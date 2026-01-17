@@ -959,10 +959,12 @@ textarea
 
 .MeetTheTeamItemInfo 
 {
-	height: 13%;
+	min-height: 13%;
+	height: auto;
 	background: #D6DCA2;
-	overflow: hidden;
+	overflow: visible;
 	margin-bottom: 2.5%;
+	padding-bottom: 3%;
 }
 
 .MeetTheTeamItemName
@@ -986,16 +988,15 @@ textarea
 
 .MeetTheTeamItemDesc
 {
-	height: 45%;
 	font-size: 1.2vw;
-	color: #000;
 	padding-left: 5%;
+	padding-right: 5%;
 	color: var(--Sonder-olive, #464834);
 	font-feature-settings: 'clig' off, 'liga' off;
 	font-family: Arial;
 	font-style: normal;
 	font-weight: 400;
-	line-height: 60%;
+	line-height: 140%;
 }
 
 .MeetTheTeamItemProf
@@ -4325,6 +4326,7 @@ textarea
 		.MeetTheTeamItemDesc
 		{
 			font-size: 0.85vh;
+			line-height: 130%;
 		}
 
 		.MeetTheTeamItemProfItem
@@ -4492,6 +4494,7 @@ textarea
 		.MeetTheTeamItemDesc
 		{
 			font-size: 2.2vh;
+			line-height: 130%;
 		}
 
 		.MeetTheTeamItemProfItem
@@ -4922,7 +4925,8 @@ textarea
 	.MeetTheTeamItemDesc
 	{
 		font-size: 1.9vh;
-		text-wrap: nowrap;
+		text-wrap: wrap;
+		line-height: 130%;
 	}
 
 	.MeetTheTeamItemProfItem
@@ -5573,6 +5577,16 @@ textarea
 		font-size: 3.8vw;
 		margin-bottom: 2%;
 		margin-top: 2%;
+	}
+
+	.ContactUsReachOut
+	{
+		font-size: 2vh !important;
+	}
+
+	.ContactUsReachOut > div:first-child
+	{
+		font-size: 2.8vh !important;
 	}
 
 	.OurSpaceContainer
