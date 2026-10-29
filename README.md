@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# The Sonderhood website
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Source for [www.the-sonderhood.com](https://www.the-sonderhood.com), a therapy centre in New Cairo. Create React App (React 18, React Router 6, Redux Toolkit), content in Firebase Firestore, hosted on Hostinger.
 
-## Available Scripts
+## Run it locally
 
-In the project directory, you can run:
+```bash
+npm install
+cp .env.example .env    # then fill in the Firebase web config
+npm start               # http://localhost:3000
+```
 
-### `npm start`
+The Firebase values are in the Firebase console under Project settings › Your apps › Web app.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Build and deploy
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+npm run build
+```
 
-### `npm test`
+This runs `react-scripts build` and then `scripts/prerender.mjs`, which reads the services, therapists and articles from Firestore and writes into `build/`:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- one HTML file per page in `build/_pages/` with its own title, description, canonical URL, social-preview tags, structured data (JSON-LD) and a readable copy of the content, so Google, WhatsApp/Facebook link previews and AI search tools see every page without running JavaScript;
+- `sitemap.xml`, `404.html`;
+- `.htaccess` for Hostinger: https and `www`, clean URLs, 301 redirects from the old addresses (`/Services/CouplesTherapy`, `/ArticlePage/...`, `/ContactUs`, ...) and real 404s.
 
-### `npm run build`
+To deploy, upload **everything inside `build/`**, including the hidden `.htaccess` and the `_pages` folder, to `public_html` on Hostinger (zipping the contents of `build/` and extracting the zip in File Manager is the easiest way). Keep a copy of the old `public_html` until the new site is checked.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To check a build exactly as Hostinger will serve it: `node scripts/serve-build.mjs`, then open http://localhost:5055.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Rebuild and upload again after adding or editing a therapist, service or article in Firebase.** New pages work straight away, but they only get their own prerendered page and sitemap entry on the next build.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+If Firestore cannot be reached during the build, `scripts/content-snapshot.json` is used instead. Refresh it with `npm run snapshot`.
 
-### `npm run eject`
+## Where things live
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| What | Where |
+| --- | --- |
+| Page titles and descriptions, URL slugs, address and phone, structured data | `src/seo/meta.mjs` |
+| Home page FAQ | `HOME_FAQS` in `src/seo/meta.mjs` |
+| Family Therapy and Behavioral Therapy (CBT & DBT) pages | `EXTRA_SERVICES` in `src/seo/meta.mjs` (a Firestore service with the same title replaces them) |
+| Other services, therapists, articles, testimonials | Firestore collections `services`, `therapists`, `blogs`, `testimonials` |
+| WhatsApp button and booking/contact forms | `src/components/WhatsAppButton.js`, `src/utils/contact.js` |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The booking and contact forms open WhatsApp (+20 109 429 2553) with the request already written; the visitor only taps Send. If the EmailJS variables in `.env` are filled in, the forms also send an email copy.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Therapist and article photos are stored in Firebase Storage, which needs the project on the Blaze (pay as you go) plan; until then the site shows initials in their place.
