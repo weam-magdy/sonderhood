@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
+import map from '../../imgs/map2.png'
 import topleft from '../../imgs/topl.jpeg'
 import botleft from '../../imgs/botl.jpeg'
 import topright from '../../imgs/topr.jpeg'
 import botright from '../../imgs/botr.jpeg'
 import mid from '../../imgs/midpics.jpeg'
-import emailjs from '@emailjs/browser'
+import { Link } from 'react-router-dom'
+import emailjs from '@emailjs/browser';
 import useTitle from '../../hooks/useTitle'
-import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/bootstrap.css'
-import './ContactUs.css'
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/bootstrap.css";
 
 const NAME_REGEX = /^[A-z]{2,24}\s[A-z]{2,24}/
 const NUMBER_REGEX = /^[1-9]{1,3}[0][1][0125][0-9]{8}/
@@ -24,10 +25,9 @@ export default function ContactUs() {
     const [number, setNumber] = useState('')
     const [verifyNumber, setVerifyNumber] = useState(false)
     const [subject, setSubject] = useState('')
+
     const [err, setErr] = useState(false)
     const [succ, setSucc] = useState(false)
-
-    const form = useRef()
 
     useEffect(() => {
         setVerifyName(NAME_REGEX.test(name))
@@ -39,25 +39,26 @@ export default function ContactUs() {
 
     const canSend = [verifyName, verifyNumber, message.length, subject.length].every(Boolean)
 
+    const form = useRef();
+
     const sendEmail = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (canSend) {
             setSucc(true)
-            setErr(false)
             setName('')
             setEmail('')
             setMessage('')
             setNumber('')
-            setSubject('')
-            emailjs.sendForm(
-                process.env.REACT_APP_service_id,
-                process.env.REACT_APP_template_id,
-                form.current,
-                process.env.REACT_APP_public_key
-            )
-        } else {
+            //@ts-ignore
+            emailjs.sendForm(process.env.REACT_APP_service_id, process.env.REACT_APP_template_id, form.current, process.env.REACT_APP_public_key)
+                .then((result) => {
+
+                }, (error) => {
+
+                });
+        }
+        else {
             setErr(true)
-            setSucc(false)
         }
     }
 
@@ -65,118 +66,112 @@ export default function ContactUs() {
         setErr(false)
     }, [name, email, message, number, subject])
 
+    const error = (
+        <div className='BookError'>
+            <p> All Fields Must Be Filled!</p>
+        </div>
+    )
+
+    const success = (
+        <div className='BookError'>
+            <p style={{ color: 'green' }}> Message Sent Successfully!</p>
+        </div>
+    )
+
     return (
         <>
-            <div className="contact-page">
+            <div className='ContactUsPageContainer'>
                 <PagesHeader />
-
-                <main className="contact-main">
-                    <header className="contact-header">
-                        <h1 className="contact-title">FIND US</h1>
-                    </header>
-
-                    <section className="contact-content">
-                        {/* Message Form */}
-                        <div className="contact-form-wrapper">
-                            <h2 className="contact-form-title">SEND US A MESSAGE</h2>
-
-                            {err && (
-                                <div className="contact-alert contact-alert--error">
-                                    All Fields Must Be Filled!
+                <div className='ContactUsPage'>
+                    <div className='ContactUsPageOurStory'>
+                        <div className='ContactUsPageOurStoryTitle'>
+                            FIND US
+                        </div>
+                        <div className='ContactUsPageOurStoryDesc'>
+                            <div className='ContactUsPageDescFirstPart'>
+                                {/* Lorem ipsum dolor sit amet consectetur. Sed urna diam lacus cum. Facilisi quis fames suscipit malesuada. Tincidunt velit in dolor cursus cursus neque. Et turpis eget pellentesque vitae eu. Non nulla urna dictum pharetra pellentesque faucibus vel. */}
+                            </div>
+                            <div className='ContactUsPageDescSecPart'>
+                                {/* Lorem ipsum dolor sit amet consectetur. Sed urna diam lacus cum. Facilisi quis fames suscipit malesuada. Tincidunt velit in dolor cursus cursus neque. Et turpis eget pellentesque vitae eu. Non nulla urna dictum pharetra pellentesque faucibus vel. */}
+                            </div>
+                        </div>
+                    </div>
+                    <div className='ContactUsContact'>
+                        <div className='ContactUsContactMap'>
+                            <div className='ContactUsContactMapImage'>
+                                <Link to='https://maps.app.goo.gl/6ib172QZdKsUx8ja6?g_st=ic'><img src={map} alt='map' /></Link>
+                            </div>
+                            <div className='ContactUsContactMapInfo'>
+                                Reach us out on<br />
+                                Email: inquiries@the-sonderhood.com<br />
+                                Cellular: +201094292553<br />
+                            </div>
+                        </div>
+                        <div className='ContactUsContactMessage'>
+                            <div className='ContactUsContactMessageContainer'>
+                                <div className='ContactUsContactMessageTitle'>
+                                    SEND US A MESSAGE
                                 </div>
-                            )}
-                            {succ && (
-                                <div className="contact-alert contact-alert--success">
-                                    Message Sent Successfully!
-                                </div>
-                            )}
-
-                            <form ref={form} className="contact-form">
-                                <input type="hidden" value={number} name="number" />
-
-                                <div className="contact-form-row">
-                                    <div className="contact-field">
-                                        <label htmlFor="name">Full Name:</label>
-                                        <input
-                                            id="name"
-                                            name="name"
-                                            type="text"
-                                            placeholder="Name..."
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                        />
+                                {err && error}
+                                {succ && success}
+                                {/*//@ts-ignore*/}
+                                <form ref={form} className='ContactUsContactMessageInfo'>
+                                    <input hidden={true} value={number} name='number' />
+                                    <div className='ContactUsContactMessageCredentials ContactUsContactMessageName'>
+                                        <label htmlFor='Name'>Full Name:</label>
+                                        <input onChange={(e) => setName(e.target.value)} value={name} placeholder='Name...' id='Name' type='text' name='name' />
                                     </div>
-                                    <div className="contact-field">
-                                        <label htmlFor="email">Email:</label>
-                                        <input
-                                            id="email"
-                                            name="email"
-                                            type="email"
-                                            placeholder="Email..."
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
+                                    <div className='ContactUsContactMessageCredentials ContactUsContactMessageEmail'>
+                                        <label htmlFor='Email'>Email</label>
+                                        <input onChange={(e) => setEmail(e.target.value)} value={email} name='email' placeholder='Email...' id='Email' type='email' />
                                     </div>
-                                </div>
-
-                                <div className="contact-form-row">
-                                    <div className="contact-field contact-field--phone">
-                                        <label>Number:</label>
+                                    <div className='ContactUsContactMessageCredentials ContactUsContactMessageNumber'>
+                                        <label >Number</label>
                                         <PhoneInput
-                                            country="eg"
+                                            country={"eg"}
                                             enableSearch={true}
                                             value={number}
                                             onChange={(phone) => setNumber(phone)}
+                                            specialLabel='Number: '
+                                            inputStyle={{
+                                                width: "75%",
+                                                height: "100%",
+                                                padding: '0%',
+                                                background: "transparent",
+                                                border: "1px solid #000",
+                                                outline: "none",
+                                                boxSizing: "border-box",
+                                                boxShadow: "none",
+                                                color: "var(--Text, #90946B)",
+                                                fontFamily: "Arial",
+                                                fontStyle: "normal",
+                                                fontWeight: "400",
+                                                lineHeight: "100%",
+                                                textIndent: "7%",
+                                                borderRadius: '0',
+                                                marginLeft: '20%'
+                                            }}
                                         />
+                                        {/* <input onChange={(e) => setNumber(e.target.value)} placeholder='Number...' id='Number' type='tel' /> */}
                                     </div>
-                                    <div className="contact-field">
-                                        <label htmlFor="subject">Subject:</label>
-                                        <input
-                                            id="subject"
-                                            type="text"
-                                            placeholder="Subject..."
-                                            value={subject}
-                                            onChange={(e) => setSubject(e.target.value)}
-                                        />
+                                    <div className='ContactUsContactMessageCredentials ContactUsContactMessageDOB'>
+                                        <label htmlFor='Subject'>Subject:</label>
+                                        <input onChange={(e) => setSubject(e.target.value)} placeholder='Subject...' id='Subject' type='text' />
                                     </div>
+                                    <div className='ContactUsContactMessageCredentials ContactUsContactMessageMessage'>
+                                        <label htmlFor='Send us a message'>Send us a message:</label>
+                                        <textarea onChange={(e) => setMessage(e.target.value)} value={message} name='message' style={{ paddingTop: '2.5%', textIndent: '0%', paddingLeft: '2.5%', justifyContent: 'flex-start', alignItems: 'flex-start' }} placeholder='' id='Send us a message' />
+                                    </div>
+                                </form>
+                                <div className='ContactUsContactMessageButton'>
+                                    {/* <button onClick={() => navigate('/BookASession')}>BOOK A SESSION</button> */}
+                                    <button onClick={sendEmail}>SEND MESSAGE</button>
                                 </div>
-
-                                <div className="contact-field contact-field--full">
-                                    <label htmlFor="message">Send us a message:</label>
-                                    <textarea
-                                        id="message"
-                                        name="message"
-                                        placeholder="Your message..."
-                                        value={message}
-                                        onChange={(e) => setMessage(e.target.value)}
-                                    />
-                                </div>
-                            </form>
-
-                            <div className="contact-submit">
-                                <button type="button" onClick={sendEmail}>
-                                    SEND MESSAGE
-                                </button>
                             </div>
                         </div>
-
-                        {/* Contact Info */}
-                        <div className="contact-info">
-                            <h3 className="contact-info-title">Reach us out on</h3>
-                            <div className="contact-info-item">
-                                <span className="contact-info-label">Cellular:{" "}</span>
-                                <a href="tel:+201094292553">+201094292553</a>
-                            </div>
-                            <div className="contact-info-item">
-                                <span className="contact-info-label">Email:{" "}</span>
-                                <a href="mailto:inquiries@the-sonderhood.com">inquiries@the-sonderhood.com</a>
-                            </div>
-                        </div>
-                    </section>
-                </main>
+                    </div>
+                </div>
             </div>
-
-            {/* Our Space Gallery */}
             <div className='OurSpaceContainer'>
                 <div className='OurSpace'>
                     <div className='OurSpaceHeading'>
@@ -196,6 +191,7 @@ export default function ContactUs() {
                         </div>
                     </div>
                     <div className='OurSpaceButton'>
+                        {/* <button onClick={() => navigate('/RequestASession')}>REQUEST A BOOKING</button> */}
                     </div>
                 </div>
             </div>

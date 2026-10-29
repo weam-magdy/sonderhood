@@ -3,61 +3,77 @@ import Therapist from '../HomePage/Therapists'
 import { useNavigate } from 'react-router-dom'
 import { selectedServices } from '../../app/services/servicesSlice'
 import { useSelector } from 'react-redux'
-import { selectedTherapists } from '../../app/therapists/therapistsSlice'
+import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
 
-export default function AboutMeetTheTeam({therapists}) 
-{
-    //eslint-disable-next-line
+export default function AboutMeetTheTeam() {
     const [selectedService, setSelectedService] = useState('All Services')
+    const [filteredTherapists, setFilteredTherapists] = useState(null)
 
     const services = useSelector(selectedServices)
     const therapistsData = useSelector(selectedTherapists)
+    const therapistsStatus = useSelector(selectTherapistsStatus)
 
-    const [availableTherapists, setAvailableTherapists] = useState(therapists)
+    const navigate = useNavigate()
 
-
-    async function handleFilter(e)
-    {
+    function handleFilter(e) {
         const serviceTitle = e.target.value
         setSelectedService(serviceTitle)
 
         const service = services?.find(serviceItem => serviceItem.title === serviceTitle)
 
-        if(service)
-        {
+        if (service) {
             let therapistsArray = []
-            //eslint-disable-next-line
-            service.therapists.map(therapist => 
-                {
-                    const foundTherapist = therapistsData.find(data => data.id === therapist.id)
+            service.therapists.forEach(therapist => {
+                const foundTherapist = therapistsData.find(data => data.id === therapist.id)
+                if (foundTherapist) {
                     therapistsArray.push(foundTherapist)
-                })
-            setAvailableTherapists(therapistsArray)
+                }
+            })
+            setFilteredTherapists(therapistsArray)
+        } else {
+            setFilteredTherapists(null) // null means show all
         }
-        else setAvailableTherapists(therapists)
     }
 
-    const servicesOptions = services.map(service => (
+    const servicesOptions = services?.map(service => (
         <option
             value={service.title}
             key={service.title}
         >
             {service.title}
         </option>
-    ))
+    )) || []
 
-    const navigate = useNavigate()
+    // Use filtered list if filtering, otherwise use all therapists from Redux
+    const displayList = filteredTherapists !== null ? filteredTherapists : therapistsData
 
-    //@ts-ignore
-    const therapistsDisplay = availableTherapists.length === 1 && availableTherapists[0] === undefined
-    ?
-    (
-        <div className='NoTherapists'>
-            No Therapists Available
-        </div>
-    )
-    : availableTherapists.map((therapist, index) => <Therapist key={index} therapist={therapist} />)
-    
+    // Show loading state while fetching
+    if (therapistsStatus === 'loading' || therapistsStatus === 'idle') {
+        return (
+            <div className='MeetTheTeamContainer'>
+                <div className='MeetTheTeamHeader'>
+                    <div className='MeetTheTeamHeaderContainer'>
+                        <div className='MeetTheTeamHeaderTitle'>
+                            <h1>MEET THE <span>TEAM</span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div className='MeetTheTeamItemsContainer'>
+                    <div className='NoTherapists'>Loading therapists...</div>
+                </div>
+            </div>
+        )
+    }
+
+    const therapistsDisplay = !displayList || displayList.length === 0
+        ? (
+            <div className='NoTherapists'>
+                No Therapists Available
+            </div>
+        )
+        : displayList.map((therapist, index) =>
+            therapist ? <Therapist key={therapist.id || index} therapist={therapist} /> : null
+        )
 
     return (
         <div className='MeetTheTeamContainer'>
@@ -73,7 +89,7 @@ export default function AboutMeetTheTeam({therapists})
                 <div className='MeetTheTeamHeaderFilters'>
                     <div className='MeetTheTeamHeaderFiltersInput'>
                         <label htmlFor='filters'>FILTER BY:</label>
-                        <select onChange={handleFilter} id='filters'>
+                        <select onChange={handleFilter} id='filters' value={selectedService}>
                             <option value='All Services'>All Services</option>
                             {servicesOptions}
                         </select>
@@ -84,8 +100,7 @@ export default function AboutMeetTheTeam({therapists})
                 {therapistsDisplay}
             </div>
             <div className='MeetTheTeamItemsButtons'>
-                    <button onClick={() => navigate('/RequestASession')} className='MeetTheTeamItemBookButton'>REQUEST A BOOKING</button>
-                    {/* <button onClick={() => navigate('/ContactUs')} className='MeetTheTeamItemContactButton'>CONTACT US</button> */}
+                <button onClick={() => navigate('/RequestASession')} className='MeetTheTeamItemBookButton'>REQUEST A BOOKING</button>
             </div>
         </div>
     )
