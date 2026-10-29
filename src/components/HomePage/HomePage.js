@@ -8,6 +8,7 @@ import MeetTheTeam from './MeetTheTeam';
 import OurBlog from './OurBlog';
 import ClientsSay from './ClientsSay';
 import FAQ from './FAQ';
+import InstagramFeed from './InstagramFeed'
 import useSeo from '../../seo/useSeo';
 import { PAGES, homeLd } from '../../seo/meta.mjs';
 
@@ -25,6 +26,7 @@ export default function HomePage()
             <OurBlog />
             <ClientsSay />
             <FAQ />
+            <InstagramFeed />
         </>
     )
 }

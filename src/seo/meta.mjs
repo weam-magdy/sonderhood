@@ -536,7 +536,7 @@ export const PRIVACY = [
     },
     {
         title: 'Services that load with our pages',
-        text: ['Like most websites, our pages load a few services from other companies, which receive your device\'s internet address: Google Fonts for the lettering on every page, Google Maps for the map on our contact page, and Google Firebase for our team photos and our newsletter.'],
+        text: ['Like most websites, our pages load a few services from other companies, which receive your device\'s internet address: Google Fonts for the lettering on every page, Google Maps for the map on our contact page, and Google Firebase for our newsletter. The Instagram posts at the end of our home page are copies kept on this website (we fetch them through Behold, behold.so), so seeing them sends nothing to Instagram; opening one takes you to Instagram, which has its own privacy policy.'],
     },
     {
         title: 'WhatsApp, phone and email',
