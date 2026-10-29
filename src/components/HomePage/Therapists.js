@@ -25,7 +25,7 @@ export default function Therapists({ therapist })
         <>
         { therapist ?<Link to={`/therapists/${therapistSlug(therapist)}`} className='MeetTheTeamItem'>
             <div className='MeetTheTeamItemImage'>
-                <SafeImage src={therapist.image} alt={`${therapist.name}, ${String(therapist.position || 'therapist').trim()} at The Sonderhood`} label={therapist.name} />
+                <SafeImage src={therapist.image} alt={`${therapist.name}, ${String(therapist.position || 'therapist').trim()} at The Sonder Hood`} label={therapist.name} />
             </div>
             <div className='MeetTheTeamItemInfo'>
                 <div className='MeetTheTeamItemName'>

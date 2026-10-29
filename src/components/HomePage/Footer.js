@@ -81,7 +81,7 @@ export default function Footer()
                         </svg>
                     </div>
                     <div className='HomeFooterInfoCopyRights'>
-                        Copyright © {new Date().getFullYear()} The Sonderhood<br />
+                        Copyright © {new Date().getFullYear()} The Sonder Hood<br />
                         | All Rights Reserved 
                     </div>
                 </div>
@@ -128,7 +128,7 @@ export default function Footer()
                     <button type='button' className='FooterCookieButton' onClick={() => window.dispatchEvent(new Event('sonderhood:consent'))}>Cookie settings</button>
                 </nav>
                 <address className='FooterDetailsAddress'>
-                    The Sonderhood, therapy center in {SITE.address.display}
+                    The Sonder Hood, therapy center in {SITE.address.display}
                     {' · '}Open {SITE.hours.display}
                     {' · '}Sessions in {sentenceList(sessionLanguages())}
                     {' · '}<a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp {SITE.phoneDisplay}</a>

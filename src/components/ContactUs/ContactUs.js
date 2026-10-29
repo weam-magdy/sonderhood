@@ -86,7 +86,7 @@ export default function ContactUs() {
                         <div className='ContactUsContactMap'>
                             <div className='ContactUsContactMapImage'>
                                 <iframe
-                                    title='Map: The Sonderhood at 3Sixty by LMD, New Cairo'
+                                    title='Map: The Sonder Hood at 3Sixty by LMD, New Cairo'
                                     src={SITE.mapsEmbedUrl}
                                     loading='lazy'
                                     referrerPolicy='no-referrer-when-downgrade'
@@ -178,15 +178,15 @@ export default function ContactUs() {
                     </div>
                     <div className='OurSpaceImages'>
                         <div className='OurSpaceImagesLeft'>
-                            <img src={topleft} alt='An hourglass and a candle on a wooden table at The Sonderhood' loading='lazy' />
-                            <img src={botleft} alt='Refreshment shelves with a kettle and plants at The Sonderhood' loading='lazy' />
+                            <img src={topleft} alt='An hourglass and a candle on a wooden table at The Sonder Hood' loading='lazy' />
+                            <img src={botleft} alt='Refreshment shelves with a kettle and plants at The Sonder Hood' loading='lazy' />
                         </div>
                         <div className='OurSpaceImagesMid'>
-                            <img src={mid} alt='An armchair by a sunlit window in a therapy room at The Sonderhood, New Cairo' loading='lazy' />
+                            <img src={mid} alt='An armchair by a sunlit window in a therapy room at The Sonder Hood, New Cairo' loading='lazy' />
                         </div>
                         <div className='OurSpaceImagesRight'>
-                            <img src={topright} alt='A wooden wall clock in a therapy room at The Sonderhood' loading='lazy' />
-                            <img src={botright} alt='A desk with a lamp, notebooks and plants at The Sonderhood' loading='lazy' />
+                            <img src={topright} alt='A wooden wall clock in a therapy room at The Sonder Hood' loading='lazy' />
+                            <img src={botright} alt='A desk with a lamp, notebooks and plants at The Sonder Hood' loading='lazy' />
                         </div>
                     </div>
                     <div className='OurSpaceButton'>

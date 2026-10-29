@@ -125,7 +125,7 @@ const NAV = [['/about', 'About'], ['/services', 'Services'], ['/therapists', 'Th
 function shell(main, whatsappText)
 {
     return `<div class="ssr">`
-        + `<header class="ssr-head"><a class="ssr-brand" href="/">The Sonderhood</a><nav class="ssr-nav">${NAV.map(([href, text]) => link(href, text)).join('')}</nav></header>`
+        + `<header class="ssr-head"><a class="ssr-brand" href="/">The Sonder Hood</a><nav class="ssr-nav">${NAV.map(([href, text]) => link(href, text)).join('')}</nav></header>`
         + `<main class="ssr-main">${main}`
         + `<p class="ssr-cta"><a class="ssr-btn" href="${esc(M.whatsappUrl(whatsappText))}">Message us on WhatsApp</a> <a href="tel:${esc(M.SITE.phone)}">or call ${esc(M.SITE.phoneDisplay)}</a></p></main>`
         + `<footer class="ssr-foot"><nav class="ssr-nav">${M.SERVICE_LINKS.map(s => link(s.path, s.name)).join('')}</nav>`
@@ -158,7 +158,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
     pages.push({
         path: '/about',
         head: { ...M.PAGES.about, ld: M.pageLd({ name: 'About Us', path: '/about' }) },
-        body: shell(`<h1>About The Sonderhood</h1>${paragraphs([M.PAGES.about.description, M.INTROS.therapists[0]])}<h2>Our team</h2>${list(therapists.map(therapistItem))}`),
+        body: shell(`<h1>About The Sonder Hood</h1>${paragraphs([M.PAGES.about.description, M.INTROS.therapists[0]])}<h2>Our team</h2>${list(therapists.map(therapistItem))}`),
     })
 
     pages.push({
@@ -180,7 +180,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
                 + list((service.points || []).map(esc))
                 + (team.length ? `<h2>Available therapists</h2>${list(team.map(therapistItem))}` : '')
                 + (service.faqs?.length ? `<h2>Frequently asked questions</h2>${faqBlock(service.faqs)}` : ''),
-            `Hello The Sonderhood, I would like to book a session for ${service.title}.`),
+            `Hello The Sonder Hood, I would like to book a session for ${service.title}.`),
         })
     }
 
@@ -201,13 +201,13 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
             lastmod: therapist.updateTime,
             head: { ...meta, ld: M.therapistLd(therapist) },
             body: shell(`<h1>${esc(therapist.name)}</h1>`
-                + paragraphs([`${String(therapist.position || '').trim()} at The Sonderhood, New Cairo.`, `Sessions in ${M.sentenceList(M.therapistLanguages(therapist))}.`])
+                + paragraphs([`${String(therapist.position || '').trim()} at The Sonder Hood, New Cairo.`, `Sessions in ${M.sentenceList(M.therapistLanguages(therapist))}.`])
                 + ((therapist.clientele || []).length ? `<p>Works with: ${esc(therapist.clientele.join(', '))}</p>` : '')
                 + ((therapist.search || []).length ? `<p>Areas of focus: ${esc(therapist.search.join(', '))}</p>` : '')
                 + (therapist.quote ? `<blockquote>${esc(therapist.quote)}</blockquote>` : '')
                 + (credentials.length ? `<h2>Credentials</h2>${list(credentials)}` : '')
                 + (written.length ? `<h2>Articles</h2>${list(written.map(blogItem))}` : ''),
-            `Hello The Sonderhood, I would like to book a session with ${therapist.name}.`),
+            `Hello The Sonder Hood, I would like to book a session with ${therapist.name}.`),
         })
     }
 
@@ -261,7 +261,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
             + `<h2>Who is the therapy for?</h2>${list(F.FINDER_FOR.map(option => esc(option.label)))}`
             + `<h2>Which language would you prefer?</h2>${list(F.FINDER_LANGUAGES.filter(option => option.id !== 'either').map(option => esc(option.label)))}`
             + `<h2>Our team</h2>${list(therapists.map(therapistItem))}`,
-            'Hello The Sonderhood, I would like help finding the right therapist.'),
+            'Hello The Sonder Hood, I would like help finding the right therapist.'),
     })
 
     pages.push({
@@ -402,14 +402,16 @@ async function main()
     const content = await loadContent()
     if (Array.isArray(content.therapists)) content.therapists = M.applyTeamChanges(content.therapists)
 
-    // The app's copy keeps the photo addresses, so the photos appear as soon as
-    // Firebase Storage serves them again; a collection the snapshot lacks is left
-    // out, and src/app/content.js then reads it from Firestore.
+    // Photo addresses Firebase Storage will not serve are dropped from the app's copy
+    // too, so browsers show the initials tile without a failed request (and a console
+    // error) per photo; the next build after Storage answers again keeps them. A
+    // collection the snapshot lacks is left out, and src/app/content.js then reads it
+    // from Firestore.
+    await dropUnreachablePhotos(content)
     const missing = COLLECTIONS.filter(name => !Array.isArray(content[name]))
     if (missing.length) console.warn(`prerender: content.json has no ${missing.join(', ')}; the app reads them from Firestore`)
     fs.writeFileSync(path.join(BUILD, 'content.json'), JSON.stringify(Object.fromEntries(COLLECTIONS.filter(name => !missing.includes(name)).map(name => [name, content[name]]))))
 
-    await dropUnreachablePhotos(content)
     const pages = buildPages(content)
 
     // The home hero is a CSS background, which the browser only finds after the

@@ -20,12 +20,12 @@ export default function WhatsAppButton()
     if (section === 'services' && slug)
     {
         const service = services.find(item => item.slug === slug)
-        if (service) text = `Hello The Sonderhood, I would like to book a session for ${service.title}.`
+        if (service) text = `Hello The Sonder Hood, I would like to book a session for ${service.title}.`
     }
     else if (section === 'therapists' && slug)
     {
         const therapist = therapists.find(item => therapistSlug(item) === slug)
-        if (therapist) text = `Hello The Sonderhood, I would like to book a session with ${therapist.name}.`
+        if (therapist) text = `Hello The Sonder Hood, I would like to book a session with ${therapist.name}.`
     }
 
     return (
@@ -34,7 +34,7 @@ export default function WhatsAppButton()
             href={whatsappUrl(text)}
             target='_blank'
             rel='noopener noreferrer'
-            aria-label='Chat with The Sonderhood on WhatsApp'
+            aria-label='Chat with The Sonder Hood on WhatsApp'
             title='Chat with us on WhatsApp'
         >
             {whatsappGlyph}

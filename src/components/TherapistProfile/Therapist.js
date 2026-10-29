@@ -147,7 +147,7 @@ export default function Therapist()
             <PagesHeader />
             <div className='TherapistProfile'>
                 <div className='TherapistProfileImage'>
-                    <SafeImage src={selectedTherapist.image} alt={`${selectedTherapist.name}, ${String(selectedTherapist.position || 'therapist').trim()} at The Sonderhood in New Cairo`} label={selectedTherapist.name} loading='eager' />
+                    <SafeImage src={selectedTherapist.image} alt={`${selectedTherapist.name}, ${String(selectedTherapist.position || 'therapist').trim()} at The Sonder Hood in New Cairo`} label={selectedTherapist.name} loading='eager' />
                 </div>
                 <div className='TherapistProfileInfo'>
                     <h1 className='TherapistProfileName'>
@@ -209,7 +209,7 @@ export default function Therapist()
         }
         <div className='TherapistBookSession'>
             <div className='TherapistBookSessionImage'>
-                <img src={book} alt='A calm therapy room at The Sonderhood' loading='lazy' />
+                <img src={book} alt='A calm therapy room at The Sonder Hood' loading='lazy' />
             </div>
             <div className='BookSession'>
                 <h2 className='BookSessionTitle'>

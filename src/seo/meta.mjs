@@ -3,7 +3,7 @@
 // so this file holds only data and pure functions: no imports, no browser globals.
 
 export const SITE = {
-    name: 'The Sonderhood',
+    name: 'The Sonder Hood',
     url: 'https://www.the-sonderhood.com',
     phone: '+201094292553',
     phoneDisplay: '+20 109 429 2553',
@@ -36,7 +36,7 @@ export const SITE = {
     },
 }
 
-export const DEFAULT_WHATSAPP_TEXT = 'Hello The Sonderhood, I would like to book a therapy session.'
+export const DEFAULT_WHATSAPP_TEXT = 'Hello The Sonder Hood, I would like to book a therapy session.'
 
 export function whatsappUrl(text = DEFAULT_WHATSAPP_TEXT) {
     return `https://wa.me/${SITE.whatsappNumber}${text ? `?text=${encodeURIComponent(text)}` : ''}`
@@ -122,7 +122,7 @@ export const SERVICE_SEO = {
         slug: 'group-therapy',
         name: 'Group Therapy',
         metaTitle: 'Group Therapy in New Cairo',
-        metaDescription: 'Small, therapist-led groups for anxiety, grief and loss, codependency and family issues. Connect with others and grow, with The Sonderhood in New Cairo.',
+        metaDescription: 'Small, therapist-led groups for anxiety, grief and loss, codependency and family issues. Connect with others and grow, with The Sonder Hood in New Cairo.',
         intro: 'Groups are led by our therapists in New Cairo. Message us on WhatsApp to hear about upcoming groups and online options.',
     },
     'family-therapy': {
@@ -337,19 +337,23 @@ export const EXTRA_BLOGS = [
             '<ol><li><strong>Name the pattern.</strong> Understanding what happened helps you stop blaming yourself for it.</li><li><strong>Allow yourself to grieve.</strong> Many people grieve the parent they needed but did not have, even while that parent is still alive.</li><li><strong>Set boundaries that protect you.</strong> Boundaries can be small: shorter visits, sharing fewer personal details, or leaving a conversation that turns hurtful. How much contact to keep is a personal decision, and there is no single right answer.</li><li><strong>Practice self-compassion.</strong> Notice when your inner voice sounds like your parent, and answer it the way you would answer a friend.</li><li><strong>Get support.</strong> <a href="/services/individual-adult-therapy">Individual therapy</a> offers a safe place to make sense of your story and build new patterns. Approaches such as <a href="/services/cbt-behavioral-therapy">cognitive behavioral therapy (CBT)</a> can help you challenge long-held beliefs about your worth.</li></ol><br />',
             'Healing is not about blaming your parent or rewriting your whole past. It is about understanding how your story shaped you, so you can choose what you carry forward.<br />',
             '<h2>You do not have to do this alone</h2><br />',
-            `At The Sonderhood, our therapists work with adults who grew up with narcissistic or emotionally immature parents, face to face at our therapy center in New Cairo or online from anywhere in Egypt. When you are ready to talk, you can <a href="/book">request a session</a> or message us on <a href="${whatsappUrl()}">WhatsApp at ${SITE.phoneDisplay}</a>.`,
+            `At The Sonder Hood, our therapists work with adults who grew up with narcissistic or emotionally immature parents, face to face at our therapy center in New Cairo or online from anywhere in Egypt. When you are ready to talk, you can <a href="/book">request a session</a> or message us on <a href="${whatsappUrl()}">WhatsApp at ${SITE.phoneDisplay}</a>.`,
         ].join(''),
     },
 ]
 
 // Cover photos served from this site, by Firestore id. They replace the article's
-// Firebase Storage photo; the remaining articles get theirs on 1 November 2026.
+// Firebase Storage photo; the last three articles get theirs on 1 November 2026.
 export const BLOG_IMAGES = {
     '6bUES3MKKemrzhuPJavZ': '/images/blog/embracing-change-self-recovery.jpg',
     C0nCs8YWOwdIjAI7p5Xb: '/images/blog/people-pleaser-struggles.jpg',
     ERQnHLdQJHQhuZgYJsiD: '/images/blog/power-of-mindfulness.jpg',
     Hj5wufuLGpB3AwOcriYL: '/images/blog/supporting-loved-ones-mental-health.jpg',
     Kg93YhicGd0ESqGQxx4i: '/images/blog/managing-anger.jpg',
+    Rg6LRrcLi8ARD0waiT8v: '/images/blog/10-strategies-to-deal-with-anxiety.jpg',
+    W0ByGdjEcwhAYxE0yo0G: '/images/blog/overcoming-anxiety-giving-yourself-permission.jpg',
+    k2kmW7mHUrT0gJ5AsgpR: '/images/blog/therapy-takes-time.jpg',
+    pV2HTYGvNRD1Vzn7Uojr: '/images/blog/challenging-your-inner-critic.jpg',
 }
 
 // Firestore articles plus EXTRA_BLOGS, newest (the code-published ones) first.
@@ -370,7 +374,7 @@ export function findTherapistByName(therapists = [], name) {
 export const HOME_FAQS = [
     {
         question: 'What can I expect during a typical psychotherapy session?',
-        answer: 'During a psychotherapy session, you can expect to engage in open and confidential conversations with your therapist. You\'ll discuss your thoughts, feelings, and concerns, and your therapist will provide guidance, support, and strategies to help you address and manage your specific issues and goals. At The Sonderhood, sessions can take place face to face at our therapy center in New Cairo or online, so you can choose the setting that feels most comfortable.',
+        answer: 'During a psychotherapy session, you can expect to engage in open and confidential conversations with your therapist. You\'ll discuss your thoughts, feelings, and concerns, and your therapist will provide guidance, support, and strategies to help you address and manage your specific issues and goals. At The Sonder Hood, sessions can take place face to face at our therapy center in New Cairo or online, so you can choose the setting that feels most comfortable.',
     },
     {
         question: 'How long does psychotherapy usually take?',
@@ -386,7 +390,7 @@ export const HOME_FAQS = [
     },
     {
         question: 'What is the difference between a psychotherapist and a psychiatrist?',
-        answer: 'A psychotherapist is a mental health professional trained in various therapeutic techniques to provide talk therapy and emotional support. They do not prescribe medication. In contrast, a psychiatrist is a medical doctor who can provide therapy but also has the authority to diagnose mental illnesses and prescribe medication when necessary. The choice between them often depends on whether you need therapy, medication, or a combination of both for your specific mental health needs. The Sonderhood\'s team are psychologists and psychotherapists who provide talk therapy, such as cognitive behavioral therapy (CBT).',
+        answer: 'A psychotherapist is a mental health professional trained in various therapeutic techniques to provide talk therapy and emotional support. They do not prescribe medication. In contrast, a psychiatrist is a medical doctor who can provide therapy but also has the authority to diagnose mental illnesses and prescribe medication when necessary. The choice between them often depends on whether you need therapy, medication, or a combination of both for your specific mental health needs. The Sonder Hood\'s team are psychologists and psychotherapists who provide talk therapy, such as cognitive behavioral therapy (CBT).',
     },
     {
         question: 'What types of therapy do you offer, and are sessions online or face to face?',
@@ -411,13 +415,13 @@ export const HOME_FAQS = [
 export const HOME_HEADLINE = 'Therapy & psychotherapy in New Cairo, face to face or online'
 
 export const INTROS = {
-    services: 'The Sonderhood offers psychotherapy for adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt. Choose a service to see how it works, which of our therapists offer it and answers to common questions.',
+    services: 'The Sonder Hood offers psychotherapy for adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt. Choose a service to see how it works, which of our therapists offer it and answers to common questions.',
     therapists: [
-        'The Sonderhood\'s psychologists and psychotherapists work with adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo and online across Egypt. Between them they offer individual therapy, couples and family therapy, cognitive behavioral therapy (CBT), DBT and psychological assessments. Every therapist works in Arabic and English, and Inji Farid also offers sessions in French.',
+        'The Sonder Hood\'s psychologists and psychotherapists work with adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo and online across Egypt. Between them they offer individual therapy, couples and family therapy, cognitive behavioral therapy (CBT), DBT and psychological assessments. Every therapist works in Arabic and English, and Inji Farid also offers sessions in French.',
         'Filter by service to find the right therapist for you, open a profile to read their credentials, then request a booking or message us on WhatsApp.',
     ],
     contact: [
-        'Visit The Sonderhood at our therapy center in New Cairo for face-to-face sessions, or start online therapy from anywhere in Egypt or abroad.',
+        'Visit The Sonder Hood at our therapy center in New Cairo for face-to-face sessions, or start online therapy from anywhere in Egypt or abroad.',
         'The quickest way to reach us is WhatsApp. Send us a message and we will help you choose a therapist and find the nearest available time.',
     ],
     book: 'Choose a session online or at our center in New Cairo. Your request opens in WhatsApp, ready to send to us, or message us directly at',
@@ -474,7 +478,7 @@ export const PAGES = {
     about: {
         path: '/about',
         title: `About Us: A Therapy Center in New Cairo${BRAND}`,
-        description: 'The story behind The Sonderhood, a safe haven for therapy in New Cairo, and the team of psychologists and psychotherapists who work here.',
+        description: 'The story behind The Sonder Hood, a safe haven for therapy in New Cairo, and the team of psychologists and psychotherapists who work here.',
     },
     therapists: {
         path: '/therapists',
@@ -489,12 +493,12 @@ export const PAGES = {
     blog: {
         path: '/blog',
         title: `Mental Health Blog by Our Therapists${BRAND}`,
-        description: 'Articles by The Sonderhood\'s therapists on anxiety, boundaries, codependency, anger, mindfulness, parenting and therapy itself.',
+        description: 'Articles by The Sonder Hood\'s therapists on anxiety, boundaries, codependency, anger, mindfulness, parenting and therapy itself.',
     },
     contact: {
         path: '/contact',
         title: `Contact Us: Therapy Center in New Cairo${BRAND}`,
-        description: `Reach The Sonderhood on WhatsApp or by phone at ${SITE.phoneDisplay}, by email, or visit our therapy center in New Cairo, Egypt. Open ${SITE.hours.display}.`,
+        description: `Reach The Sonder Hood on WhatsApp or by phone at ${SITE.phoneDisplay}, by email, or visit our therapy center in New Cairo, Egypt. Open ${SITE.hours.display}.`,
     },
     book: {
         path: '/book',
@@ -509,7 +513,7 @@ export const PAGES = {
     privacy: {
         path: '/privacy',
         title: `Privacy Policy${BRAND}`,
-        description: 'What The Sonderhood\'s website collects, why, and how to ask us to see or delete it: analytics only with your consent, WhatsApp messages and newsletter emails.',
+        description: 'What The Sonder Hood\'s website collects, why, and how to ask us to see or delete it: analytics only with your consent, WhatsApp messages and newsletter emails.',
     },
     notFound: {
         path: '/404',
@@ -557,7 +561,7 @@ export function therapistMeta(therapist) {
     const extra = therapistLanguages(therapist).slice(SITE.languages.length)
     const speaking = extra.length ? `${sentenceList(extra)}-speaking ` : ''
     const article = /^founder/i.test(position) ? 'the' : /^[aeiou]/i.test(speaking || position) ? 'an' : 'a'
-    let description = `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at The Sonderhood in New Cairo`
+    let description = `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at The Sonder Hood in New Cairo`
     if (clientele.length) description += `, working with ${sentenceList(clientele)}`
     if (focus.length) description += ` on ${sentenceList(focus)}`
     description += '. Sessions in person or online.'
@@ -600,7 +604,7 @@ export function organizationLd() {
                 '@type': 'MedicalClinic',
                 '@id': ORG_ID,
                 name: SITE.name,
-                alternateName: ['The Sonder Hood', 'Sonderhood'],
+                alternateName: ['The Sonderhood', 'Sonderhood'],
                 url: `${SITE.url}/`,
                 logo: absoluteUrl(SITE.logo),
                 image: absoluteUrl(SITE.image),

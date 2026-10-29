@@ -1,4 +1,4 @@
-# The Sonderhood website
+# The Sonder Hood website
 
 Source for [www.the-sonderhood.com](https://www.the-sonderhood.com), a therapy center in New Cairo. Create React App (React 18, React Router 6, Redux Toolkit), content in Firebase Firestore, hosted on Hostinger.
 

@@ -24,7 +24,7 @@ export default function WhySonderHood()
     return (
         <div ref={ref} className='WhySonderContainer'>
             <div className='WhySonderHeader'>
-                <h1>WHY CHOOSE <span>THE SONDERHOOD?</span></h1>
+                <h1>WHY CHOOSE <span>THE SONDER HOOD?</span></h1>
             </div>
             <div className='WhySonderItemsContainer'>
                 <motion.div 

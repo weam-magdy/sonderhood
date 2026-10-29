@@ -118,7 +118,7 @@ export default function FindTherapist()
                                     {matches.map(({ therapist, hits }) => (
                                         <article key={therapist.id} className='FinderMatch'>
                                             <div className='FinderMatchImage'>
-                                                <SafeImage src={therapist.image} alt={`${therapist.name}, ${String(therapist.position || 'therapist').trim()} at The Sonderhood`} label={therapist.name} />
+                                                <SafeImage src={therapist.image} alt={`${therapist.name}, ${String(therapist.position || 'therapist').trim()} at The Sonder Hood`} label={therapist.name} />
                                             </div>
                                             <div className='FinderMatchInfo'>
                                                 <h3><Link to={`/therapists/${therapistSlug(therapist)}`}>{therapist.name}</Link></h3>

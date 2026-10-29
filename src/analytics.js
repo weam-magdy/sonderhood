@@ -1,4 +1,4 @@
-// Google Analytics 4, property "The Sonderhood". Nothing loads and no cookie is set
+// Google Analytics 4, property "The Sonder Hood". Nothing loads and no cookie is set
 // until the visitor accepts the notice (ConsentBanner); the choice is kept for 12
 // months in localStorage (in memory when storage is blocked) and can be changed from
 // the footer or /privacy. Page views are sent by useSeo once a page has its title,
