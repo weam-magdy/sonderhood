@@ -38,7 +38,6 @@ function fetch_url($url)
         ]);
         $body = curl_exec($curl);
         $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
-        curl_close($curl);
         return ($body !== false && $status >= 200 && $status < 300) ? $body : false;
     }
     $context = stream_context_create(['http' => ['timeout' => 10, 'header' => "User-Agent: TheSonderHood-site/1.0\r\n"]]);
@@ -84,8 +83,10 @@ foreach ($feed['posts'] as $post) {
     if ($id === '' || !preg_match('#^https://(www\.)?instagram\.com/#', $link)) continue;
     if (!preg_match('#^https://([a-z0-9-]+\.)*behold\.pictures/#i', (string) $source)) continue;
 
-    $existing = glob(CACHE_DIR . '/' . $id . '.{webp,jpg,png}', GLOB_BRACE);
-    $file = $existing ? $existing[0] : null;
+    $file = null;
+    foreach (['webp', 'jpg', 'png'] as $extension) {
+        if (is_file(CACHE_DIR . '/' . $id . '.' . $extension)) $file = CACHE_DIR . '/' . $id . '.' . $extension;
+    }
     if (!$file) {
         $bytes = fetch_url($source);
         $extension = $bytes !== false && strlen($bytes) < 4000000 ? image_extension($bytes) : null;
