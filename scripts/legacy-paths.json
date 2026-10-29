@@ -1,0 +1,38 @@
+{
+  "note": "Addresses of the pre-October-2026 site (display text with spaces removed), by Firestore id. Frozen so renaming an item in Firebase keeps its old link redirecting. Do not edit.",
+  "services": {
+    "5nwmIB32vjsHXknedWyf": "Child&AdolescentTherapy",
+    "7pRO6dkH0ruCAbYNVQvr": "Assessments",
+    "ArjQ4Rm2ff6tkNtAQ6LT": "OnlineTherapy",
+    "ee4ZPo01CGhm2vK1Li4C": "GroupTherapy",
+    "hhsdmrAXJVOTKq8UT3Yv": "IndividualsTherapy",
+    "wkCeZbijHxJw1RhtEpix": "CouplesTherapy"
+  },
+  "therapists": {
+    "34YNM9NMyuXgT9KbZ3DC": "ShahdZanaty",
+    "F1jzTtRVVh2PMFASVHVe": "HabibaYoussry",
+    "HJNGY0HUGgR9hmAbu7OP": "WeaamElaidy",
+    "J9Odp0mxyUYUYQWZoNyT": "HeidiFares",
+    "KFxjskC9AHfryZNIeQ92": "MirnaMostafa",
+    "T9wWRmQihJCyH0VVuQM5": "JanaRadwan",
+    "VvjHvkCbDzu05GDOSqSb": "SaharFarid",
+    "X4BxaEE7wk7eX89xknzz": "IngieElSaady",
+    "iEhvRoHYHNipJ8vCbkuo": "NadiaFahmy",
+    "pPoI0CEo3PAAKSZfwQ8L": "FaridaTalaat",
+    "sxxYjLxrm23clMf8QYgY": "YosraElsewerky"
+  },
+  "blogs": {
+    "6bUES3MKKemrzhuPJavZ": "EmbracingChange:AJourneytoSelf-Recovery",
+    "C0nCs8YWOwdIjAI7p5Xb": "TheHiddenStrugglesofaPeople-Pleaser",
+    "ERQnHLdQJHQhuZgYJsiD": "ThePowerofMindfulness:EmbracingthePresentMoment",
+    "Hj5wufuLGpB3AwOcriYL": "SupportingLovedOneswithPsychologicalChallenges",
+    "Kg93YhicGd0ESqGQxx4i": "NavigatingAnger:UnderstandingandManagingthisPowerfulEmotion",
+    "Rg6LRrcLi8ARD0waiT8v": "AComprehensiveGuide:10EffectiveStrategiestoDealwithAnxiety",
+    "W0ByGdjEcwhAYxE0yo0G": "EmbraceControl:OvercomingAnxietyandGivingYourselfPermission",
+    "k2kmW7mHUrT0gJ5AsgpR": "TherapyTakesTime:TheRushtoChange",
+    "kXcA96yItOsWQXevm6sW": "HoldYourGround:StandingFirmonYourBoundariesGracefully",
+    "pV2HTYGvNRD1Vzn7Uojr": "ConqueringInnerCritics:AGuidetoChallengingNegativeVoices",
+    "tzHyzlP8upRuRlE6pQQO": "BreakingFreefromCodependency",
+    "xlXZzbyqyAEixDHKfE6j": "ParentingStylesandChildWell-being:QualityoverQuantity"
+  }
+}

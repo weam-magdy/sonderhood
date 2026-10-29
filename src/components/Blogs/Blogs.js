@@ -9,7 +9,6 @@ import { selectAllBlogs } from '../../seo/selectors'
 import useSeo from '../../seo/useSeo'
 import { PAGES, blogSlug, pageLd } from '../../seo/meta.mjs'
 import SafeImage from '../SafeImage'
-import { PageError, PageLoading } from '../PageStatus'
 
 export default function Blogs()
 {
@@ -20,8 +19,8 @@ export default function Blogs()
 
     const navigate = useNavigate()
 
-    if (!blogs.length) return blogsStatus === 'failed' ? <PageError /> : <PageLoading />
-
+    // The articles published from the code are always in the list, so the page
+    // renders at once and says below the list whether the rest is still coming.
     const restofBlogs = blogs.slice(1)
     const firstBlog = blogs.slice(0, 1)
 
@@ -105,6 +104,8 @@ export default function Blogs()
         </div>
         <div className='TopicContainer'>
             {displayedBlogs}
+            {(blogsStatus === 'idle' || blogsStatus === 'loading') && <p className='SimplePageStatus BlogsStatus'>Loading more articles…</p>}
+            {blogsStatus === 'failed' && <p className='SimplePageStatus BlogsStatus'>We couldn't load the other articles. Please refresh the page.</p>}
         </div>
         </>
     )

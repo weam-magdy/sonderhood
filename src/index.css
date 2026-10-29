@@ -6681,6 +6681,13 @@ a.OurBlogItemContainer,
 	font-size: max(18px, 1.5vw);
 }
 
+.BlogsStatus
+{
+	width: 100%;
+	text-align: center;
+	font-family: Arial, sans-serif;
+}
+
 /* Contact details and links under the footer */
 .FooterDetails
 {
