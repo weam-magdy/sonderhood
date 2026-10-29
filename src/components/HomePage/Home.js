@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import HomeHeader from './HomeHeader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, useAnimation, useInView } from 'framer-motion'
 import { HOME_HEADLINE } from '../../seo/meta.mjs'
+import { FINDER_PATH } from '../../seo/finder.mjs'
 
 export default function Home() 
 {
@@ -68,6 +69,7 @@ export default function Home()
                     <div className='HomePageBookSessionButton'>
                         <button onClick={() => navigate('/book')}>Request A Booking <FontAwesomeIcon icon={faArrowRight} /></button>
                     </div>
+                    <Link to={FINDER_PATH} className='HomePageFinderLink'>Not sure who to see? Find your therapist</Link>
                     <h1 className='HomePageHeadline'>{HOME_HEADLINE}</h1>
                 </motion.div>
             </div>

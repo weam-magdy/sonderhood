@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useInView } from 'framer-motion';
 
-const MENU = [['Home', '/'], ['About', '/about'], ['Our Therapists', '/therapists'], ['Blog', '/blog'], ['Services', '/services'], ['Contact Us', '/contact'], ['Request A Session', '/book']]
+const MENU = [['Home', '/'], ['About', '/about'], ['Our Therapists', '/therapists'], ['Find a Therapist', '/find-a-therapist'], ['Blog', '/blog'], ['Services', '/services'], ['Contact Us', '/contact'], ['Request A Session', '/book']]
 
 export default function PagesHeader() 
 {

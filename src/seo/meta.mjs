@@ -314,9 +314,56 @@ export function blogSlug(blog) {
 // that one is shown instead.
 export const EXTRA_BLOGS = [
     {
+        id: 'online-or-face-to-face-therapy',
+        slug: 'online-or-face-to-face-therapy',
+        title: 'Online or Face-to-Face Therapy, in Arabic or English?',
+        metaTitle: 'Online or Face-to-Face Therapy in Egypt?',
+        metaDescription: 'Is online therapy as effective as face to face? What research says, when each suits you, and how to choose Arabic or English therapy in Egypt or abroad.',
+        topic: 'Online Therapy',
+        duration: '4 mins read',
+        therapist: 'Weaam Elaidy',
+        image: '/images/blog/online-or-face-to-face-therapy.jpg',
+        createTime: '2026-10-29T19:00:00Z',
+        description: 'On average, video therapy works about as well as face to face. Learn when each suits you and how to choose Arabic or English therapy in Egypt or abroad.',
+        body: [
+            'If you are starting therapy in New Cairo, or <a href="/services/online-therapy">online therapy in Egypt</a> or from abroad, two choices come up early. Face to face or video call? Arabic, English or both?<br />',
+            'On average, video therapy works about as well as meeting face to face, so the choice often comes down to privacy, travel and comfort. For language, choose the one you find easiest for talking about feelings, or tell us if you would like both.<br />',
+            '<h2>Is online therapy as effective as face to face?</h2><br />',
+            'On average, yes. In a 2023 British Journal of Psychiatry review of 32 randomized trials, video and face-to-face treatment worked about equally well, with similar dropout rates. A 2026 review of 12 therapy trials, in the Journal of Medical Internet Research, also found no clear difference.<br />',
+            'Research also suggests your bond with your therapist can be just as strong over video. Still, the evidence is limited. Most trials in the 2026 review were American and tested cognitive behavioral therapy (CBT), and results may differ by condition.<br />',
+            '<h2>When might face-to-face therapy suit you better?</h2><br />',
+            'Some people feel more at ease starting therapy in person. Face to face may also suit you better if:<br />',
+            '<ul><li>You have nowhere private at home to talk without being overheard.</li><li>Someone at home might listen in, check your phone or make you feel unsafe.</li><li>You keep going through crises. Professional guidance suggests therapists then offer other options, such as in-person care.</li></ul><br />',
+            '<a href="/services/child-adolescent-therapy">Sessions for children and teenagers</a> are held at our center in New Cairo, and teenagers can also attend online. <a href="/services/psychological-assessments">Psychological assessments</a> are carried out by our psychologists at the center in New Cairo. Many standardized tests were designed to be given face to face.<br />',
+            '<h2>When might online therapy suit you better?</h2><br />',
+            'Online sessions save travel time and can fit more easily around a busy week. <a href="/services/online-therapy">Online therapy</a> may suit you better if:<br />',
+            '<ul><li>You live far from New Cairo, or your work or studies leave little spare time.</li><li>You travel often and want to keep your sessions going.</li><li>You live outside Egypt and want sessions in Arabic or English with a therapist based in Cairo.</li></ul><br />',
+            'If you live outside Egypt, or will join sessions while traveling, mention it when you book. Rules on online therapy differ by country, and you and your therapist will need a plan for emergencies where you are.<br />',
+            '<h2>Arabic, English or both?</h2><br />',
+            'Choose the language you can talk about feelings in most freely. Research on bilingual people often finds that emotional words feel stronger in the language learned first. Childhood memories also tend to come back in more detail, and with more feeling, in that language.<br />',
+            'Not everyone feels this way. If you grew up speaking English daily, at school, at home or with friends, it may carry as much feeling as Arabic, or more.<br />',
+            'In a small 2025 master\'s thesis at the American University in Cairo, 20 Egyptian bilinguals talked about trauma and loss. They described Arabic as the language of closeness, and English as a buffer that helped them step back.<br />',
+            'Some people find painful or embarrassing topics easier to begin in a second language. Others feel they cannot fully express themselves in it.<br />',
+            'Switching languages mid-session is common. In a 2017 survey of 109 multilingual therapy clients, nearly two-thirds said they briefly switched languages. Therapists are encouraged to notice these switches with you, since a switch can bring a feeling closer or hold it at a distance.<br />',
+            'Whether you want an English-speaking therapist in Cairo or an Arabic-speaking therapist online, tell us your preferred language when you book. We will match you with one of <a href="/therapists">our therapists</a>. <a href="/therapists/inji-farid">Inji Farid</a> also offers sessions in French.<br />',
+            '<h2>How to prepare for an online session</h2><br />',
+            'The UK\'s NHS and the British Psychological Society suggest these steps:<br />',
+            '<ul><li>Choose a quiet, private, well-lit room where no one can overhear you.</li><li>Use headphones or earbuds so others cannot hear your therapist.</li><li>Check your internet, camera and microphone, and log on a few minutes early.</li><li>Keep your phone nearby, and agree with your therapist what to do if the call drops.</li><li>Ask the people at home not to disturb you.</li></ul><br />',
+            'Your therapist may ask where you are at the start of each session, a routine safety step that professional guidance recommends.<br />',
+            '<h2>What if you need help urgently?</h2><br />',
+            'Therapy sessions, online or face to face, are not an emergency service. If you are thinking about ending your life, or you or someone else is in immediate danger, go to the nearest hospital emergency department. In Egypt you can also call 123 for an ambulance or 122 for the police.<br />',
+            'For urgent emotional support, call 16328, the 24-hour psychological support hotline run by Egypt\'s Ministry of Health and Population. If you are outside Egypt, call your local emergency number.<br />',
+            '<h2>How to start therapy in New Cairo or online</h2><br />',
+            'Sessions are held at our center in 3Sixty by LMD, New Cairo, or online by video call.<br />',
+            `When you are ready, message us on <a href="${whatsappUrl()}">WhatsApp at ${SITE.phoneDisplay}</a> or <a href="/book">request a session</a>. We are open every day, 10 am to 10 pm Cairo time.<br />`,
+            'When you get in touch, tell us whether you prefer online or face to face, and Arabic, English or French. If you are not sure yet, say so, and we will help you choose a therapist.',
+        ].join(''),
+    },
+    {
         id: 'narcissistic-parent',
         slug: 'narcissistic-parent',
         title: 'Growing Up with a Narcissistic Parent: Signs, Effects and Healing',
+        metaTitle: 'Growing Up with a Narcissistic Parent: Signs and Healing',
         topic: 'Family Relationships',
         duration: '3 mins read',
         therapist: 'Weaam Elaidy',
@@ -343,7 +390,7 @@ export const EXTRA_BLOGS = [
 ]
 
 // Cover photos served from this site, by Firestore id. They replace the article's
-// Firebase Storage photo; the last three articles get theirs on 1 November 2026.
+// Firebase Storage photo.
 export const BLOG_IMAGES = {
     '6bUES3MKKemrzhuPJavZ': '/images/blog/embracing-change-self-recovery.jpg',
     C0nCs8YWOwdIjAI7p5Xb: '/images/blog/people-pleaser-struggles.jpg',
@@ -354,13 +401,39 @@ export const BLOG_IMAGES = {
     W0ByGdjEcwhAYxE0yo0G: '/images/blog/overcoming-anxiety-giving-yourself-permission.jpg',
     k2kmW7mHUrT0gJ5AsgpR: '/images/blog/therapy-takes-time.jpg',
     pV2HTYGvNRD1Vzn7Uojr: '/images/blog/challenging-your-inner-critic.jpg',
+    kXcA96yItOsWQXevm6sW: '/images/blog/setting-healthy-boundaries.jpg',
+    tzHyzlP8upRuRlE6pQQO: '/images/blog/breaking-free-from-codependency.jpg',
+    xlXZzbyqyAEixDHKfE6j: '/images/blog/parenting-styles-child-wellbeing.jpg',
+}
+
+// Shorter titles and descriptions for search results, by Firestore id, where the
+// article's own headline or summary runs past what Google shows. The article keeps
+// both on the site.
+export const BLOG_SEARCH = {
+    Kg93YhicGd0ESqGQxx4i: {
+        metaTitle: 'Managing Anger: Understanding a Powerful Emotion',
+        metaDescription: 'Understand anger and how it affects your body, then learn healthy ways to manage it, from assertive communication to relaxation techniques.',
+    },
+    Rg6LRrcLi8ARD0waiT8v: {
+        metaTitle: '10 Effective Strategies to Deal with Anxiety',
+        metaDescription: 'Proven ways to manage anxiety, from understanding where it comes from to building a support system, so you can regain control of daily life.',
+    },
+    W0ByGdjEcwhAYxE0yo0G: { metaTitle: 'Overcoming Anxiety: Giving Yourself Permission' },
+    kXcA96yItOsWQXevm6sW: { metaTitle: 'How to Set Healthy Boundaries and Hold Your Ground' },
+    pV2HTYGvNRD1Vzn7Uojr: {
+        metaTitle: 'How to Challenge Your Inner Critic',
+        metaDescription: 'How a harsh inner critic wears down self-worth, and how recognizing it, understanding it and getting support can quiet those negative voices.',
+    },
+    xlXZzbyqyAEixDHKfE6j: {
+        metaDescription: 'How parenting styles shape a child\'s mental health, why quality time matters more than quantity, and how acceptance, autonomy and love help children thrive.',
+    },
 }
 
 // Firestore articles plus EXTRA_BLOGS, newest (the code-published ones) first.
 export function mergeBlogs(blogs = []) {
     const titles = new Set(blogs.map(b => String(b.title || '').trim().toLowerCase()))
-    const withCovers = blogs.map(b => (BLOG_IMAGES[b.id] ? { ...b, image: BLOG_IMAGES[b.id] } : b))
-    return [...EXTRA_BLOGS.filter(b => !titles.has(b.title.toLowerCase())), ...withCovers]
+    const decorated = blogs.map(b => ({ ...b, ...(BLOG_IMAGES[b.id] && { image: BLOG_IMAGES[b.id] }), ...BLOG_SEARCH[b.id] }))
+    return [...EXTRA_BLOGS.filter(b => !titles.has(b.title.toLowerCase())), ...decorated]
 }
 
 // Article authors are typed by hand ("Ingie ElSaady", "Ingie El Saady").
@@ -469,10 +542,17 @@ export const PRIVACY = [
 
 const BRAND = ` | ${SITE.name}`
 
+// Google shows about 65 characters of a title, so the brand is left off a title it
+// would push past that.
+const TITLE_MAX = 65
+function titled(main) {
+    return `${main}${BRAND}`.length <= TITLE_MAX ? `${main}${BRAND}` : main
+}
+
 export const PAGES = {
     home: {
         path: '/',
-        title: `Therapists in New Cairo & Online Therapy in Egypt${BRAND}`,
+        title: `Therapists in New Cairo & Online Therapy${BRAND}`,
         description: 'Psychotherapy in Arabic, English or French for adults, couples, families and teens, face to face in New Cairo or online across Egypt. Book on WhatsApp.',
     },
     about: {
@@ -483,11 +563,11 @@ export const PAGES = {
     therapists: {
         path: '/therapists',
         title: `Our Therapists in New Cairo & Online${BRAND}`,
-        description: 'Meet our psychologists and psychotherapists in New Cairo. Find a therapist for anxiety, depression, relationships, couples or family issues, in person or online.',
+        description: 'Meet our psychologists and psychotherapists in New Cairo and find a therapist for anxiety, depression, relationships or family issues, in person or online.',
     },
     services: {
         path: '/services',
-        title: `Therapy Services: Adults, Couples, Families & CBT${BRAND}`,
+        title: titled('Therapy Services: Adults, Couples, Families & CBT'),
         description: 'Individual adult therapy, couples therapy, family therapy, child and teen therapy, CBT, group therapy, assessments and online therapy in New Cairo.',
     },
     blog: {
@@ -543,7 +623,7 @@ export function serviceMeta(service) {
     const seo = service.seo || SERVICE_SEO[service.id] || {}
     return {
         path: `/services/${service.slug}`,
-        title: `${seo.metaTitle || `${service.title} in New Cairo & Online`}${BRAND}`,
+        title: titled(seo.metaTitle || `${service.title} in New Cairo & Online`),
         description: seo.metaDescription || service.description,
         image: SITE.image,
     }
@@ -561,13 +641,17 @@ export function therapistMeta(therapist) {
     const extra = therapistLanguages(therapist).slice(SITE.languages.length)
     const speaking = extra.length ? `${sentenceList(extra)}-speaking ` : ''
     const article = /^founder/i.test(position) ? 'the' : /^[aeiou]/i.test(speaking || position) ? 'an' : 'a'
-    let description = `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at The Sonder Hood in New Cairo`
-    if (clientele.length) description += `, working with ${sentenceList(clientele)}`
-    if (focus.length) description += ` on ${sentenceList(focus)}`
-    description += '. Sessions in person or online.'
+    const describe = (clients, topics) => `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at The Sonder Hood in New Cairo`
+        + (clients.length ? `, working with ${sentenceList(clients)}` : '')
+        + (topics.length ? ` on ${sentenceList(topics)}` : '')
+        + '. Sessions in person or online.'
+    // Search results show about 160 characters: fewer focus areas, then no client
+    // groups, until the description fits.
+    const tries = [[clientele, focus], [clientele, focus.slice(0, 2)], [clientele, focus.slice(0, 1)], [[], focus.slice(0, 2)], [[], focus.slice(0, 1)], [[], []]]
+    const description = tries.map(([clients, topics]) => describe(clients, topics)).find(text => text.length <= 160) || describe([], [])
     return {
         path: `/therapists/${therapistSlug(therapist)}`,
-        title: `${therapist.name}, ${speaking.replace('-speaking', '-Speaking')}${cleanPosition(position)} in New Cairo${BRAND}`,
+        title: titled(`${therapist.name}, ${speaking.replace('-speaking', '-Speaking')}${cleanPosition(position)} in New Cairo`),
         description,
         image: therapist.image || SITE.image,
         type: 'profile',
@@ -579,7 +663,7 @@ export function blogMeta(blog) {
         path: `/blog/${blogSlug(blog)}`,
         // An article may set a shorter title and description for search results;
         // its headline and blog card keep `title` and `description`.
-        title: `${blog.metaTitle || blog.title}${BRAND}`,
+        title: titled(blog.metaTitle || blog.title),
         description: blog.metaDescription || blog.description || PAGES.blog.description,
         image: blog.image || SITE.image,
         type: 'article',

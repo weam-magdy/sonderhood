@@ -118,7 +118,7 @@ function headTags({ title, description, path: pagePath, image, type = 'website',
     ].filter(Boolean).join('')
 }
 
-const NAV = [['/about', 'About'], ['/services', 'Services'], ['/therapists', 'Therapists'], ['/blog', 'Blog'], ['/contact', 'Contact'], ['/book', 'Book a session']]
+const NAV = [['/about', 'About'], ['/services', 'Services'], ['/therapists', 'Therapists'], ['/find-a-therapist', 'Find a therapist'], ['/blog', 'Blog'], ['/contact', 'Contact'], ['/book', 'Book a session']]
 
 // A plain, styled version of the page (styles live in public/index.html). The
 // React app replaces it on load; until then it is readable and every link works.

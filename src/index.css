@@ -136,6 +136,19 @@ textarea
 	width: 60%;
 }
 
+/* "Not sure who to see?" under the booking button: the way into Find your therapist. */
+.HomePageFinderLink
+{
+	margin-top: 3%;
+	padding: 4px 8px;
+	color: var(--Sonder-yellow);
+	font-family: Arial, sans-serif;
+	font-size: clamp(12px, 0.9vw, 16px);
+	text-align: center;
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
 .HomePageBookSessionButton button
 {
 	width: 100%;
