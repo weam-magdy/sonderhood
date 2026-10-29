@@ -6593,6 +6593,21 @@ a.OurBlogItemContainer,
 	font-style: normal;
 }
 
+/* Article subheadings look like the bold lines the older articles use */
+.ArticleText h2
+{
+	margin: 0;
+	font-size: inherit;
+	font-weight: 700;
+	line-height: inherit;
+}
+
+.ArticleText a
+{
+	color: inherit;
+	text-decoration: underline;
+}
+
 .ImageFallback
 {
 	width: 100%;

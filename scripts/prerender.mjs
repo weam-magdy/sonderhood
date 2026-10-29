@@ -135,15 +135,16 @@ function shell(main, whatsappText)
         + `<main class="ssr-main">${main}`
         + `<p class="ssr-cta"><a class="ssr-btn" href="${esc(M.whatsappUrl(whatsappText))}">Message us on WhatsApp</a> <a href="tel:${esc(M.SITE.phone)}">or call ${esc(M.SITE.phoneDisplay)}</a></p></main>`
         + `<footer class="ssr-foot"><nav class="ssr-nav">${M.SERVICE_LINKS.map(s => link(s.path, s.name)).join('')}</nav>`
-        + `<p>${esc(M.SITE.name)}, therapy centre in ${esc(M.SITE.address.display)} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
+        + `<p>${esc(M.SITE.name)}, therapy center in ${esc(M.SITE.address.display)} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
         + `</div>`
 }
 
 // ---------------------------------------------------------------- pages
 
-function buildPages({ services: rawServices, therapists, blogs })
+function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
 {
     const services = M.mergeServices([...rawServices].sort((a, b) => (a.order ?? 99) - (b.order ?? 99)), therapists)
+    const blogs = M.mergeBlogs(rawBlogs)
     const therapistItem = (t) => `${link(`/therapists/${M.therapistSlug(t)}`, t.name)}, ${esc(String(t.position || '').trim())}`
     const blogItem = (b) => `${link(`/blog/${M.blogSlug(b)}`, b.title)} by ${esc(b.therapist)}. ${esc(b.description)}`
     const serviceItem = (s) => `${link(`/services/${s.slug}`, s.title)}: ${esc(s.description)}`
@@ -275,7 +276,7 @@ function htaccess({ services, therapists, blogs })
         if (!oldPath || oldPath.toLowerCase() === newPath.slice(1).toLowerCase()) return
         moved.push(`RewriteRule ^${regexEscape(oldPath)}/?$ ${newPath} [NC,R=301,L]`)
     }
-    // The old links were the display text with its spaces removed; [NC] covers any capitalisation.
+    // The old links were the display text with its spaces removed; [NC] covers any capitalization.
     for (const service of services) add(service.title && `services/${M.legacySlug(service.title)}`, `/services/${M.decorateService(service).slug}`)
     for (const therapist of therapists) add(therapist.name && `therapists/${M.legacySlug(therapist.name)}`, `/therapists/${M.therapistSlug(therapist)}`)
     for (const blog of blogs) add(blog.title && `ArticlePage/${M.legacySlug(blog.title)}`, `/blog/${M.blogSlug(blog)}`)

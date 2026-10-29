@@ -1,6 +1,6 @@
 # The Sonderhood website
 
-Source for [www.the-sonderhood.com](https://www.the-sonderhood.com), a therapy centre in New Cairo. Create React App (React 18, React Router 6, Redux Toolkit), content in Firebase Firestore, hosted on Hostinger.
+Source for [www.the-sonderhood.com](https://www.the-sonderhood.com), a therapy center in New Cairo. Create React App (React 18, React Router 6, Redux Toolkit), content in Firebase Firestore, hosted on Hostinger.
 
 ## Run it locally
 

@@ -85,7 +85,7 @@ export default function ContactUs() {
                     <div className='ContactUsContact'>
                         <div className='ContactUsContactMap'>
                             <div className='ContactUsContactMapImage'>
-                                <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'><img src={map} alt='Map showing The Sonderhood therapy centre in New Cairo' /></a>
+                                <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'><img src={map} alt='Map showing The Sonderhood therapy center in New Cairo' /></a>
                             </div>
                             <div className='ContactUsContactMapInfo'>
                                 <address className='ContactUsContactDetails'>

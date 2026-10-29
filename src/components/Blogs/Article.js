@@ -4,7 +4,8 @@ import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
-import { selectedBlogs, selectBlogsStatus } from '../../app/blogs/blogsSlice'
+import { selectBlogsStatus } from '../../app/blogs/blogsSlice'
+import { selectAllBlogs } from '../../seo/selectors'
 import { selectedTherapists } from '../../app/therapists/therapistsSlice'
 import useSeo from '../../seo/useSeo'
 import { blogLd, blogMeta, blogSlug, findTherapistByName, legacySlug, therapistSlug } from '../../seo/meta.mjs'
@@ -13,7 +14,7 @@ import NotFound, { PageError, PageLoading } from '../PageStatus'
 
 export default function Article()
 {
-    const blogs = useSelector(selectedBlogs)
+    const blogs = useSelector(selectAllBlogs)
     const blogsStatus = useSelector(selectBlogsStatus)
     const therapists = useSelector(selectedTherapists)
 

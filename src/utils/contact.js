@@ -53,7 +53,7 @@ export function bookingMessage({ firstName, lastName, number, email, location, d
     lines.push(`Name: ${`${firstName || ''} ${lastName || ''}`.trim()}`)
     if (number) lines.push(`Phone: +${String(number).replace(/\D/g, '')}`)
     if (email) lines.push(`Email: ${email}`)
-    lines.push(`Session: ${location === 'Online' ? 'Online' : 'At the centre in New Cairo'}`)
+    lines.push(`Session: ${location === 'Online' ? 'Online' : 'At the center in New Cairo'}`)
     if (therapist) lines.push(`Therapist: ${therapist}`)
     if (day) lines.push(`Preferred day: ${day}`)
     if (reach) lines.push(`Contact me by: ${reach}`)

@@ -4,7 +4,7 @@ import PagesHeader from '../PagesHeader/PagesHeader'
 import book from '../../imgs/mainmob.jpeg'
 import { useSelector } from 'react-redux'
 import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
-import { selectedBlogs } from '../../app/blogs/blogsSlice'
+import { selectAllBlogs } from '../../seo/selectors'
 import useSeo from '../../seo/useSeo'
 import { blogSlug, legacySlug, therapistLd, therapistMeta, therapistSlug } from '../../seo/meta.mjs'
 import { bookingMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
@@ -22,7 +22,7 @@ export default function Therapist()
 {
     const therapists = useSelector(selectedTherapists)
     const therapistsStatus = useSelector(selectTherapistsStatus)
-    const blogs = useSelector(selectedBlogs)
+    const blogs = useSelector(selectAllBlogs)
 
     const { therapist } = useParams()
 

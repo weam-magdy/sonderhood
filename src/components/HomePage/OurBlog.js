@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { selectedBlogs } from '../../app/blogs/blogsSlice'
+import { selectAllBlogs } from '../../seo/selectors'
 import { blogSlug } from '../../seo/meta.mjs'
 import SafeImage from '../SafeImage'
 
 export default function OurBlog()
 {
-    const blogs = useSelector(selectedBlogs)
+    const blogs = useSelector(selectAllBlogs)
 
     const navigate = useNavigate()
 

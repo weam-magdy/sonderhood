@@ -129,7 +129,7 @@ export default function Footer()
                     <Link to='/book'>Book a Session</Link>
                 </nav>
                 <address className='FooterDetailsAddress'>
-                    The Sonderhood, therapy centre in {SITE.address.display}
+                    The Sonderhood, therapy center in {SITE.address.display}
                     {' · '}<a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp {SITE.phoneDisplay}</a>
                     {' · '}<a href={`tel:${SITE.phone}`}>Call</a>
                     {' · '}<a href={`mailto:${SITE.email}`}>{SITE.email}</a>

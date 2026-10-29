@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectedBlogs, selectBlogsStatus } from '../../app/blogs/blogsSlice'
+import { selectBlogsStatus } from '../../app/blogs/blogsSlice'
+import { selectAllBlogs } from '../../seo/selectors'
 import useSeo from '../../seo/useSeo'
 import { PAGES, blogSlug, pageLd } from '../../seo/meta.mjs'
 import SafeImage from '../SafeImage'
@@ -14,7 +15,7 @@ export default function Blogs()
 {
     useSeo({ ...PAGES.blog, jsonLd: pageLd({ name: 'Blog', path: PAGES.blog.path }) })
 
-    const blogs = useSelector(selectedBlogs)
+    const blogs = useSelector(selectAllBlogs)
     const blogsStatus = useSelector(selectBlogsStatus)
 
     const navigate = useNavigate()

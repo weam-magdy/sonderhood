@@ -9,7 +9,7 @@ export const SITE = {
     phoneDisplay: '+20 109 429 2553',
     whatsappNumber: '201094292553',
     email: 'inquiries@the-sonderhood.com',
-    // The centre's pin on the contact page (updated January 2026). Keep the
+    // The center's pin on the contact page (updated January 2026). Keep the
     // address, the pin and the Google Business Profile saying the same thing.
     address: {
         locality: 'New Cairo',
@@ -65,21 +65,21 @@ export const SERVICE_SEO = {
         name: 'Individual Adult Therapy',
         metaTitle: 'Individual Therapy for Adults in New Cairo & Online',
         metaDescription: 'One-to-one psychotherapy for adults dealing with anxiety, depression, stress, relationships or self-esteem. Face to face in New Cairo or online across Egypt.',
-        intro: 'Individual therapy for adults is available face to face at our therapy centre in New Cairo or online by secure video call, so you can see a therapist wherever you are in Egypt.',
+        intro: 'Individual therapy for adults is available face to face at our therapy center in New Cairo or online by secure video call, so you can see a therapist wherever you are in Egypt.',
     },
     wkCeZbijHxJw1RhtEpix: {
         slug: 'couples-therapy',
         name: 'Couples Therapy',
         metaTitle: 'Couples Therapy & Marriage Counseling in Cairo',
         metaDescription: 'Couples therapy and marriage counseling in New Cairo or online: communication, trust, infidelity, intimacy and conflict. Book your first session on WhatsApp.',
-        intro: 'Couples therapy and marriage counseling sessions take place at our centre in New Cairo or online, so both partners can attend even with busy schedules.',
+        intro: 'Couples therapy and marriage counseling sessions take place at our center in New Cairo or online, so both partners can attend even with busy schedules.',
     },
     '5nwmIB32vjsHXknedWyf': {
         slug: 'child-adolescent-therapy',
         name: 'Child & Adolescent Therapy',
         metaTitle: 'Child & Teen Therapy in New Cairo & Online',
         metaDescription: 'Therapy for children and teenagers: behavioral issues, anxiety, school challenges, emotional regulation and family dynamics, in New Cairo or online.',
-        intro: 'Sessions for children and teenagers are held at our centre in New Cairo, and teenagers can also attend online. Parents and caregivers are involved whenever it helps.',
+        intro: 'Sessions for children and teenagers are held at our center in New Cairo, and teenagers can also attend online. Parents and caregivers are involved whenever it helps.',
     },
     '7pRO6dkH0ruCAbYNVQvr': {
         slug: 'psychological-assessments',
@@ -93,7 +93,7 @@ export const SERVICE_SEO = {
         name: 'Online Therapy',
         metaTitle: 'Online Therapy in Egypt by Video',
         metaDescription: 'Online therapy by secure video with The Sonderhood\'s therapists, for individuals, couples and teenagers anywhere in Egypt or abroad. Book on WhatsApp.',
-        intro: 'Online sessions are run by the same team of therapists who see clients at our centre in New Cairo, so you can start therapy from anywhere in Egypt or abroad.',
+        intro: 'Online sessions are run by the same team of therapists who see clients at our center in New Cairo, so you can start therapy from anywhere in Egypt or abroad.',
     },
     ee4ZPo01CGhm2vK1Li4C: {
         slug: 'group-therapy',
@@ -107,14 +107,14 @@ export const SERVICE_SEO = {
         name: 'Family Therapy',
         metaTitle: 'Family Therapy in New Cairo & Online',
         metaDescription: 'Family therapy for conflict at home, parenting challenges, divorce and big life changes. Sessions face to face in New Cairo or online across Egypt.',
-        intro: 'Family therapy sessions are available face to face at our centre in New Cairo or online by secure video call.',
+        intro: 'Family therapy sessions are available face to face at our center in New Cairo or online by secure video call.',
     },
     'behavioral-therapy': {
         slug: 'cbt-behavioral-therapy',
         name: 'Behavioral Therapy (CBT & DBT)',
         metaTitle: 'CBT & Behavioral Therapy in Cairo & Online',
         metaDescription: 'Cognitive behavioral therapy (CBT) and DBT for anxiety, depression, OCD and emotional regulation, with trained therapists in New Cairo or online.',
-        intro: 'CBT and DBT sessions are available for adults and teenagers, face to face at our centre in New Cairo or online by secure video call.',
+        intro: 'CBT and DBT sessions are available for adults and teenagers, face to face at our center in New Cairo or online by secure video call.',
     },
 }
 
@@ -143,7 +143,7 @@ export const EXTRA_SERVICES = [
             },
             {
                 question: 'Can family therapy be done online?',
-                answer: 'Yes. Family therapy sessions can take place face to face at our centre in New Cairo or online by secure video call.',
+                answer: 'Yes. Family therapy sessions can take place face to face at our center in New Cairo or online by secure video call.',
             },
         ],
     },
@@ -157,7 +157,7 @@ export const EXTRA_SERVICES = [
         faqs: [
             {
                 question: 'What is cognitive behavioral therapy (CBT)?',
-                answer: 'CBT is a structured, goal-focused form of talk therapy. It helps you notice the links between your thoughts, feelings and behaviors, challenge unhelpful thinking patterns and practise new ways of coping between sessions.',
+                answer: 'CBT is a structured, goal-focused form of talk therapy. It helps you notice the links between your thoughts, feelings and behaviors, challenge unhelpful thinking patterns and practice new ways of coping between sessions.',
             },
             {
                 question: 'What is the difference between CBT and DBT?',
@@ -169,7 +169,7 @@ export const EXTRA_SERVICES = [
             },
             {
                 question: 'Is CBT available online?',
-                answer: 'Yes. CBT and DBT sessions are available face to face at our centre in New Cairo or online by secure video call from anywhere in Egypt.',
+                answer: 'Yes. CBT and DBT sessions are available face to face at our center in New Cairo or online by secure video call from anywhere in Egypt.',
             },
         ],
     },
@@ -233,7 +233,46 @@ export const BLOG_SLUGS = {
 }
 
 export function blogSlug(blog) {
-    return BLOG_SLUGS[blog?.id] || slugify(blog?.title)
+    return blog?.slug || BLOG_SLUGS[blog?.id] || slugify(blog?.title)
+}
+
+// Articles published from the code rather than Firestore. Same shape as a
+// Firestore blog; if an article with the same title is added in Firestore,
+// that one is shown instead.
+export const EXTRA_BLOGS = [
+    {
+        id: 'narcissistic-parent',
+        slug: 'narcissistic-parent',
+        title: 'Growing Up with a Narcissistic Parent: Signs, Effects and Healing',
+        topic: 'Family Relationships',
+        duration: '3 mins read',
+        therapist: 'Weaam Elaidy',
+        image: '/images/blog/narcissistic-parent.jpg',
+        createTime: '2026-10-29T09:00:00Z',
+        description: 'Growing up with a narcissistic parent can shape how you see yourself for years. Learn the common signs, how it shows up in adult life, and how to start healing.',
+        body: [
+            'Some parents love their children in a way that feels warm and steady. Others love in a way that always seems to come with conditions: you are praised when you make them look good, and ignored or criticized when you don\'t. If that sounds familiar, you may have grown up with a narcissistic parent.<br />',
+            'The term "narcissistic parent" is not a diagnosis. Narcissistic personality disorder can only be diagnosed by a qualified professional, and not every self-centered parent has it. What the term describes is a pattern of parenting in which the parent\'s needs, image and feelings consistently come before the child\'s.<br />',
+            '<h2>Common signs of a narcissistic parent</h2><br />',
+            '<ul><li>Love feels conditional, tied to your grades, looks or achievements.</li><li>Your feelings are dismissed, mocked or turned into a story about them.</li><li>They need to be the center of attention, even on your important days.</li><li>Criticism is constant, while apologies are rare or never come.</li><li>Guilt, comparison or silence is used to control your choices.</li><li>One child is treated as the "golden child" and another as the scapegoat.</li><li>Your memories are denied or rewritten: "That never happened," "You\'re too sensitive."</li></ul><br />',
+            'These patterns can be hard to see from the inside. When this is the only family you have known, it simply feels normal, and many people only begin to question it as adults, often when a partner, a friend or a therapist points it out.<br />',
+            '<h2>How it can show up in adult life</h2><br />',
+            'Children adapt to survive. They learn to read moods, keep the peace and earn approval. Those strategies make sense in childhood, but they often follow us into adulthood. Adult children of narcissistic parents commonly describe:<br />',
+            '<ul><li>People-pleasing and difficulty saying no</li><li>Perfectionism and a harsh inner critic</li><li>Doubting their own feelings and memories</li><li>Guilt whenever they set a boundary</li><li>Being drawn to relationships that repeat the same dynamic</li></ul><br />',
+            'If you recognize yourself here, it does not mean something is wrong with you. It means you learned to cope in an environment that did not meet your needs. You can read more in our articles on <a href="/blog/people-pleaser-struggles">the hidden struggles of a people-pleaser</a>, <a href="/blog/breaking-free-from-codependency">breaking free from codependency</a> and <a href="/blog/challenging-your-inner-critic">challenging your inner critic</a>.<br />',
+            '<h2>First steps toward healing</h2><br />',
+            '<ol><li><strong>Name the pattern.</strong> Understanding what happened helps you stop blaming yourself for it.</li><li><strong>Allow yourself to grieve.</strong> Many people grieve the parent they needed but did not have, even while that parent is still alive.</li><li><strong>Set boundaries that protect you.</strong> Boundaries can be small: shorter visits, sharing fewer personal details, or leaving a conversation that turns hurtful. How much contact to keep is a personal decision, and there is no single right answer.</li><li><strong>Practice self-compassion.</strong> Notice when your inner voice sounds like your parent, and answer it the way you would answer a friend.</li><li><strong>Get support.</strong> <a href="/services/individual-adult-therapy">Individual therapy</a> offers a safe place to make sense of your story and build new patterns. Approaches such as <a href="/services/cbt-behavioral-therapy">cognitive behavioral therapy (CBT)</a> can help you challenge long-held beliefs about your worth.</li></ol><br />',
+            'Healing is not about blaming your parent or rewriting your whole past. It is about understanding how your story shaped you, so you can choose what you carry forward.<br />',
+            '<h2>You do not have to do this alone</h2><br />',
+            `At The Sonderhood, our therapists work with adults who grew up with narcissistic or emotionally immature parents, face to face at our therapy center in New Cairo or online from anywhere in Egypt. When you are ready to talk, you can <a href="/book">request a session</a> or message us on <a href="${whatsappUrl()}">WhatsApp at ${SITE.phoneDisplay}</a>.`,
+        ].join(''),
+    },
+]
+
+// Firestore articles plus EXTRA_BLOGS, newest (the code-published ones) first.
+export function mergeBlogs(blogs = []) {
+    const titles = new Set(blogs.map(b => String(b.title || '').trim().toLowerCase()))
+    return [...EXTRA_BLOGS.filter(b => !titles.has(b.title.toLowerCase())), ...blogs]
 }
 
 // Article authors are typed by hand ("Ingie ElSaady", "Ingie El Saady").
@@ -247,7 +286,7 @@ export function findTherapistByName(therapists = [], name) {
 export const HOME_FAQS = [
     {
         question: 'What can I expect during a typical psychotherapy session?',
-        answer: 'During a psychotherapy session, you can expect to engage in open and confidential conversations with your therapist. You\'ll discuss your thoughts, feelings, and concerns, and your therapist will provide guidance, support, and strategies to help you address and manage your specific issues and goals. At The Sonderhood, sessions can take place face to face at our therapy centre in New Cairo or online, so you can choose the setting that feels most comfortable.',
+        answer: 'During a psychotherapy session, you can expect to engage in open and confidential conversations with your therapist. You\'ll discuss your thoughts, feelings, and concerns, and your therapist will provide guidance, support, and strategies to help you address and manage your specific issues and goals. At The Sonderhood, sessions can take place face to face at our therapy center in New Cairo or online, so you can choose the setting that feels most comfortable.',
     },
     {
         question: 'How long does psychotherapy usually take?',
@@ -267,7 +306,7 @@ export const HOME_FAQS = [
     },
     {
         question: 'What types of therapy do you offer, and are sessions online or face to face?',
-        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy centre in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best.',
+        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best.',
     },
     {
         question: 'How do I book a session with a therapist?',
@@ -280,16 +319,16 @@ export const HOME_FAQS = [
 export const HOME_HEADLINE = 'Therapy & psychotherapy in New Cairo, face to face or online'
 
 export const INTROS = {
-    services: 'The Sonderhood offers psychotherapy for adults, couples, families, teenagers and children, face to face at our therapy centre in New Cairo or online by secure video call from anywhere in Egypt. Choose a service to see how it works, which of our therapists offer it and answers to common questions.',
+    services: 'The Sonderhood offers psychotherapy for adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt. Choose a service to see how it works, which of our therapists offer it and answers to common questions.',
     therapists: [
-        'The Sonderhood\'s psychologists and psychotherapists work with adults, couples, families, teenagers and children, face to face at our therapy centre in New Cairo and online across Egypt. Between them they offer individual therapy, couples and family therapy, cognitive behavioral therapy (CBT), DBT and psychological assessments.',
+        'The Sonderhood\'s psychologists and psychotherapists work with adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo and online across Egypt. Between them they offer individual therapy, couples and family therapy, cognitive behavioral therapy (CBT), DBT and psychological assessments.',
         'Filter by service to find the right therapist for you, open a profile to read their credentials, then request a booking or message us on WhatsApp.',
     ],
     contact: [
-        'Visit The Sonderhood at our therapy centre in New Cairo for face-to-face sessions, or start online therapy from anywhere in Egypt or abroad.',
+        'Visit The Sonderhood at our therapy center in New Cairo for face-to-face sessions, or start online therapy from anywhere in Egypt or abroad.',
         'The quickest way to reach us is WhatsApp. Send us a message and we will help you choose a therapist and find the nearest available time.',
     ],
-    book: 'Choose a session online or at our centre in New Cairo. Your request opens in WhatsApp, ready to send to us, or message us directly at',
+    book: 'Choose a session online or at our center in New Cairo. Your request opens in WhatsApp, ready to send to us, or message us directly at',
 }
 
 // ---------------------------------------------------------------- page titles and descriptions
@@ -304,7 +343,7 @@ export const PAGES = {
     },
     about: {
         path: '/about',
-        title: `About Us: A Therapy Centre in New Cairo${BRAND}`,
+        title: `About Us: A Therapy Center in New Cairo${BRAND}`,
         description: 'The story behind The Sonderhood, a safe haven for therapy in New Cairo, and the team of psychologists and psychotherapists who work here.',
     },
     therapists: {
@@ -324,13 +363,13 @@ export const PAGES = {
     },
     contact: {
         path: '/contact',
-        title: `Contact Us: Therapy Centre in New Cairo${BRAND}`,
-        description: `Reach The Sonderhood on WhatsApp or by phone at ${SITE.phoneDisplay}, by email, or visit our therapy centre in New Cairo, Cairo, Egypt.`,
+        title: `Contact Us: Therapy Center in New Cairo${BRAND}`,
+        description: `Reach The Sonderhood on WhatsApp or by phone at ${SITE.phoneDisplay}, by email, or visit our therapy center in New Cairo, Cairo, Egypt.`,
     },
     book: {
         path: '/book',
         title: `Book a Therapy Session in Cairo or Online${BRAND}`,
-        description: 'Request a therapy session at our centre in New Cairo or online. Send your request straight to our WhatsApp and we will find you the nearest available slot.',
+        description: 'Request a therapy session at our center in New Cairo or online. Send your request straight to our WhatsApp and we will find you the nearest available slot.',
     },
     notFound: {
         path: '/404',
@@ -413,7 +452,7 @@ export function organizationLd() {
                 url: `${SITE.url}/`,
                 logo: absoluteUrl(SITE.logo),
                 image: absoluteUrl(SITE.image),
-                description: 'Psychotherapy centre in New Cairo offering individual adult therapy, couples therapy, family therapy, child and adolescent therapy, CBT and DBT, group therapy, psychological assessments and online therapy across Egypt.',
+                description: 'Psychotherapy center in New Cairo offering individual adult therapy, couples therapy, family therapy, child and adolescent therapy, CBT and DBT, group therapy, psychological assessments and online therapy across Egypt.',
                 telephone: SITE.phone,
                 email: SITE.email,
                 address: {
@@ -532,9 +571,9 @@ export function blogLd(blog, author) {
             '@type': 'BlogPosting',
             headline: blog.title,
             description: blog.description || undefined,
-            image: blog.image || undefined,
             url: absoluteUrl(meta.path),
             mainEntityOfPage: absoluteUrl(meta.path),
+            image: blog.image ? absoluteUrl(blog.image) : undefined,
             datePublished: blog.createTime || undefined,
             dateModified: blog.updateTime || blog.createTime || undefined,
             author: author
