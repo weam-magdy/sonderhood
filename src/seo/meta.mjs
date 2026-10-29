@@ -23,6 +23,10 @@ export const SITE = {
     mapsEmbedUrl: 'https://maps.google.com/maps?q=3sixty%20By%20LMD%2C%20New%20Cairo&ll=30.0277362,31.5510843&z=16&output=embed',
     image: '/og-image.jpg',
     logo: '/logo512.png',
+    // Opening hours and session languages, confirmed by the owner in October 2026.
+    // Session prices are deliberately kept off the site, so the structured data has no priceRange.
+    hours: { opens: '10:00', closes: '22:00', display: 'every day, 10 am to 10 pm' },
+    languages: ['Arabic', 'English'],
     socials: {
         facebook: 'https://www.facebook.com/profile.php?id=100092881591617',
         instagram: 'https://www.instagram.com/thesonderhood/',
@@ -93,8 +97,8 @@ export const SERVICE_SEO = {
         slug: 'online-therapy',
         name: 'Online Therapy',
         metaTitle: 'Online Therapy in Egypt by Video',
-        metaDescription: 'Online therapy by secure video with The Sonderhood\'s therapists, for individuals, couples and teenagers anywhere in Egypt or abroad. Book on WhatsApp.',
-        intro: 'Online sessions are run by the same team of therapists who see clients at our center in New Cairo, so you can start therapy from anywhere in Egypt or abroad.',
+        metaDescription: 'Online therapy in Arabic or English by secure video, for individuals, couples and teenagers anywhere in Egypt or abroad. Book on WhatsApp.',
+        intro: 'Online sessions are run by the same team of therapists who see clients at our center in New Cairo, in Arabic or English, so you can start therapy from anywhere in Egypt or abroad.',
     },
     ee4ZPo01CGhm2vK1Li4C: {
         slug: 'group-therapy',
@@ -270,10 +274,21 @@ export const EXTRA_BLOGS = [
     },
 ]
 
+// Cover photos served from this site, by Firestore id. They replace the article's
+// Firebase Storage photo; the remaining articles get theirs on 1 November 2026.
+export const BLOG_IMAGES = {
+    '6bUES3MKKemrzhuPJavZ': '/images/blog/embracing-change-self-recovery.jpg',
+    C0nCs8YWOwdIjAI7p5Xb: '/images/blog/people-pleaser-struggles.jpg',
+    ERQnHLdQJHQhuZgYJsiD: '/images/blog/power-of-mindfulness.jpg',
+    Hj5wufuLGpB3AwOcriYL: '/images/blog/supporting-loved-ones-mental-health.jpg',
+    Kg93YhicGd0ESqGQxx4i: '/images/blog/managing-anger.jpg',
+}
+
 // Firestore articles plus EXTRA_BLOGS, newest (the code-published ones) first.
 export function mergeBlogs(blogs = []) {
     const titles = new Set(blogs.map(b => String(b.title || '').trim().toLowerCase()))
-    return [...EXTRA_BLOGS.filter(b => !titles.has(b.title.toLowerCase())), ...blogs]
+    const withCovers = blogs.map(b => (BLOG_IMAGES[b.id] ? { ...b, image: BLOG_IMAGES[b.id] } : b))
+    return [...EXTRA_BLOGS.filter(b => !titles.has(b.title.toLowerCase())), ...withCovers]
 }
 
 // Article authors are typed by hand ("Ingie ElSaady", "Ingie El Saady").
@@ -307,11 +322,11 @@ export const HOME_FAQS = [
     },
     {
         question: 'What types of therapy do you offer, and are sessions online or face to face?',
-        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best.',
+        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best. Sessions are available in Arabic and English.',
     },
     {
         question: 'How do I book a session with a therapist?',
-        answer: `The quickest way is to message us on WhatsApp at ${SITE.phoneDisplay}, or send a booking request through our website. Let us know whether you prefer an in-person or online session and any preferred days, and we will help you choose a therapist and find the nearest available slot.`,
+        answer: `The quickest way is to message us on WhatsApp at ${SITE.phoneDisplay}, or send a booking request through our website. Let us know whether you prefer an in-person or online session and any preferred days, and we will help you choose a therapist and find the nearest available slot. We are open ${SITE.hours.display}.`,
     },
 ]
 
@@ -340,7 +355,7 @@ export const PAGES = {
     home: {
         path: '/',
         title: `Therapists in New Cairo & Online Therapy in Egypt${BRAND}`,
-        description: 'Psychotherapy for adults, couples, families and teens, face to face in New Cairo or online across Egypt. CBT, assessments and more. Book on WhatsApp.',
+        description: 'Psychotherapy in Arabic or English for adults, couples, families and teens, face to face in New Cairo or online across Egypt. Book on WhatsApp.',
     },
     about: {
         path: '/about',
@@ -365,7 +380,7 @@ export const PAGES = {
     contact: {
         path: '/contact',
         title: `Contact Us: Therapy Center in New Cairo${BRAND}`,
-        description: `Reach The Sonderhood on WhatsApp or by phone at ${SITE.phoneDisplay}, by email, or visit our therapy center in New Cairo, Cairo, Egypt.`,
+        description: `Reach The Sonderhood on WhatsApp or by phone at ${SITE.phoneDisplay}, by email, or visit our therapy center in New Cairo, Egypt. Open ${SITE.hours.display}.`,
     },
     book: {
         path: '/book',
@@ -441,6 +456,12 @@ export function blogMeta(blog) {
 
 const ORG_ID = `${SITE.url}/#organization`
 
+const WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+function openingHoursLd() {
+    return [{ '@type': 'OpeningHoursSpecification', dayOfWeek: WEEK, opens: SITE.hours.opens, closes: SITE.hours.closes }]
+}
+
 export function organizationLd() {
     return {
         '@context': 'https://schema.org',
@@ -465,6 +486,8 @@ export function organizationLd() {
                 },
                 geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.latitude, longitude: SITE.geo.longitude },
                 hasMap: SITE.mapsUrl,
+                openingHoursSpecification: openingHoursLd(),
+                knowsLanguage: SITE.languages.map(name => ({ '@type': 'Language', name })),
                 areaServed: [
                     { '@type': 'City', name: 'Cairo' },
                     { '@type': 'Country', name: 'Egypt' },
@@ -476,7 +499,8 @@ export function organizationLd() {
                     telephone: SITE.phone,
                     email: SITE.email,
                     contactType: 'customer service',
-                    availableLanguage: ['English', 'Arabic'],
+                    availableLanguage: SITE.languages,
+                    hoursAvailable: openingHoursLd(),
                 },
                 sameAs: Object.values(SITE.socials),
             },

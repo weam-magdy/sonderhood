@@ -100,6 +100,8 @@ export default function ContactUs() {
                                     Cellular: <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a><br />
                                     Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
                                     Address: <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'>{SITE.address.display}</a><br />
+                                    Opening hours: {SITE.hours.display}<br />
+                                    Languages: {SITE.languages.join(' and ')}<br />
                                 </address>
                             </div>
                         </div>

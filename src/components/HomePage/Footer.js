@@ -126,6 +126,8 @@ export default function Footer()
                 </nav>
                 <address className='FooterDetailsAddress'>
                     The Sonderhood, therapy center in {SITE.address.display}
+                    {' · '}Open {SITE.hours.display}
+                    {' · '}Sessions in {SITE.languages.join(' and ')}
                     {' · '}<a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp {SITE.phoneDisplay}</a>
                     {' · '}<a href={`tel:${SITE.phone}`}>Call</a>
                     {' · '}<a href={`mailto:${SITE.email}`}>{SITE.email}</a>

@@ -159,7 +159,7 @@ function shell(main, whatsappText)
         + `<main class="ssr-main">${main}`
         + `<p class="ssr-cta"><a class="ssr-btn" href="${esc(M.whatsappUrl(whatsappText))}">Message us on WhatsApp</a> <a href="tel:${esc(M.SITE.phone)}">or call ${esc(M.SITE.phoneDisplay)}</a></p></main>`
         + `<footer class="ssr-foot"><nav class="ssr-nav">${M.SERVICE_LINKS.map(s => link(s.path, s.name)).join('')}</nav>`
-        + `<p>${esc(M.SITE.name)}, therapy center in ${esc(M.SITE.address.display)} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
+        + `<p>${esc(M.SITE.name)}, therapy center in ${esc(M.SITE.address.display)} · Open ${esc(M.SITE.hours.display)} · Sessions in ${esc(M.SITE.languages.join(' and '))} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
         + `</div>`
 }
 
@@ -273,6 +273,8 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
                 `Phone: <a href="tel:${esc(M.SITE.phone)}">${esc(M.SITE.phoneDisplay)}</a>`,
                 `Email: <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a>`,
                 `Address: ${link(M.SITE.mapsUrl, M.SITE.address.display)}`,
+                `Opening hours: ${esc(M.SITE.hours.display)}`,
+                `Languages: ${esc(M.SITE.languages.join(' and '))}`,
             ])),
     })
 
