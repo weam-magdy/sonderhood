@@ -22,9 +22,40 @@ startAnalytics()
 const contentReady = Promise.all([fetchTherapists, fetchServices, fetchBlogs, fetchTestimonials].map(load => store.dispatch(load())))
 const timeout = new Promise(resolve => setTimeout(resolve, 2000))
 
+// The app also waits until the browser has recorded the prerendered page's largest
+// paint, the speed measure Google uses. Replaced sooner, the browser forgets that
+// paint and counts the app's first render instead, which on a slow phone comes
+// seconds later. Browsers that do not report it wait at most 300 ms.
+const paintRecorded = new Promise(resolve =>
+{
+	setTimeout(resolve, 300)
+	try
+	{
+		new PerformanceObserver((list, observer) =>
+		{
+			observer.disconnect()
+			resolve()
+		}).observe({ type: 'largest-contentful-paint', buffered: true })
+	}
+	catch
+	{
+		resolve()
+	}
+})
+
+// The prerendered home page's phone menu button jumps to the plain menu further down
+// (#menu). That menu goes when the app takes over, so a visitor who tapped it is taken
+// back to the top, next to the app's own menu button.
+function leavePrerenderedMenu()
+{
+	if (window.location.hash !== '#menu') return
+	window.history.replaceState(null, '', window.location.pathname + window.location.search)
+	window.scrollTo(0, 0)
+}
+
 //@ts-ignore
 const root = ReactDOM.createRoot(document.getElementById('root'));
-Promise.race([contentReady, timeout]).then(() => root.render(
+Promise.race([Promise.all([contentReady, paintRecorded]), timeout]).then(leavePrerenderedMenu).then(() => root.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<BrowserRouter>

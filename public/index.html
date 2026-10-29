@@ -19,10 +19,23 @@
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100;9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <script>
+      // The build draws the cookie notice into every page (scripts/prerender.mjs). This
+      // hides it before the first paint for visitors who have already chosen (the same
+      // record and 12 months as src/analytics.js), and its buttons store a choice the
+      // same way before the app has loaded; the app reads it when it starts.
+      try {
+        var saved = JSON.parse(localStorage.getItem('sonderhood-analytics') || 'null');
+        if (saved && saved.choice && Date.now() - saved.date < 365 * 864e5) document.documentElement.className += ' consent-chosen';
+      } catch (e) {}
+      // Kept in memory too, for browsers that block storage. Once the app runs it
+      // replaces this function with its own (src/analytics.js).
+      function sonderhoodChoose(choice) {
+        window.sonderhoodChoice = choice;
+        try { localStorage.setItem('sonderhood-analytics', JSON.stringify({ choice: choice, date: Date.now() })); } catch (e) {}
+        document.documentElement.className += ' consent-chosen';
+      }
+    </script>
     <style>
       /* The readable page the build writes into #root for crawlers and slow connections; the app replaces it. */
       .ssr { min-height: 100%; background: #FFFDF4; color: #464834; font: 16px/1.65 'DM Sans', Arial, sans-serif; }
@@ -42,7 +55,16 @@
       .ssr-cta { margin-top: 32px; }
       .ssr-btn { display: inline-block; margin-right: 12px; padding: 12px 22px; border-radius: 999px; background: #25D366; color: #FFFFFF !important; font-weight: 700; text-decoration: none; }
       .ssr-foot { padding: 24px 7% 40px; border-top: 1px solid #E8E2C4; font-size: 14px; }
+      .consent-chosen .ssr-consent { display: none; }
+      /* The home page's first screen, drawn with the app's own classes. Up to 900px wide the app shows a menu button instead of the top menu. */
+      .ssr-hero-menu { display: none; }
+      @media (max-width: 900px) {
+        [data-prerendered-hero] .HomeHeaderContainer { display: none; }
+        .ssr-hero-menu { display: inline-flex; box-sizing: border-box; align-self: flex-start; align-items: center; justify-content: center; min-width: 64px; margin: 5%; padding: 6px 8px; color: #464834; }
+      }
     </style>
+    <!-- Without JavaScript there is no Analytics to agree to, and the notice could not be closed. -->
+    <noscript><style>.ssr-consent { display: none; }</style></noscript>
   </head>
   <body>
     <div id="root"></div>

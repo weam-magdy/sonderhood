@@ -24,9 +24,10 @@ export function getConsent()
     }
     catch
     {
-        // Storage blocked, or an older plain-text value: fall back to this visit's choice.
+        // Storage blocked, or an older plain-text value: fall back to this visit's choice,
+        // which may have been made on the prerendered notice before the app loaded.
     }
-    return sessionChoice
+    return sessionChoice || window.sonderhoodChoice || null
 }
 
 function load()
@@ -122,6 +123,14 @@ export function trackLead(method)
 export function startAnalytics()
 {
     if (getConsent() === 'granted') load()
+    // The cookie notice drawn into the page (public/index.html) stays on screen until the
+    // app replaces it; from now on its buttons go through setConsent, so an Accept tapped
+    // in that moment still starts Analytics.
+    window.sonderhoodChoose = (choice) =>
+    {
+        setConsent(choice)
+        document.documentElement.classList.add('consent-chosen')
+    }
     document.addEventListener('click', (event) =>
     {
         const link = event.target && event.target.closest ? event.target.closest('a[href]') : null

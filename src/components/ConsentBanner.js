@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getConsent, setConsent } from '../analytics'
+import { CONSENT_TEXT } from '../seo/meta.mjs'
 
 // Asks whether Google Analytics may run. "Cookie settings" in the footer and the
 // privacy page reopen it with a 'sonderhood:consent' event; it then takes keyboard
@@ -43,7 +44,7 @@ export default function ConsentBanner()
     return (
         <div className='ConsentBanner' role='region' aria-label='Cookie choice'>
             <p>
-                We would like to use Google Analytics to see which pages help visitors and how many of them contact us, never what anyone writes. It sets cookies, and it stays off unless you accept. <Link to='/privacy'>Privacy policy</Link>
+                {CONSENT_TEXT} <Link to='/privacy'>Privacy policy</Link>
             </p>
             <div className='ConsentBannerButtons'>
                 <button type='button' ref={acceptRef} className='ConsentAccept' onClick={() => choose('granted')}>Accept</button>

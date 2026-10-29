@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { instagram } from '../../imgs/InstagramIcon'
 import { whatsappTile } from '../../imgs/WhatsAppIcon'
 import { Link } from 'react-router-dom'
-import { collection, addDoc } from 'firebase/firestore'
-import { db } from '../../Config/firebaseConfig'
 import { SERVICE_LINKS, SITE, sentenceList, sessionLanguages, whatsappUrl } from '../../seo/meta.mjs'
 
 export default function Footer()
@@ -11,7 +9,6 @@ export default function Footer()
     const [email , setEmail] = useState('')
     const [subscribed , setSubscribed] = useState(false)
     const [err , setErr] = useState(false)
-    const newsLetterCollection = collection(db, 'newsletter')
 
     async function handleSubmit(e)
     {
@@ -20,7 +17,9 @@ export default function Footer()
         {
             try
             {
-                await addDoc(newsLetterCollection, { email })
+                // Firebase loads only when someone subscribes, so no page has to carry it.
+                const { subscribe } = await import('../../app/newsletter')
+                await subscribe(email)
                 setEmail('')
                 setSubscribed(true)
             }

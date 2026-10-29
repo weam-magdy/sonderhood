@@ -41,7 +41,18 @@ If Firestore cannot be reached during the build, `scripts/content-snapshot.json`
 | Family Therapy and Behavioral Therapy (CBT & DBT) pages | `EXTRA_SERVICES` in `src/seo/meta.mjs` (a Firestore service with the same title replaces them) |
 | Other services, therapists, articles, testimonials | Firestore collections `services`, `therapists`, `blogs`, `testimonials` |
 | WhatsApp button and booking/contact forms | `src/components/WhatsAppButton.js`, `src/utils/contact.js` |
+| Team photos and article covers | `public/images/team/`, `public/images/blog/`, mapped in `TEAM_PHOTOS` and `BLOG_IMAGES` in `src/seo/meta.mjs` |
+| Fonts | `src/fonts/` (DM Sans, licence in `OFL.txt`) and `src/WebFonts/`, all served from the site |
+| Instagram grid at the end of the home page | `public/instagram.php`, fed by a Behold JSON feed whose address goes in `public/instagram-config.php` (see below) |
 
 The booking and contact forms open WhatsApp (+20 109 429 2553) with the request already written; the visitor only taps Send. If the EmailJS variables in `.env` are filled in, the forms also send an email copy.
 
-Therapist and article photos are stored in Firebase Storage, which needs the project on the Blaze (pay as you go) plan; until then the site shows initials in their place.
+Photos are served from the site itself: Firebase Storage no longer serves files to projects on the free Spark plan.
+
+### Instagram grid
+
+`public/instagram.php` reads the Behold feed at most every 4 hours (hourly after a failure), copies the photos into `/instagram/` on the server and gives the home page up to 6 posts; the grid stays hidden while there are none. The feed address is not in this repository, because every request to it counts as a view on Behold's free plan (1,200 a month). Put it in `public/instagram-config.php` (ignored by git), then build and upload that file and `instagram.php`:
+
+```php
+<?php return 'https://feeds.behold.so/YOUR-FEED-ID';
+```

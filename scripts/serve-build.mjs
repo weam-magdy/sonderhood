@@ -6,11 +6,12 @@
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
+import zlib from 'node:zlib'
 import { fileURLToPath } from 'node:url'
 
 const BUILD = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', 'build')
 const PORT = Number(process.argv[2] || process.env.PORT || 5055)
-const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.xml': 'application/xml', '.txt': 'text/plain', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.woff': 'font/woff', '.otf': 'font/otf', '.ttf': 'font/ttf', '.mp4': 'video/mp4', '.map': 'application/json' }
+const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.xml': 'application/xml', '.txt': 'text/plain', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.webp': 'image/webp', '.woff': 'font/woff', '.woff2': 'font/woff2', '.otf': 'font/otf', '.ttf': 'font/ttf', '.mp4': 'video/mp4', '.map': 'application/json' }
 
 // The plain "RewriteRule ^pattern$ /target [R=301...]" lines from the generated .htaccess.
 const redirects = fs.readFileSync(path.join(BUILD, '.htaccess'), 'utf8').split(/\r?\n/)
@@ -20,10 +21,17 @@ const redirects = fs.readFileSync(path.join(BUILD, '.htaccess'), 'utf8').split(/
 
 const isFile = (file) => fs.existsSync(file) && fs.statSync(file).isFile()
 
+// Text files go out gzipped, as Hostinger sends them, so Lighthouse runs against this
+// server download what visitors download.
+const COMPRESSIBLE = new Set(['.html', '.js', '.css', '.json', '.xml', '.txt', '.svg'])
+
 function send(res, status, file, headers = {})
 {
-    res.writeHead(status, { 'Content-Type': TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream', ...headers })
-    fs.createReadStream(file).pipe(res)
+    const gzip = COMPRESSIBLE.has(path.extname(file).toLowerCase()) && /\bgzip\b/.test(res.req.headers['accept-encoding'] || '')
+    res.writeHead(status, { 'Content-Type': TYPES[path.extname(file).toLowerCase()] || 'application/octet-stream', ...(gzip && { 'Content-Encoding': 'gzip', Vary: 'Accept-Encoding' }), ...headers })
+    const stream = fs.createReadStream(file)
+    if (gzip) stream.pipe(zlib.createGzip()).pipe(res)
+    else stream.pipe(res)
 }
 
 http.createServer((req, res) =>

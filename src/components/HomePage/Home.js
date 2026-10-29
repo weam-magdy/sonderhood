@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import HomeHeader from './HomeHeader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
@@ -7,9 +7,21 @@ import { motion, useAnimation, useInView } from 'framer-motion'
 import { HOME_HEADLINE } from '../../seo/meta.mjs'
 import { FINDER_PATH } from '../../seo/finder.mjs'
 
-export default function Home() 
+// The build draws this hero into the home page's HTML (scripts/prerender.mjs), so on
+// a first visit it is already on screen when the app starts. That first time the
+// app shows it as it is, instead of hiding the text and sliding it in again.
+let heroPrerendered = typeof document !== 'undefined' && !!document.querySelector('[data-prerendered-hero]')
+
+export default function Home()
 {
     const navigate = useNavigate()
+
+    const [skipEntrance] = useState(() =>
+    {
+        const skip = heroPrerendered
+        heroPrerendered = false
+        return skip
+    })
 
     const tiltedRef = useRef(null)
     const tiltedInView = useInView(tiltedRef, { once: true })
@@ -20,15 +32,17 @@ export default function Home()
     const mainTiltedAnimation = useAnimation()
     const mainBookAnimation = useAnimation()
 
+    // Already in their final state when the entrance is skipped; starting them anyway
+    // briefly lifts the booking panel over the tilted bar on tablets.
     useEffect(() =>
     {
-        if(tiltedInView) mainTiltedAnimation.start('final')
+        if(tiltedInView && !skipEntrance) mainTiltedAnimation.start('final')
         //eslint-disable-next-line
     }, [tiltedInView])
 
     useEffect(() =>
     {
-        if(bookInView) mainBookAnimation.start('visible')
+        if(bookInView && !skipEntrance) mainBookAnimation.start('visible')
         //eslint-disable-next-line
     }, [bookInView])
 
@@ -45,7 +59,7 @@ export default function Home()
                             start: { transform: 'rotate(0deg)' },
                             final: { transform: 'rotate(-20deg)' }
                         }}
-                        initial='start'
+                        initial={skipEntrance ? 'final' : 'start'}
                         animate={mainTiltedAnimation}
                         transition={{ duration: 0.5, delay: 0.25 }}
                         className='IVectorTilted'
@@ -58,7 +72,7 @@ export default function Home()
                         hidden: { opacity: 0, x: 200 }, 
                         visible: { opacity: 1, x: 0 }
                     }}
-                    initial='hidden'
+                    initial={skipEntrance ? 'visible' : 'hidden'}
                     animate={mainBookAnimation}
                     transition={{ duration: 1, delay: 0.25 }}
                     className='HomePageBookSession'

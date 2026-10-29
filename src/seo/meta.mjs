@@ -340,6 +340,7 @@ export const EXTRA_BLOGS = [
         topic: 'Online Therapy',
         duration: '4 mins read',
         therapist: 'Weaam Elaidy',
+        service: 'online-therapy',
         image: '/images/blog/online-or-face-to-face-therapy.jpg',
         createTime: '2026-10-29T19:00:00Z',
         description: 'On average, video therapy works about as well as face to face. Learn when each suits you and how to choose Arabic or English therapy in Egypt or abroad.',
@@ -385,6 +386,7 @@ export const EXTRA_BLOGS = [
         topic: 'Family Relationships',
         duration: '3 mins read',
         therapist: 'Weaam Elaidy',
+        service: 'individual-adult-therapy',
         image: '/images/blog/narcissistic-parent.jpg',
         createTime: '2026-10-29T09:00:00Z',
         description: 'Growing up with a narcissistic parent can shape how you see yourself for years. Learn the common signs, how it shows up in adult life, and how to start healing.',
@@ -447,11 +449,47 @@ export const BLOG_SEARCH = {
     },
 }
 
+// One spelling per author: the Firestore bylines were typed by hand. Keyed by the
+// name without spaces, lowercased (legacySlug). Ingie El Saady as on her profile;
+// "Engy Helmy" as "Ingy Helmy", the spelling on her other two articles.
+const AUTHOR_SPELLINGS = {
+    ingieelsaady: 'Ingie El Saady',
+    engyhelmy: 'Ingy Helmy',
+}
+
+// The service page each article supports, linked at its end, by Firestore id
+// (the articles in EXTRA_BLOGS name theirs).
+const BLOG_SERVICES = {
+    '6bUES3MKKemrzhuPJavZ': 'individual-adult-therapy',
+    C0nCs8YWOwdIjAI7p5Xb: 'individual-adult-therapy',
+    ERQnHLdQJHQhuZgYJsiD: 'cbt-behavioral-therapy',
+    Hj5wufuLGpB3AwOcriYL: 'family-therapy',
+    Kg93YhicGd0ESqGQxx4i: 'cbt-behavioral-therapy',
+    Rg6LRrcLi8ARD0waiT8v: 'cbt-behavioral-therapy',
+    W0ByGdjEcwhAYxE0yo0G: 'individual-adult-therapy',
+    k2kmW7mHUrT0gJ5AsgpR: 'individual-adult-therapy',
+    pV2HTYGvNRD1Vzn7Uojr: 'cbt-behavioral-therapy',
+    kXcA96yItOsWQXevm6sW: 'individual-adult-therapy',
+    tzHyzlP8upRuRlE6pQQO: 'individual-adult-therapy',
+    xlXZzbyqyAEixDHKfE6j: 'child-adolescent-therapy',
+}
+
 // Firestore articles plus EXTRA_BLOGS, newest (the code-published ones) first.
 export function mergeBlogs(blogs = []) {
     const titles = new Set(blogs.map(b => String(b.title || '').trim().toLowerCase()))
-    const decorated = blogs.map(b => ({ ...b, ...(BLOG_IMAGES[b.id] && { image: BLOG_IMAGES[b.id] }), ...BLOG_SEARCH[b.id] }))
+    const decorated = blogs.map(b => ({
+        ...b,
+        therapist: AUTHOR_SPELLINGS[legacySlug(b.therapist)] || b.therapist,
+        ...(BLOG_IMAGES[b.id] && { image: BLOG_IMAGES[b.id] }),
+        ...(BLOG_SERVICES[b.id] && { service: BLOG_SERVICES[b.id] }),
+        ...BLOG_SEARCH[b.id],
+    }))
     return [...EXTRA_BLOGS.filter(b => !titles.has(b.title.toLowerCase())), ...decorated]
+}
+
+// The service page an article supports, as { name, path }, or undefined.
+export function blogServiceLink(blog) {
+    return blog?.service ? SERVICE_LINKS.find(link => link.path === `/services/${blog.service}`) : undefined
 }
 
 // Article authors are typed by hand ("Ingie ElSaady", "Ingie El Saady").
@@ -505,6 +543,10 @@ export const HOME_FAQS = [
 
 export const HOME_HEADLINE = 'Therapy & psychotherapy in New Cairo, face to face or online'
 
+// The cookie notice (src/components/ConsentBanner.js, also drawn into every page by
+// scripts/prerender.mjs), followed by a link to the privacy policy.
+export const CONSENT_TEXT = 'We would like to use Google Analytics to see which pages help visitors and how many of them contact us, never what anyone writes. It sets cookies, and it stays off unless you accept.'
+
 export const INTROS = {
     services: 'The Sonder Hood offers psychotherapy for adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt. Choose a service to see how it works, which of our therapists offer it and answers to common questions.',
     therapists: [
@@ -536,7 +578,7 @@ export const PRIVACY = [
     },
     {
         title: 'Services that load with our pages',
-        text: ['Like most websites, our pages load a few services from other companies, which receive your device\'s internet address: Google Fonts for the lettering on every page, Google Maps for the map on our contact page, and Google Firebase for our newsletter. The Instagram posts at the end of our home page are copies kept on this website (we fetch them through Behold, behold.so), so seeing them sends nothing to Instagram; opening one takes you to Instagram, which has its own privacy policy.'],
+        text: ['Our lettering and photos come from this website itself. Two services from other companies load only where they are needed, and they receive your device\'s internet address: Google Maps for the map on our contact page, and Google Firebase when you subscribe to our newsletter (or, rarely, when this website\'s own copy of our services, therapists and articles fails to load and the page reads them from Firebase instead). The Instagram posts at the end of our home page are copies kept on this website (we fetch them through Behold, behold.so), so seeing them sends nothing to Instagram; opening one takes you to Instagram, which has its own privacy policy.'],
     },
     {
         title: 'WhatsApp, phone and email',
@@ -552,7 +594,7 @@ export const PRIVACY = [
     },
     {
         title: 'Updates',
-        text: ['We will update this page if anything changes. Last updated 29 October 2026.'],
+        text: ['We will update this page if anything changes. Last updated 30 October 2026.'],
     },
 ]
 

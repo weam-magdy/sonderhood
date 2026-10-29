@@ -23,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+# The Behold feed address for public/instagram.php: kept off GitHub (every request to it counts as a view on the free plan)
+/public/instagram-config.php

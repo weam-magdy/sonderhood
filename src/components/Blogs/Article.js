@@ -8,7 +8,7 @@ import { selectBlogsStatus } from '../../app/blogs/blogsSlice'
 import { selectAllBlogs } from '../../seo/selectors'
 import { selectedTherapists } from '../../app/therapists/therapistsSlice'
 import useSeo from '../../seo/useSeo'
-import { blogLd, blogMeta, blogSlug, findTherapistByName, legacySlug, therapistSlug } from '../../seo/meta.mjs'
+import { blogLd, blogMeta, blogServiceLink, blogSlug, findTherapistByName, legacySlug, therapistSlug } from '../../seo/meta.mjs'
 import SafeImage from '../SafeImage'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
 
@@ -38,6 +38,7 @@ export default function Article()
     }
 
     const readMoreBlogs = blogs.filter(blog => blog.id !== selectedBlog.id)
+    const service = blogServiceLink(selectedBlog)
 
     const displayedSelectedBlog = (
         <div className='ArticlePageMain'>
@@ -57,7 +58,7 @@ export default function Article()
                     {selectedBlog.title}
                 </h1>
                 <div className='ArticlePageMainInfoServiceAuthor'>
-                    By: {author ? <Link className='PlainLink' to={`/therapists/${therapistSlug(author)}`}>{selectedBlog.therapist}</Link> : selectedBlog.therapist}
+                    By: {author ? <Link className='PlainLink' to={`/therapists/${therapistSlug(author)}`}>{author.name}</Link> : selectedBlog.therapist}
                 </div>
             </div>
         </div>
@@ -99,7 +100,9 @@ export default function Article()
             <PagesHeader />
             {displayedSelectedBlog}
         </div>
-        <div dangerouslySetInnerHTML={{ __html: selectedBlog.body }} className='ArticleText'>
+        <div className='ArticleText'>
+            <div dangerouslySetInnerHTML={{ __html: selectedBlog.body }} />
+            {service && <p className='ArticleServiceLink'>Want to talk this through with a therapist? Read about our <Link to={service.path}>{service.name}</Link>.</p>}
         </div>
         <div className='ReadMoreContainer'>
             <div className='ReadMoreTitle'>
