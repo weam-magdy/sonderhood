@@ -1,8 +1,7 @@
 {
-  "fetchedAt": "2026-10-29T13:04:57.624Z",
+  "fetchedAt": "2026-10-29T16:27:56.446Z",
   "services": [
     {
-      "title": "Child & Adolescent Therapy ",
       "therapists": [
         {
           "id": "X4BxaEE7wk7eX89xknzz"
@@ -18,6 +17,9 @@
         "Family Dynamics",
         "And more…"
       ],
+      "description": "Supportive therapy for children and teens. Trained therapists use age-appropriate methods to help with issues like anxiety, depression, and family conflicts.",
+      "order": 3,
+      "title": "Child & Adolescent Therapy ",
       "faqs": [
         {
           "answer": "Signs that your child may benefit from therapy include behavioral changes (e.g., aggression, withdrawal), academic difficulties, emotional struggles (e.g., frequent crying, excessive anxiety), or significant family-related stressors (e.g., divorce, loss).",
@@ -36,13 +38,20 @@
           "answer": "The duration of child therapy varies depending on the child's needs and progress. Therapy can be short-term or long-term. Frequency of sessions is typically once a week, but it can be adjusted based on the child's requirements and progress."
         }
       ],
-      "description": "Supportive therapy for children and teens. Trained therapists use age-appropriate methods to help with issues like anxiety, depression, and family conflicts.",
-      "order": 3,
       "id": "5nwmIB32vjsHXknedWyf",
       "createTime": "2023-09-28T08:19:43.178748Z",
       "updateTime": "2023-10-10T13:57:12.444586Z"
     },
     {
+      "points": [
+        "Personality Assessments",
+        "Cognitive Assessments",
+        "Mood and Anxiety Assessments",
+        "Relationship Assessments",
+        "Risk Assessments",
+        "Trauma and PTSD Assessments",
+        "And more…"
+      ],
       "faqs": [
         {
           "question": "What is the purpose of a psychological assessment?",
@@ -61,53 +70,19 @@
           "answer": "Not always. While referrals can be beneficial, many individuals seek assessments independently. It's advisable to discuss your intentions with a mental health professional for guidance."
         }
       ],
-      "order": 4,
-      "points": [
-        "Personality Assessments",
-        "Cognitive Assessments",
-        "Mood and Anxiety Assessments",
-        "Relationship Assessments",
-        "Risk Assessments",
-        "Trauma and PTSD Assessments",
-        "And more…"
-      ],
-      "title": "Assessments",
       "therapists": [
         {
           "id": "pEdaMrKO12IEmcVOUDWI"
         }
       ],
+      "title": "Assessments",
+      "order": 4,
       "description": "Comprehensive psychological assessments to guide personalized therapy, offering insights and tailored treatment plans for mental well-being.",
       "id": "7pRO6dkH0ruCAbYNVQvr",
       "createTime": "2023-09-28T08:20:30.298414Z",
       "updateTime": "2023-10-10T13:57:17.777913Z"
     },
     {
-      "title": "Online Therapy",
-      "therapists": [
-        {
-          "id": "HJNGY0HUGgR9hmAbu7OP"
-        },
-        {
-          "id": "X4BxaEE7wk7eX89xknzz"
-        },
-        {
-          "id": "F1jzTtRVVh2PMFASVHVe"
-        },
-        {
-          "id": "zGyx9qf6rM3UbZTKJD4A"
-        },
-        {
-          "id": "BnIVoYqiQho23WTZgy8X"
-        }
-      ],
-      "description": "Convenient online therapy via secure video or messaging. Access professional support from anywhere, maintaining flexibility in scheduling and location.",
-      "points": [
-        "Online therapy is as efficient as in-person therapy. It is here just as an extra service to provide you with more flexibility in timing and location with a lot less commuting hours. ",
-        "Online therapy can accommodate individuals, adolescents, couples, as well as groups. ",
-        "And more…"
-      ],
-      "order": 5,
       "faqs": [
         {
           "question": "What is online therapy, and how does it work?",
@@ -130,17 +105,51 @@
           "answer": "Online therapy is effective for a wide range of mental health concerns. It's particularly well-suited for issues like anxiety, depression, stress, relationship difficulties, and general emotional support. However, it may not be the best choice for severe mental health crises or situations requiring immediate intervention."
         }
       ],
+      "description": "Convenient online therapy via secure video or messaging. Access professional support from anywhere, maintaining flexibility in scheduling and location.",
+      "points": [
+        "Online therapy is as efficient as in-person therapy. It is here just as an extra service to provide you with more flexibility in timing and location with a lot less commuting hours. ",
+        "Online therapy can accommodate individuals, adolescents, couples, as well as groups. ",
+        "And more…"
+      ],
+      "therapists": [
+        {
+          "id": "HJNGY0HUGgR9hmAbu7OP"
+        },
+        {
+          "id": "X4BxaEE7wk7eX89xknzz"
+        },
+        {
+          "id": "F1jzTtRVVh2PMFASVHVe"
+        },
+        {
+          "id": "zGyx9qf6rM3UbZTKJD4A"
+        },
+        {
+          "id": "BnIVoYqiQho23WTZgy8X"
+        }
+      ],
+      "order": 5,
+      "title": "Online Therapy",
       "id": "ArjQ4Rm2ff6tkNtAQ6LT",
       "createTime": "2023-09-28T08:19:23.528794Z",
       "updateTime": "2023-10-10T13:57:22.535922Z"
     },
     {
+      "points": [
+        "Grief & Loss",
+        "Anxiety",
+        "Codependence",
+        "Family issues",
+        "And more…"
+      ],
+      "title": "Group Therapy",
+      "order": 6,
       "therapists": [
         {
           "id": "X4BxaEE7wk7eX89xknzz"
         }
       ],
-      "order": 6,
+      "description": "Structured therapy in small groups. Connect, share experiences, and learn with others. Effective for various concerns, fostering personal growth and peer support.",
       "faqs": [
         {
           "question": "What is group therapy, and how does it work?",
@@ -163,21 +172,11 @@
           "answer": "The duration of group therapy varies based on the specific group and its goals. Some groups are short-term, spanning a few weeks, while others may be ongoing. Sessions are usually held weekly, but this can also vary depending on the group's structure and focus."
         }
       ],
-      "description": "Structured therapy in small groups. Connect, share experiences, and learn with others. Effective for various concerns, fostering personal growth and peer support.",
-      "title": "Group Therapy",
-      "points": [
-        "Grief & Loss",
-        "Anxiety",
-        "Codependence",
-        "Family issues",
-        "And more…"
-      ],
       "id": "ee4ZPo01CGhm2vK1Li4C",
       "createTime": "2023-09-28T08:20:09.826334Z",
       "updateTime": "2023-10-10T13:57:27.975934Z"
     },
     {
-      "order": 1,
       "points": [
         "Mental Health Concerns",
         "Relationship Problems",
@@ -185,24 +184,6 @@
         "Self-Esteem and Identity",
         "And more…"
       ],
-      "therapists": [
-        {
-          "id": "HJNGY0HUGgR9hmAbu7OP"
-        },
-        {
-          "id": "X4BxaEE7wk7eX89xknzz"
-        },
-        {
-          "id": "zGyx9qf6rM3UbZTKJD4A"
-        },
-        {
-          "id": "F1jzTtRVVh2PMFASVHVe"
-        },
-        {
-          "id": "BnIVoYqiQho23WTZgy8X"
-        }
-      ],
-      "title": "Individuals Therapy",
       "description": "Personalized, confidential counseling for adults. Explore and address emotional challenges, develop coping skills, and achieve personal growth with a trained therapist.",
       "faqs": [
         {
@@ -226,13 +207,48 @@
           "answer": "Finding the right therapist involves research, considering their expertise and approach, and having an initial consultation to assess your comfort and compatibility. It's essential to feel comfortable with your therapist, so if you don't, it's okay to explore other options until you find the right fit. Your therapist's goal is to support your well-being and growth."
         }
       ],
+      "therapists": [
+        {
+          "id": "HJNGY0HUGgR9hmAbu7OP"
+        },
+        {
+          "id": "X4BxaEE7wk7eX89xknzz"
+        },
+        {
+          "id": "zGyx9qf6rM3UbZTKJD4A"
+        },
+        {
+          "id": "F1jzTtRVVh2PMFASVHVe"
+        },
+        {
+          "id": "BnIVoYqiQho23WTZgy8X"
+        }
+      ],
+      "title": "Individuals Therapy",
+      "order": 1,
       "id": "hhsdmrAXJVOTKq8UT3Yv",
       "createTime": "2023-09-28T08:18:18.580934Z",
       "updateTime": "2023-10-10T13:57:32.719293Z"
     },
     {
+      "order": 2,
       "title": "Couples Therapy",
       "description": "Specialized counseling to improve relationships. Therapists help couples resolve conflicts, enhance communication, and foster healthier, more satisfying partnerships.",
+      "therapists": [
+        {
+          "id": "X4BxaEE7wk7eX89xknzz"
+        },
+        {
+          "id": "F1jzTtRVVh2PMFASVHVe"
+        }
+      ],
+      "points": [
+        "Communication Problems",
+        "Intimacy and Sexual Issues",
+        "Trust and Infidelity",
+        "Family Dynamics",
+        "And more…"
+      ],
       "faqs": [
         {
           "question": "What is couples therapy, and how does it work?",
@@ -255,22 +271,6 @@
           "answer": "Couples therapy can be highly effective in improving relationships and helping couples resolve issues. However, the success of therapy depends on both partners' willingness to actively engage in the process. While it can lead to positive changes, there are no guarantees that it will save every troubled relationship."
         }
       ],
-      "order": 2,
-      "points": [
-        "Communication Problems",
-        "Intimacy and Sexual Issues",
-        "Trust and Infidelity",
-        "Family Dynamics",
-        "And more…"
-      ],
-      "therapists": [
-        {
-          "id": "X4BxaEE7wk7eX89xknzz"
-        },
-        {
-          "id": "F1jzTtRVVh2PMFASVHVe"
-        }
-      ],
       "id": "wkCeZbijHxJw1RhtEpix",
       "createTime": "2023-09-28T08:18:34.935765Z",
       "updateTime": "2023-10-10T13:57:37.337646Z"
@@ -278,8 +278,7 @@
   ],
   "therapists": [
     {
-      "services": [],
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fshahd.jpg?alt=media&token=01c1348f-9e13-433d-a1fd-ae7844442699",
+      "position": "Neuropsychologist",
       "search": [
         "Anxiety",
         "Depression",
@@ -293,8 +292,9 @@
         "Trauma",
         "Major life transitions"
       ],
-      "position": "Neuropsychologist",
-      "quote": "I want to be a therapist who truly empathizes, not only because I've been trained to, but because I've been there myself and found my way through. I know what it feels like to struggle, and I know how powerful it can be to have support along the way. That's why I believe we all need help at some point in our lives, and why no one should have to face things alone.",
+      "clientele": [
+        "Adults +18"
+      ],
       "certificates": [
         {
           "title": "Bachelor of Arts in Psychology",
@@ -342,20 +342,28 @@
           "year": "2024"
         }
       ],
-      "clientele": [
-        "Adults +18"
-      ],
       "name": "Shahd Zanaty",
+      "services": [],
+      "quote": "I want to be a therapist who truly empathizes, not only because I've been trained to, but because I've been there myself and found my way through. I know what it feels like to struggle, and I know how powerful it can be to have support along the way. That's why I believe we all need help at some point in our lives, and why no one should have to face things alone.",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fshahd.jpg?alt=media&token=01c1348f-9e13-433d-a1fd-ae7844442699",
       "id": "34YNM9NMyuXgT9KbZ3DC",
       "createTime": "2026-01-17T00:33:53.780863Z",
       "updateTime": "2026-01-17T00:33:53.780863Z"
     },
     {
-      "quote": "You don't have to feel hopeful about the future, it's enough to just be curious about what is coming.",
-      "name": "Habiba Youssry",
-      "services": [
-        "Child Therapy",
-        "Group Therapy"
+      "position": "Counseling Psychotherapist ",
+      "search": [
+        "Depression",
+        "Anxiety",
+        "Marriage",
+        "Relationships",
+        "Self Esteem",
+        "Trauma",
+        "Family Problem",
+        "Abusive parents",
+        "Social Anxiety",
+        "OCD",
+        "Family problems"
       ],
       "certificates": [
         {
@@ -374,57 +382,30 @@
           "title": "Masters of Science in Psychology"
         }
       ],
-      "position": "Counseling Psychotherapist ",
+      "name": "Habiba Youssry",
       "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fhabiba.jpeg?alt=media&token=07101a34-5314-4967-ac1c-eb88808ef8c6&_gl=1*19iloxx*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4NzUzNzkuNTIuMC4w",
+      "services": [
+        "Child Therapy",
+        "Group Therapy"
+      ],
+      "quote": "You don't have to feel hopeful about the future, it's enough to just be curious about what is coming.",
       "clientele": [
         "Adults +18",
         "Couples",
         "Adolescents"
-      ],
-      "search": [
-        "Depression",
-        "Anxiety",
-        "Marriage",
-        "Relationships",
-        "Self Esteem",
-        "Trauma",
-        "Family Problem",
-        "Abusive parents",
-        "Social Anxiety",
-        "OCD",
-        "Family problems"
       ],
       "id": "F1jzTtRVVh2PMFASVHVe",
       "createTime": "2023-09-21T16:26:20.407843Z",
       "updateTime": "2023-10-09T18:44:18.520627Z"
     },
     {
-      "services": [
-        "Child Therapy",
-        "Group Therapy"
-      ],
-      "search": [
-        "Depression",
-        "Anxiety",
-        "Marriage",
-        "Relationship",
-        "Self Esteem",
-        "Social Anxiety",
-        "OCD",
-        "Trauma",
-        "Codependency",
-        "Abusive parents",
-        "Family Problems"
-      ],
-      "name": "Weaam Elaidy",
-      "clientele": [
-        "Adults +18"
-      ],
-      "quote": "I once read in a book “wounded healers are effective because they are more able to empathize with the wounds of the patient”.. And I promise to feel whatever you bring in. I promise to put myself in your shoes.. so come in and feel home.",
       "blogs": [
         ""
       ],
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Ftherapist1.jpg?alt=media&token=e3c5c130-9094-4620-946f-915be5ac95e6&_gl=1*1dbnps1*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4NzM2MDQuNTguMC4w",
+      "clientele": [
+        "Adults +18"
+      ],
+      "name": "Weaam Elaidy",
       "position": "Founder and Counseling Psychotherapist ",
       "certificates": [
         {
@@ -463,11 +444,32 @@
           "title": "CBT for Depression"
         }
       ],
+      "services": [
+        "Child Therapy",
+        "Group Therapy"
+      ],
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Ftherapist1.jpg?alt=media&token=e3c5c130-9094-4620-946f-915be5ac95e6&_gl=1*1dbnps1*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4NzM2MDQuNTguMC4w",
+      "search": [
+        "Depression",
+        "Anxiety",
+        "Marriage",
+        "Relationship",
+        "Self Esteem",
+        "Social Anxiety",
+        "OCD",
+        "Trauma",
+        "Codependency",
+        "Abusive parents",
+        "Family Problems"
+      ],
+      "quote": "I once read in a book “wounded healers are effective because they are more able to empathize with the wounds of the patient”.. And I promise to feel whatever you bring in. I promise to put myself in your shoes.. so come in and feel home.",
       "id": "HJNGY0HUGgR9hmAbu7OP",
       "createTime": "2023-09-21T16:30:10.345075Z",
       "updateTime": "2023-10-09T18:45:15.846464Z"
     },
     {
+      "position": "Clinical Psychologist (under training and supervision)",
+      "name": "Heidi Fares",
       "search": [
         "Depression",
         "Eating Disorder",
@@ -487,15 +489,6 @@
         "Psychosis",
         "Delusional Disorders"
       ],
-      "services": [],
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fheidi.jpg?alt=media&token=4b0cdd88-d195-48f1-8926-2a292a271a2e",
-      "quote": "The more you know yourself, the more patience you have for what you see in others. - Erik Erikson",
-      "clientele": [
-        "Adolescents",
-        "Adults +18"
-      ],
-      "position": "Clinical Psychologist (under training and supervision)",
-      "name": "Heidi Fares",
       "certificates": [
         {
           "title": "MSc in Clinical and Developmental Neuropsychology",
@@ -518,19 +511,26 @@
           "year": "2025"
         }
       ],
+      "services": [],
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fheidi.jpg?alt=media&token=4b0cdd88-d195-48f1-8926-2a292a271a2e",
+      "clientele": [
+        "Adolescents",
+        "Adults +18"
+      ],
+      "quote": "The more you know yourself, the more patience you have for what you see in others. - Erik Erikson",
       "id": "J9Odp0mxyUYUYQWZoNyT",
       "createTime": "2026-01-17T00:34:31.734146Z",
       "updateTime": "2026-01-17T00:34:31.734146Z"
     },
     {
-      "search": [],
-      "id": "KFxjskC9AHfryZNIeQ92",
-      "position": "Clinical Psychotherapist ",
+      "quote": "“Success as a therapist is not is not found in doing something for the client but rather in being something for the client” by Ili Rivera Walter",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2FMirna.jpg?alt=media&token=5c8970e9-a835-4ccc-9c7e-6ba354e710f6",
       "clientele": [
         "Adolescents",
         "Adults +18"
       ],
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2FMirna.jpg?alt=media&token=5c8970e9-a835-4ccc-9c7e-6ba354e710f6",
+      "services": [],
+      "id": "KFxjskC9AHfryZNIeQ92",
       "certificates": [
         {
           "title": "MSc Clinical Psychology",
@@ -593,26 +593,14 @@
           "year": "2019"
         }
       ],
-      "services": [],
+      "position": "Clinical Psychotherapist ",
+      "search": [],
       "name": "Mirna Mostafa",
-      "quote": "“Success as a therapist is not is not found in doing something for the client but rather in being something for the client” by Ili Rivera Walter",
       "createTime": "2025-01-14T20:47:50.710636Z",
       "updateTime": "2025-01-14T20:47:50.710636Z"
     },
     {
-      "services": [],
-      "clientele": [
-        "Adults +18"
-      ],
-      "quote": "It's not what's wrong with you, it's what happened to you",
-      "name": "Jana Radwan",
-      "search": [
-        "Understanding repeated patterns",
-        "Attachment styles",
-        "Relationship choices",
-        "Childhood emotional neglect",
-        "Unresolved trauma"
-      ],
+      "position": "Prenatal & Child Psychologist (under training and supervision)",
       "certificates": [
         {
           "title": "Msc Child, Adolescent and Family Psychology",
@@ -625,15 +613,34 @@
           "year": "2025"
         }
       ],
+      "search": [
+        "Understanding repeated patterns",
+        "Attachment styles",
+        "Relationship choices",
+        "Childhood emotional neglect",
+        "Unresolved trauma"
+      ],
+      "name": "Jana Radwan",
+      "quote": "It's not what's wrong with you, it's what happened to you",
+      "clientele": [
+        "Adults +18"
+      ],
       "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fjana.jpg?alt=media&token=e76e29a4-eed5-4b53-baf2-4d67265c9b8c",
-      "position": "Prenatal & Child Psychologist (under training and supervision)",
+      "services": [],
       "id": "T9wWRmQihJCyH0VVuQM5",
       "createTime": "2026-01-17T00:33:46.921815Z",
       "updateTime": "2026-01-17T00:33:46.921815Z"
     },
     {
       "position": "Counseling Psychotherapist",
-      "name": "Sahar Farid",
+      "quote": "Dive within to heal parts of yourself that you've been at cold-war with... flourish with authentic self-love, genuine kindness and unconditional acceptance towards yourself, to live life to the fullest.",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fsahar.jpg?alt=media&token=651e399e-eeee-4d9f-8ec1-2c8b18c0b4ea",
+      "search": [],
+      "clientele": [
+        "Children",
+        "Adolescents",
+        "Adults +18"
+      ],
       "certificates": [
         {
           "year": "2018",
@@ -646,20 +653,22 @@
           "title": "MSc Clinical Psychology"
         }
       ],
-      "quote": "Dive within to heal parts of yourself that you've been at cold-war with... flourish with authentic self-love, genuine kindness and unconditional acceptance towards yourself, to live life to the fullest.",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fsahar.jpg?alt=media&token=651e399e-eeee-4d9f-8ec1-2c8b18c0b4ea",
+      "name": "Sahar Farid",
       "services": [],
-      "search": [],
-      "clientele": [
-        "Children",
-        "Adolescents",
-        "Adults +18"
-      ],
       "id": "VvjHvkCbDzu05GDOSqSb",
       "createTime": "2024-03-10T16:54:58.921660Z",
       "updateTime": "2024-03-20T11:26:24.478268Z"
     },
     {
+      "name": "Ingie El Saady",
+      "blogs": [
+        ""
+      ],
+      "services": [
+        "Child Therapy",
+        "Group Therapy"
+      ],
+      "quote": "There is always light. If only we're brave enough to see it. If only we're brave enough to be it.\"  by Amanda Gorman",
       "search": [
         "Depression",
         "Anxiety",
@@ -671,6 +680,13 @@
         "Social Anxiety",
         "OCD",
         "Family problems"
+      ],
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2FIngyEs.jpeg?alt=media&token=aaf24cb8-c182-4bb1-a320-fd0d23bd93c7&_gl=1*1plbpbr*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4NzU1NzEuMjUuMC4w",
+      "clientele": [
+        "Individual Adult therapy",
+        "Adolescents",
+        "Group therapy",
+        "Couples therapy"
       ],
       "certificates": [
         {
@@ -689,35 +705,26 @@
           "title": "MSc Psychology"
         }
       ],
-      "clientele": [
-        "Individual Adult therapy",
-        "Adolescents",
-        "Group therapy",
-        "Couples therapy"
-      ],
-      "services": [
-        "Child Therapy",
-        "Group Therapy"
-      ],
-      "name": "Ingie El Saady",
       "position": "Clinical Psychologist",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2FIngyEs.jpeg?alt=media&token=aaf24cb8-c182-4bb1-a320-fd0d23bd93c7&_gl=1*1plbpbr*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4NzU1NzEuMjUuMC4w",
-      "blogs": [
-        ""
-      ],
-      "quote": "There is always light. If only we're brave enough to see it. If only we're brave enough to be it.\"  by Amanda Gorman",
       "id": "X4BxaEE7wk7eX89xknzz",
       "createTime": "2023-09-21T15:54:55.712434Z",
       "updateTime": "2023-10-10T20:13:01.399091Z"
     },
     {
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fnadia.jpg?alt=media&token=004e7a37-c854-4045-ac9b-4215bb1ed5cc",
+      "quote": "Part of getting to know yourself is to unknow yourself-to let go of the limiting stories you've told yourself about who you are so that you aren't trapped by them, so you can live your life and not the story you've been telling yourself about your life. -Lori Gottlieb",
       "name": "Nadia Fahmy",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fnadia.jpg?alt=media&token=004e7a37-c854-4045-ac9b-4215bb1ed5cc",
+      "search": [
+        "Depression",
+        "Anxiety disorders",
+        "Mood disorders",
+        "Interpersonal relationships"
+      ],
+      "position": "Clinical Psychologist",
       "clientele": [
         "Adolescents",
         "Adults +18"
       ],
-      "services": [],
       "certificates": [
         {
           "title": "BA in Psychology",
@@ -745,25 +752,22 @@
           "year": ""
         }
       ],
-      "search": [
-        "Depression",
-        "Anxiety disorders",
-        "Mood disorders",
-        "Interpersonal relationships"
-      ],
-      "position": "Clinical Psychologist",
-      "quote": "Part of getting to know yourself is to unknow yourself-to let go of the limiting stories you've told yourself about who you are so that you aren't trapped by them, so you can live your life and not the story you've been telling yourself about your life. -Lori Gottlieb",
+      "services": [],
       "id": "iEhvRoHYHNipJ8vCbkuo",
       "createTime": "2026-01-17T00:34:00.984197Z",
       "updateTime": "2026-01-17T00:34:00.984197Z"
     },
     {
+      "quote": "There is no such thing as a person you can't learn to love once you've heard their story. — Andrew Stanton",
+      "name": "Farida Talaat",
+      "position": "Clinical Psychologist",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Ffarida.jpg?alt=media&token=a77a50dc-78ac-4fff-8b1c-06efe44423a7",
+      "services": [],
       "clientele": [
         "Children",
         "Adolescents",
         "Adults +18"
       ],
-      "quote": "There is no such thing as a person you can't learn to love once you've heard their story. — Andrew Stanton",
       "search": [
         "Anxiety",
         "Excessive worry",
@@ -781,9 +785,6 @@
         "Identity",
         "Personal growth"
       ],
-      "services": [],
-      "name": "Farida Talaat",
-      "position": "Clinical Psychologist",
       "certificates": [
         {
           "title": "Bachelor of Arts in Psychology",
@@ -826,13 +827,19 @@
           "year": "2026"
         }
       ],
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Ffarida.jpg?alt=media&token=a77a50dc-78ac-4fff-8b1c-06efe44423a7",
       "id": "pPoI0CEo3PAAKSZfwQ8L",
       "createTime": "2026-01-17T00:34:18.063578Z",
       "updateTime": "2026-01-17T00:34:18.063578Z"
     },
     {
-      "quote": "I am not what happened to me, I am what I choose to become. \"Carl Jung\"",
+      "position": "Clinical Psychologist",
+      "search": [
+        "Depression",
+        "Anxiety",
+        "OCD",
+        "Personality disorders",
+        "Mood disorders"
+      ],
       "certificates": [
         {
           "title": "Masters of Science in Psychology",
@@ -890,20 +897,13 @@
           "year": "2025"
         }
       ],
-      "search": [
-        "Depression",
-        "Anxiety",
-        "OCD",
-        "Personality disorders",
-        "Mood disorders"
-      ],
-      "position": "Clinical Psychologist",
-      "services": [],
       "clientele": [
         "Adults +18"
       ],
       "name": "Yosra Elsewerky",
       "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FTherapists%2Fyoussra.jpg?alt=media&token=66c5c2c2-f869-4d97-a74a-2e4457670821",
+      "quote": "I am not what happened to me, I am what I choose to become. \"Carl Jung\"",
+      "services": [],
       "id": "sxxYjLxrm23clMf8QYgY",
       "createTime": "2026-01-17T00:33:40.799768Z",
       "updateTime": "2026-02-03T23:17:27.402889Z"
@@ -911,23 +911,23 @@
   ],
   "blogs": [
     {
-      "therapist": "Mirna Mostafa",
       "description": "Recognize exhaustion from chasing. Accept departures, heal, thrive independently. Embrace self-worth, love, and confidently move forward into change.",
-      "title": "Embracing Change: A Journey to Self-Recovery",
-      "body": "Someone once told me, \"After you chase somebody for so long, eventually your legs get tired, and you get fed up. That’s when you know it’s over. That’s when you know it’s time to move on.\" Just let them go. Admit the fact that they’re not here anymore. Don’t listen to anyone who tries to bring you down. You WILL get out of this. You WILL move on, forget about this whole thing, laugh again until you cry and hurt your stomach, achieve all your goals relying on no one but yourself, make yourself proud and happy all over again. You WILL be okay. But someday, always keep in mind that it takes time to repair what is broken. Trust me, it’s all about a matter of time. Just walk away and never look back on what you left behind. It doesn’t necessarily mean you forget about this whole thing in the meantime, but it just means that you have to accept what happened and cope with this whole thing from now on. You’ll be upset for days, months, and years. It’s going to be awful, but don’t you ever give up! Keep moving on. Keep making peace with your inner self. Keep yourself in touch with your inner wisdom. Keep that self-destructive and harmful attitude away from you. Keep spreading those positive vibes wherever you go. Keep that enormous smile on your face all day long. Keep laughing hard whenever you hear a joke, even if it’s ridiculous. Keep watching your favorite movie over and over again, watch it until you get bored of it. Keep replaying your absolute favorite ultimate party playlist frequently until you end up disliking it. Keep spoiling and treating yourself as a child. Keep rewarding and pampering yourself all day, every day. Keep treating yourself to something nice. Keep falling in love with your irresistible delicious midnight snack. Keep working out hard. Keep challenging yourself. Keep enjoying the aftermath of your daily intense training. Keep hitting the gym. Keep creating and throwing your own dance party any time you want. Keep thinking about that epic dance party of all time! Keep ignoring people you no longer wish to be around. Keep rejecting their phone calls and messages if you don’t want to text them back. Keep following your passion. Keep doing what makes you happy. Keep doing what you love, and last but not least, KEEP LIVING until your last breath. Be thankful for what you have and MAKE YOUR LIFE WORTH LIVING. Don’t waste your time on people who take you for granted. Don’t take things too seriously. Don’t make things complicated. Don’t be a grown-up! You are worth being loved and appreciated. You are worth being cherished. You are worth an effort. You are worth being someone’s everything. Learn how to love, value, and appreciate yourself. Trust me, you deserve better! Take a step forward and MOVE ON!",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp8.jpeg?alt=media&token=2c18fbe8-051f-4496-ba4b-1bfbc14e9741",
       "topic": "Self-worth",
+      "title": "Embracing Change: A Journey to Self-Recovery",
+      "therapist": "Mirna Mostafa",
+      "body": "Someone once told me, \"After you chase somebody for so long, eventually your legs get tired, and you get fed up. That’s when you know it’s over. That’s when you know it’s time to move on.\" Just let them go. Admit the fact that they’re not here anymore. Don’t listen to anyone who tries to bring you down. You WILL get out of this. You WILL move on, forget about this whole thing, laugh again until you cry and hurt your stomach, achieve all your goals relying on no one but yourself, make yourself proud and happy all over again. You WILL be okay. But someday, always keep in mind that it takes time to repair what is broken. Trust me, it’s all about a matter of time. Just walk away and never look back on what you left behind. It doesn’t necessarily mean you forget about this whole thing in the meantime, but it just means that you have to accept what happened and cope with this whole thing from now on. You’ll be upset for days, months, and years. It’s going to be awful, but don’t you ever give up! Keep moving on. Keep making peace with your inner self. Keep yourself in touch with your inner wisdom. Keep that self-destructive and harmful attitude away from you. Keep spreading those positive vibes wherever you go. Keep that enormous smile on your face all day long. Keep laughing hard whenever you hear a joke, even if it’s ridiculous. Keep watching your favorite movie over and over again, watch it until you get bored of it. Keep replaying your absolute favorite ultimate party playlist frequently until you end up disliking it. Keep spoiling and treating yourself as a child. Keep rewarding and pampering yourself all day, every day. Keep treating yourself to something nice. Keep falling in love with your irresistible delicious midnight snack. Keep working out hard. Keep challenging yourself. Keep enjoying the aftermath of your daily intense training. Keep hitting the gym. Keep creating and throwing your own dance party any time you want. Keep thinking about that epic dance party of all time! Keep ignoring people you no longer wish to be around. Keep rejecting their phone calls and messages if you don’t want to text them back. Keep following your passion. Keep doing what makes you happy. Keep doing what you love, and last but not least, KEEP LIVING until your last breath. Be thankful for what you have and MAKE YOUR LIFE WORTH LIVING. Don’t waste your time on people who take you for granted. Don’t take things too seriously. Don’t make things complicated. Don’t be a grown-up! You are worth being loved and appreciated. You are worth being cherished. You are worth an effort. You are worth being someone’s everything. Learn how to love, value, and appreciate yourself. Trust me, you deserve better! Take a step forward and MOVE ON!",
       "duration": "4 mins read",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp8.jpeg?alt=media&token=2c18fbe8-051f-4496-ba4b-1bfbc14e9741",
       "id": "6bUES3MKKemrzhuPJavZ",
       "createTime": "2023-12-28T11:51:34.713821Z",
       "updateTime": "2023-12-28T11:52:50.991259Z"
     },
     {
       "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp6.jpg?alt=media&token=7bf4c4bc-6131-4a5a-8f0d-6c50467e9d61&_gl=1*5fz01y*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4ODAyNDcuNTcuMC4w",
-      "topic": "Boundaries",
       "body": "Have you ever come across someone who seems to be always cheerful, always saying \"yes\" to every request, and appears eager to make others happy? While these individuals may project an image of consistent contentment, they often deal with a multitude of internal struggles, anxieties, and an ongoing battle for validation. In this article, we'll explore the multifaceted world of people pleasers and how their outward attitude often masks their inner turmoil.<br />  <strong>The Chameleon</strong><br />  People pleasers are like chameleons, seamlessly adapting themselves to their surroundings and the individuals they encounter. They possess a remarkable ability to blend in, perpetually striving to mirror the expectations of those around them. On the surface, they might appear to be amiable and accommodating, but beneath this façade, they can lose touch with their true selves.<br />  <strong>Always Saying YES</strong><br />  One of the most characteristic traits of people pleasers is their reluctance to say \"no.\" They habitually respond with agreement, even when it inconveniences them or contradicts their own desires. This unrelenting eagerness to assist can cultivate an image of perpetual availability and willingness to help, but it can also lead to exhaustion and the festering of inner resentment.<br />  <strong>The Conflict Avoider</strong><br />  People pleasers go to great lengths to avoid conflict. They often skip expressing their own opinions, needs, or desires in order to avoid disagreements or upsetting others. While this avoidance might make them seem like peacemakers who consistently maintain harmony, it often comes at the cost of their own well-being and the authenticity of their interactions.<br />  <strong>The Perfectionist</strong><br />  Many people-pleasers struggle with perfectionism. They relentlessly pursue flawlessness in every aspect of their lives, not necessarily because they genuinely seek it but because they believe it is the key to earning love and approval. This ceaseless quest for perfection can result in profound stress and anxiety.<br />  <strong>The Self-Blamer</strong><br />  When things go wrong, people pleasers frequently direct blame toward themselves, even when they have no control over the situation. They shoulder an unnecessary burden of guilt, convinced that they are responsible for every misstep. This inclination to self-blame can foster feelings of inadequacy and unworthiness.<br />  <strong>The Masked Emotions</strong><br />  One of the most intricate aspects of being a people pleaser is their adeptness at concealing their authentic emotions. They have become experts at masking their inner struggles behind a façade of perpetual cheerfulness. They may laugh when they want to cry, nod when they disagree, and pretend that everything is fine when it is not. This veneer can make it challenging for them to seek help or for others to discern their emotional distress.<br />  <strong>The Fear of Rejection</strong><br />  At the core of people pleasing lies an ingrained fear of rejection. Many people-pleasers equate their self-worth with their ability to make others happy. This fear propels them to maintain a façade of contentment and compliance, often resulting in the suppression of their true selves.<br />  <strong>The Toll on Mental Health</strong><br />  While people pleasers may appear content and selfless, the toll on their mental health can be substantial. The relentless pursuit of approval and the suppression of their own feelings and desires can lead to anxiety, depression, and a pervasive sense of emptiness. The smiling mask they wear can become an exhausting burden, and the internal turmoil can be unbearable.<br />  Breaking Free from the Facade<br />  Recognizing the façade of perpetual cheerfulness is just the beginning. To break free from people-pleasing tendencies and reclaim their authentic selves, individuals must embark on a journey of self-discovery, self-acceptance, and self-care.<br /> <ol> <li>Self-Reflection: Take time to reflect on your own desires and needs. Ask yourself what truly brings you happiness and fulfillment.</li>  <li>Learn to Say No: Practice setting boundaries and saying \"no\" when necessary. Understand that saying \"no\" is not a rejection of others but a form of self-care.</li>  <li>Seek Support: Reach out to friends, family, or a therapist who can offer understanding and guidance as you work through your people-pleasing tendencies.</li>  <li>Embrace Imperfection: Understand that it's okay to make mistakes. Recognize that nobody is perfect, and embracing your flaws is part of self-love.</li>  <li>Reconnect with Your Authentic Self: Rediscover your true desires, values, and passions. Reconnect with the joy of being yourself, unburdened by the need for constant approval.</li> </ol><br /> In conclusion, the smiling mask of a people pleaser can be deceiving, concealing a world of inner struggles and sacrifices. It's essential to recognize the toll people pleasing takes on mental health and take steps to break free from the facade. Embracing authenticity and self-care can lead to a happier and more fulfilling life, one where you don't have to wear a mask to be loved and accepted.<br />",
-      "description": "People-Pleasers hide struggles, say yes to all, and fear rejection; embracing authenticity is the path to freedom.",
       "therapist": "Weaam Elaidy",
+      "description": "People-Pleasers hide struggles, say yes to all, and fear rejection; embracing authenticity is the path to freedom.",
+      "topic": "Boundaries",
       "title": "The Hidden Struggles of a People-Pleaser",
       "duration": "6 mins read",
       "id": "C0nCs8YWOwdIjAI7p5Xb",
@@ -935,109 +935,109 @@
       "updateTime": "2023-10-10T16:36:12.255351Z"
     },
     {
-      "topic": "Mindfulness",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp1.jpg?alt=media&token=f309638a-9aec-40d6-b1a6-ac037ce10475&_gl=1*pw3t7x*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NTg4Njc0OC42LjEuMTY5NTg4Njg1My4yOC4wLjA.",
-      "body": "Have you ever returned home after a busy day of work, errands, and socializing, only to realize you can't recall the emotions and thoughts you experienced throughout the day? If so, you likely weren't practicing mindfulness during your hectic day.<br />  Mindfulness is a simple yet profound concept. It involves fully engaging your mind in the present moment, in what you're doing, and in the environment around you. When our minds wander, we disconnect from the present, becoming entangled in compulsive thoughts about the past or worries about the future, leading to stress.<br />  Practicing mindfulness entails gently redirecting your awareness to the here and now. This often involves focusing on your sensations, a technique useful in both formal meditation and everyday activities like walking, cooking, or cleaning.<br />  The human mind is naturally inclined to think, evaluate, and problem-solve. However, if left unchecked, it constantly seeks new stimuli, ideas to ponder, and escapes from reality.<br />  Mindfulness practice gradually retrains the mind to be more present-focused, putting you in control of your thoughts rather than allowing them to dominate you.<br />  Mindfulness offers more than improved focus; it enhances cognitive abilities, slows brain aging, reduces stress and anxiety, boosts well-being, and aids in pain management.<br />  One effective mindfulness technique is the grounding exercise. It prompts you to identify five things you can see, four things you can touch, three things you can hear, two things you can smell, and one thing you can taste. While it may seem simple, this exercise clears away racing thoughts, bringing your attention to the present moment for a few precious minutes. Repeating this exercise helps train your mind to stay grounded and enhances your ability to concentrate on the present moment.<br />",
-      "title": "The Power of Mindfulness: Embracing the Present Moment",
       "description": "Discover the benefits of mindfulness, staying present amidst a busy world, and the grounding exercise for improved focus and well-being.",
       "duration": "4 mins read",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp1.jpg?alt=media&token=f309638a-9aec-40d6-b1a6-ac037ce10475&_gl=1*pw3t7x*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NTg4Njc0OC42LjEuMTY5NTg4Njg1My4yOC4wLjA.",
       "therapist": "Ingie El Saady",
+      "body": "Have you ever returned home after a busy day of work, errands, and socializing, only to realize you can't recall the emotions and thoughts you experienced throughout the day? If so, you likely weren't practicing mindfulness during your hectic day.<br />  Mindfulness is a simple yet profound concept. It involves fully engaging your mind in the present moment, in what you're doing, and in the environment around you. When our minds wander, we disconnect from the present, becoming entangled in compulsive thoughts about the past or worries about the future, leading to stress.<br />  Practicing mindfulness entails gently redirecting your awareness to the here and now. This often involves focusing on your sensations, a technique useful in both formal meditation and everyday activities like walking, cooking, or cleaning.<br />  The human mind is naturally inclined to think, evaluate, and problem-solve. However, if left unchecked, it constantly seeks new stimuli, ideas to ponder, and escapes from reality.<br />  Mindfulness practice gradually retrains the mind to be more present-focused, putting you in control of your thoughts rather than allowing them to dominate you.<br />  Mindfulness offers more than improved focus; it enhances cognitive abilities, slows brain aging, reduces stress and anxiety, boosts well-being, and aids in pain management.<br />  One effective mindfulness technique is the grounding exercise. It prompts you to identify five things you can see, four things you can touch, three things you can hear, two things you can smell, and one thing you can taste. While it may seem simple, this exercise clears away racing thoughts, bringing your attention to the present moment for a few precious minutes. Repeating this exercise helps train your mind to stay grounded and enhances your ability to concentrate on the present moment.<br />",
+      "title": "The Power of Mindfulness: Embracing the Present Moment",
+      "topic": "Mindfulness",
       "id": "ERQnHLdQJHQhuZgYJsiD",
       "createTime": "2023-09-22T05:28:18.019952Z",
       "updateTime": "2023-10-10T16:15:30.023874Z"
     },
     {
-      "body": "If you have a friend or loved one grappling with psychological issues, you might wonder if your support is sufficient. Being a caregiver can be overwhelming and bewildering. This article helps you assess your approach to supporting your loved ones.<br />  The primary aspect of providing support is embracing an open mind and active listening skills. It goes beyond merely hearing their struggles; it involves truly understanding their unspoken feelings and empathizing. It's crucial to inquire about their specific needs, whether they seek your perspective or simply require validation and empathy.<br />  Don't hesitate to ask questions to gain a deeper understanding of their feelings. Loved ones can't expect you to grasp their situation without providing sufficient information.<br />  Assisting someone struggling with psychological challenges in their daily tasks can be remarkably beneficial. It demonstrates your unwavering support and helps alleviate their burdens.<br />  Encouraging them to seek professional psychological help is imperative. No matter how caring you are as a friend or family member, a qualified therapist possesses unique tools for aiding your loved ones during difficult times.<br />  However, we haven't covered all aspects of helping someone in distress. Being a caregiver can be exceptionally demanding, especially when you're exposed to stress yourself. At times, we forget to care for ourselves, devoting all our time to others' needs.<br />  Ensure you don't lose yourself while helping those in need. Prioritizing your own well-being is essential. Consider how you can offer effective support if you're not mentally stable. Prioritizing self-care, seeking therapy when necessary, and setting boundaries are indispensable for maintaining your psychological health.<br />  It's equally crucial not to take your loved one's progress personally if you feel their situation isn't improving or their problems remain unsolved. This doesn't signify failure as a caregiver; it acknowledges that some elements are beyond your control.<br />  This brings us to the critical distinction between what you can and cannot control. You can control your words and behavior toward them, but their actions remain within their domain. Ultimately, it's their life to navigate, not yours.<br />",
-      "therapist": "Ingie El Saady",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp2.jpg?alt=media&token=dc8ac251-9c2c-4a2c-a6ea-5cd9242d6478&_gl=1*n4qgoo*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NTg4Njc0OC42LjEuMTY5NTg4NzEzMC40NS4wLjA.",
-      "topic": "Supporting others",
-      "duration": "5 mins read",
       "description": "Discover healthy ways to provide support, including active listening, assistance with daily tasks, encouraging professional help, and self-care for caregivers.",
+      "therapist": "Ingie El Saady",
+      "duration": "5 mins read",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp2.jpg?alt=media&token=dc8ac251-9c2c-4a2c-a6ea-5cd9242d6478&_gl=1*n4qgoo*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NTg4Njc0OC42LjEuMTY5NTg4NzEzMC40NS4wLjA.",
       "title": "Supporting Loved Ones with Psychological Challenges",
+      "topic": "Supporting others",
+      "body": "If you have a friend or loved one grappling with psychological issues, you might wonder if your support is sufficient. Being a caregiver can be overwhelming and bewildering. This article helps you assess your approach to supporting your loved ones.<br />  The primary aspect of providing support is embracing an open mind and active listening skills. It goes beyond merely hearing their struggles; it involves truly understanding their unspoken feelings and empathizing. It's crucial to inquire about their specific needs, whether they seek your perspective or simply require validation and empathy.<br />  Don't hesitate to ask questions to gain a deeper understanding of their feelings. Loved ones can't expect you to grasp their situation without providing sufficient information.<br />  Assisting someone struggling with psychological challenges in their daily tasks can be remarkably beneficial. It demonstrates your unwavering support and helps alleviate their burdens.<br />  Encouraging them to seek professional psychological help is imperative. No matter how caring you are as a friend or family member, a qualified therapist possesses unique tools for aiding your loved ones during difficult times.<br />  However, we haven't covered all aspects of helping someone in distress. Being a caregiver can be exceptionally demanding, especially when you're exposed to stress yourself. At times, we forget to care for ourselves, devoting all our time to others' needs.<br />  Ensure you don't lose yourself while helping those in need. Prioritizing your own well-being is essential. Consider how you can offer effective support if you're not mentally stable. Prioritizing self-care, seeking therapy when necessary, and setting boundaries are indispensable for maintaining your psychological health.<br />  It's equally crucial not to take your loved one's progress personally if you feel their situation isn't improving or their problems remain unsolved. This doesn't signify failure as a caregiver; it acknowledges that some elements are beyond your control.<br />  This brings us to the critical distinction between what you can and cannot control. You can control your words and behavior toward them, but their actions remain within their domain. Ultimately, it's their life to navigate, not yours.<br />",
       "id": "Hj5wufuLGpB3AwOcriYL",
       "createTime": "2023-09-21T16:42:55.873657Z",
       "updateTime": "2023-10-10T16:17:00.821452Z"
     },
     {
+      "description": "Uncover anger's spectrum and physiological impact. Navigate healthy strategies, emphasizing assertive communication and relaxation techniques. Manage anger for emotional well-being and harmonious living.",
       "topic": "Anger Management",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp11.png?alt=media&token=4c18d08f-d2b8-4370-9d7e-3dccb0e4f1dd",
+      "title": "Navigating Anger: Understanding and Managing this Powerful Emotion",
       "therapist": "Ingie ElSaady",
       "body": "Charles Spielberger, PhD, a psychologist who specializes in the study of anger, defines anger as \"an emotional state that varies in intensity from mild irritation to intense fury and rage.\" Anger is a feeling that is accompanied by physiological and biological changes, just like other emotions. Anger raises your blood pressure, heart rate, and levels of energy hormones like adrenaline and noradrenaline.  Anger can stem from a variety of things, such as fretting or brooding about personal issues, or it can be directed against a specific person or situation (such as a supervisor or coworker) or occurrence (such as a traffic jam or canceled trip). Angry memories can also be sparked by painful or upsetting experiences.  People deal with their anger in different ways, both consciously and unconsciously. The three primary strategies are soothing, suppressing, and expressing. The best approach to communicate anger is to do so in an assertive, rather than an aggressive, manner. You must learn how to express your demands clearly and how to get them met without causing harm to other people in order to do this. Being respectful of oneself and other people is what it means to be assertive, not being forceful or demanding.  Suppression of anger might be followed by conversion or redirection. When you suppress your rage, put it out of your mind, and turn your attention toward something constructive, this occurs. The idea is to control, repress, and transform your anger into more positive actions. This kind of response has the risk that, if it isn't allowed to be expressed outside of oneself, your wrath will turn inward and toward you. An internalized anger might result in depression, high blood pressure, or hypertension.  Anger that goes unspoken might lead to other issues. Pathological manifestations of anger may result from it, such as hostile and cynical behavior or passive-aggressive behavior (retaliating against someone subtly without explaining why, instead of facing them directly).  Individuals who are always criticizing everything, demeaning other people, and making cynical remarks lack the ability to channel their rage in a productive way. It should come as no surprise that they rarely have happy relationships.  Reducing your emotional reactions to anger as well as the physiological arousal it produces is the aim of anger management. The things or people that irritate you are unavoidable and cannot be changed, but you may learn to manage your responses.  Simple relaxation techniques like deep breathing and calming visualization can help reduce feelings of anger. You can acquire relaxation techniques from books and classes, and once you have the skills, you can use them in any circumstance.",
-      "title": "Navigating Anger: Understanding and Managing this Powerful Emotion",
-      "description": "Uncover anger's spectrum and physiological impact. Navigate healthy strategies, emphasizing assertive communication and relaxation techniques. Manage anger for emotional well-being and harmonious living.",
       "duration": " 4 mins read",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp11.png?alt=media&token=4c18d08f-d2b8-4370-9d7e-3dccb0e4f1dd",
       "id": "Kg93YhicGd0ESqGQxx4i",
       "createTime": "2024-02-04T16:35:46.176375Z",
       "updateTime": "2024-02-04T16:35:46.176375Z"
     },
     {
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp9.png?alt=media&token=c64021dc-cd47-4c43-b81b-b8c6833a6acb",
-      "topic": "Anxiety",
-      "duration": "8 mins read",
-      "body": "In today's fast-paced world, anxiety has become increasingly prevalent, affecting individuals from all walks of life. If you're one of the millions dealing with anxiety, you're not alone. Acknowledging your struggle is the first step toward finding effective coping mechanisms. In this blog post, we will explore ten proven strategies to help you navigate anxiety and regain control of your life. Remember, everyone's journey is unique, so feel free to tailor these suggestions to suit your personal needs. 1. Understand Anxiety: To effectively deal with anxiety, it's crucial to understand its nature. Anxiety is a normal response to stress, but when it becomes excessive and interferes with daily functioning, it requires attention. Learn about the different types of anxiety disorders, common symptoms, and potential triggers. Educating yourself empowers you to recognize and address your anxiety proactively. 2. Practice Deep Breathing and Relaxation Techniques: Deep breathing exercises and relaxation techniques, such as progressive muscle relaxation or guided imagery, can help calm your mind and body during moments of anxiety. Whenever you feel overwhelmed, take slow, deep breaths and focus on the sensation of your breath entering and leaving your body. These techniques promote relaxation and reduce the intensity of anxiety symptoms. 3. Establish a Support System: Building a support system is crucial in managing anxiety. Seek out trusted friends, family members, or support groups who can provide a listening ear, encouragement, and understanding. Sharing your thoughts and feelings with others can alleviate the burden of anxiety and offer fresh perspectives on managing stressors. 4. Engage in Regular Physical Exercise: Physical activity has long been recognized as an effective tool in reducing anxiety. Regular exercise helps release endorphins, which are natural mood boosters. Engage in activities you enjoy, such as walking, jogging, yoga, or dancing. Aim for at least 30 minutes of moderate exercise most days of the week to reap the benefits of improved mental well-being. 5. Practice Mindfulness and Meditation: Mindfulness and meditation techniques can be powerful tools in managing anxiety. By focusing on the present moment and observing your thoughts without judgment, you can develop a greater sense of calm and reduce anxiety's grip on your mind. Consider incorporating mindfulness practices into your daily routine, such as mindful breathing, body scans, or guided meditation apps. 6. Prioritize Self-Care: Self-care is essential for maintaining optimal mental health. Take time to engage in activities that bring you joy and relaxation. This might include reading a book, taking a warm bath, pursuing a hobby, or spending time in nature. Remember, self-care is not selfish; it's an investment in your well-being. 7. Challenge Negative Thoughts: Anxiety often feeds on negative and irrational thoughts. Learn to identify and challenge these thoughts by asking yourself if they are based on evidence or if there are alternative explanations. Replace negative thoughts with positive, realistic affirmations. 8. Establish Healthy Sleep Habits: Sleep plays a vital role in managing anxiety. Establish a regular sleep routine by going to bed and waking up at consistent times. Create a sleep-friendly environment by ensuring your bedroom is dark, quiet, and comfortable. Avoid stimulating activities before bed, such as using electronic devices, and practice relaxation techniques to help calm your mind for a restful night's sleep. 9. Limit Stress and Overstimulation: Identify sources of stress and overstimulation in your life and take steps to minimize their impact. This may involve setting boundaries, learning to say \"no\" when necessary, and simplifying your schedule. Engaging in stress-reducing activities like journaling, listening to calming music, or spending time in nature can also help restore balance. 10. Seek Professional Help: If anxiety significantly impairs your daily life or persists despite your efforts, consider seeking professional help. A mental health professional, such as a therapist or psychologist, can provide personalized guidance, therapy, or medication if needed. Remember, reaching out for support is a sign of strength, and professionals are there to help you navigate your journey toward better mental well-being. Dealing with anxiety is a journey that requires patience, self-compassion, and a willingness to try different strategies. By understanding anxiety, practicing relaxation techniques, building a support system, engaging in physical exercise, prioritizing self-care, challenging negative thoughts, prioritizing sleep, limiting stress, and seeking professional help when needed, you can take significant steps toward managing anxiety and leading a fulfilling life. Remember, it's okay to ask for help and take things one day at a time.",
-      "title": "A Comprehensive Guide: 10 Effective Strategies to Deal with Anxiety",
       "description": "Discover proven strategies to tackle anxiety head-on. From understanding its roots to building a support system, this guide empowers you to regain control and live a fulfilling life.",
       "therapist": "Habiba Youssry",
+      "duration": "8 mins read",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp9.png?alt=media&token=c64021dc-cd47-4c43-b81b-b8c6833a6acb",
+      "title": "A Comprehensive Guide: 10 Effective Strategies to Deal with Anxiety",
+      "topic": "Anxiety",
+      "body": "In today's fast-paced world, anxiety has become increasingly prevalent, affecting individuals from all walks of life. If you're one of the millions dealing with anxiety, you're not alone. Acknowledging your struggle is the first step toward finding effective coping mechanisms. In this blog post, we will explore ten proven strategies to help you navigate anxiety and regain control of your life. Remember, everyone's journey is unique, so feel free to tailor these suggestions to suit your personal needs. 1. Understand Anxiety: To effectively deal with anxiety, it's crucial to understand its nature. Anxiety is a normal response to stress, but when it becomes excessive and interferes with daily functioning, it requires attention. Learn about the different types of anxiety disorders, common symptoms, and potential triggers. Educating yourself empowers you to recognize and address your anxiety proactively. 2. Practice Deep Breathing and Relaxation Techniques: Deep breathing exercises and relaxation techniques, such as progressive muscle relaxation or guided imagery, can help calm your mind and body during moments of anxiety. Whenever you feel overwhelmed, take slow, deep breaths and focus on the sensation of your breath entering and leaving your body. These techniques promote relaxation and reduce the intensity of anxiety symptoms. 3. Establish a Support System: Building a support system is crucial in managing anxiety. Seek out trusted friends, family members, or support groups who can provide a listening ear, encouragement, and understanding. Sharing your thoughts and feelings with others can alleviate the burden of anxiety and offer fresh perspectives on managing stressors. 4. Engage in Regular Physical Exercise: Physical activity has long been recognized as an effective tool in reducing anxiety. Regular exercise helps release endorphins, which are natural mood boosters. Engage in activities you enjoy, such as walking, jogging, yoga, or dancing. Aim for at least 30 minutes of moderate exercise most days of the week to reap the benefits of improved mental well-being. 5. Practice Mindfulness and Meditation: Mindfulness and meditation techniques can be powerful tools in managing anxiety. By focusing on the present moment and observing your thoughts without judgment, you can develop a greater sense of calm and reduce anxiety's grip on your mind. Consider incorporating mindfulness practices into your daily routine, such as mindful breathing, body scans, or guided meditation apps. 6. Prioritize Self-Care: Self-care is essential for maintaining optimal mental health. Take time to engage in activities that bring you joy and relaxation. This might include reading a book, taking a warm bath, pursuing a hobby, or spending time in nature. Remember, self-care is not selfish; it's an investment in your well-being. 7. Challenge Negative Thoughts: Anxiety often feeds on negative and irrational thoughts. Learn to identify and challenge these thoughts by asking yourself if they are based on evidence or if there are alternative explanations. Replace negative thoughts with positive, realistic affirmations. 8. Establish Healthy Sleep Habits: Sleep plays a vital role in managing anxiety. Establish a regular sleep routine by going to bed and waking up at consistent times. Create a sleep-friendly environment by ensuring your bedroom is dark, quiet, and comfortable. Avoid stimulating activities before bed, such as using electronic devices, and practice relaxation techniques to help calm your mind for a restful night's sleep. 9. Limit Stress and Overstimulation: Identify sources of stress and overstimulation in your life and take steps to minimize their impact. This may involve setting boundaries, learning to say \"no\" when necessary, and simplifying your schedule. Engaging in stress-reducing activities like journaling, listening to calming music, or spending time in nature can also help restore balance. 10. Seek Professional Help: If anxiety significantly impairs your daily life or persists despite your efforts, consider seeking professional help. A mental health professional, such as a therapist or psychologist, can provide personalized guidance, therapy, or medication if needed. Remember, reaching out for support is a sign of strength, and professionals are there to help you navigate your journey toward better mental well-being. Dealing with anxiety is a journey that requires patience, self-compassion, and a willingness to try different strategies. By understanding anxiety, practicing relaxation techniques, building a support system, engaging in physical exercise, prioritizing self-care, challenging negative thoughts, prioritizing sleep, limiting stress, and seeking professional help when needed, you can take significant steps toward managing anxiety and leading a fulfilling life. Remember, it's okay to ask for help and take things one day at a time.",
       "id": "Rg6LRrcLi8ARD0waiT8v",
       "createTime": "2024-02-04T16:25:50.887693Z",
       "updateTime": "2024-02-04T16:25:50.887693Z"
     },
     {
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp7.jpg?alt=media&token=965729e1-cc96-4ac5-9c9c-c8afe423370e&_gl=1*xuxz2e*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NzEyOTM4MC4yNS4xLjE2OTcxMjk3ODguNDQuMC4w",
       "description": "Learn how setting time limits and giving yourself permission to leave can empower you to conquer anxiety and regain control.",
-      "therapist": "Ingy Helmy",
-      "duration": "4 mins read",
+      "topic": "Anxiety",
       "title": "Embrace Control: Overcoming Anxiety and Giving Yourself Permission",
       "body": "Sometimes, attending events or engaging in specific activities can be challenging due to various reasons, with fear being a prominent factor. This fear can range from mere discomfort to full-blown social anxiety, occasionally leading people to isolate themselves.<br /> One clever strategy to manage this fear is to set a time limit. For instance, you might decide to attend an event for only 30 minutes or commit to listening to just the first song. This approach provides a sense of safety, knowing you're not locked into a lengthy commitment. It's like dipping your toe in the water instead of diving headfirst. Surprisingly, those who use this trick often end up staying much longer than their initially imposed time limit.<br /> However, clients frequently share that they used this tactic but then downplay their success in overcoming anxiety. They may feel like they \"cheated\" in some way because they initially planned to leave early. In reality, it still counts. I often ask if this approach made it easier for them to attend the event, and the answer is almost always a resounding yes. This leads to a deeper conversation about what it means to give yourself permission.<br /> Giving yourself permission to leave if you feel the need is a powerful act of taking control. When you do this, you acknowledge that you have the authority to set boundaries for the event. If you go and don't enjoy it, you can leave. If you're having a great time, you can stay. This sense of control is at the core of the anxiety that holds many people back from participating in social activities.<br /> Acknowledging your own control can be challenging, but when you give yourself permission to leave early, you are essentially stating that you are in control. The fear of being in an uncomfortable or unenjoyable situation can be lessened by the realization that you can terminate the situation at any time. You are in control.<br /> While it's true that there's much in life that we can't control, we can always control whether we stay and for how long. We can react to the situation and recognize the control we have over ourselves. This realization is the key to feeling safe – recognizing where we do have control and giving ourselves permission to exercise it.<br />",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp7.jpg?alt=media&token=965729e1-cc96-4ac5-9c9c-c8afe423370e&_gl=1*xuxz2e*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NzEyOTM4MC4yNS4xLjE2OTcxMjk3ODguNDQuMC4w",
-      "topic": "Anxiety",
+      "duration": "4 mins read",
+      "therapist": "Ingy Helmy",
       "id": "W0ByGdjEcwhAYxE0yo0G",
       "createTime": "2023-10-12T16:53:50.125881Z",
       "updateTime": "2024-02-04T16:26:56.815858Z"
     },
     {
       "duration": "3 min read",
-      "title": "Therapy Takes Time: The Rush to Change",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp3.jpg?alt=media&token=7927d6d4-ba1f-4c91-ac16-dc36abca96e8&_gl=1*aiqd0k*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NTg4Njc0OC42LjEuMTY5NTg4NzMxNi40MS4wLjA.",
-      "topic": "Therapy",
-      "description": "Embrace patience in the journey of change, like a river's flow. Efforts can guide, but change takes its own time.",
-      "body": "I came across an intriguing saying recently: \"You can't push the river.\" This phrase was used to emphasize the importance of patience when it comes to change. I found the metaphor quite insightful for a few reasons. Take a moment to visualize someone attempting to physically push a river, standing in the water, pushing while the water effortlessly flows around them.<br />  A river serves as a powerful analogy for the process of change. Picture the river's source as where you are now, and downstream as your desired destination. There are numerous ways we resist this flow. Some of us may avoid even getting into the river altogether, effectively evading change, unless circumstances force us in.<br />  Once we're in the river, resistance to change can persist. We might swim upstream, attempting to return to where we began. Or we might swim to the side and settle for partial change. Sometimes, we cling to rocks and branches, doing our utmost to impede progress towards change. Occasionally, we allow external factors, like people in our lives who resist change, to pull us out of the river in a metaphorical helicopter, preventing change from disrupting their lives.<br />  But what if we genuinely desire to change?<br />  In these instances, we find ourselves largely at the river's mercy. As the saying goes, \"You can't push the river.\" Similar to how a river flows at its own natural pace, the process of change moves in its own time. People frequently inquire about the duration of change. The somewhat frustrating answer is that it takes as long as it takes.<br />  Much like a river meandering in some areas and rushing through rapids in others, change unfolds at its necessary pace. Most of the traits or behaviors we seek to change about ourselves didn't develop overnight; they have evolved over years. Although we often wish for overnight transformations, it takes time to unravel years of ingrained habits, training, and learning that brought us to our current state.<br />  So, as challenging as it may be, patience is the key. Do your part to facilitate the process of change, but simultaneously understand that the river of change flows at its own pace, regardless of how hard you may try to push it.<br />",
       "therapist": "Ingy Helmy",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp3.jpg?alt=media&token=7927d6d4-ba1f-4c91-ac16-dc36abca96e8&_gl=1*aiqd0k*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NTg4Njc0OC42LjEuMTY5NTg4NzMxNi40MS4wLjA.",
+      "body": "I came across an intriguing saying recently: \"You can't push the river.\" This phrase was used to emphasize the importance of patience when it comes to change. I found the metaphor quite insightful for a few reasons. Take a moment to visualize someone attempting to physically push a river, standing in the water, pushing while the water effortlessly flows around them.<br />  A river serves as a powerful analogy for the process of change. Picture the river's source as where you are now, and downstream as your desired destination. There are numerous ways we resist this flow. Some of us may avoid even getting into the river altogether, effectively evading change, unless circumstances force us in.<br />  Once we're in the river, resistance to change can persist. We might swim upstream, attempting to return to where we began. Or we might swim to the side and settle for partial change. Sometimes, we cling to rocks and branches, doing our utmost to impede progress towards change. Occasionally, we allow external factors, like people in our lives who resist change, to pull us out of the river in a metaphorical helicopter, preventing change from disrupting their lives.<br />  But what if we genuinely desire to change?<br />  In these instances, we find ourselves largely at the river's mercy. As the saying goes, \"You can't push the river.\" Similar to how a river flows at its own natural pace, the process of change moves in its own time. People frequently inquire about the duration of change. The somewhat frustrating answer is that it takes as long as it takes.<br />  Much like a river meandering in some areas and rushing through rapids in others, change unfolds at its necessary pace. Most of the traits or behaviors we seek to change about ourselves didn't develop overnight; they have evolved over years. Although we often wish for overnight transformations, it takes time to unravel years of ingrained habits, training, and learning that brought us to our current state.<br />  So, as challenging as it may be, patience is the key. Do your part to facilitate the process of change, but simultaneously understand that the river of change flows at its own pace, regardless of how hard you may try to push it.<br />",
+      "description": "Embrace patience in the journey of change, like a river's flow. Efforts can guide, but change takes its own time.",
+      "topic": "Therapy",
+      "title": "Therapy Takes Time: The Rush to Change",
       "id": "k2kmW7mHUrT0gJ5AsgpR",
       "createTime": "2023-09-21T16:44:46.315623Z",
       "updateTime": "2023-12-28T11:53:35.676371Z"
     },
     {
-      "topic": "Boundaries",
       "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp4.jpg?alt=media&token=5c84b1da-02c1-46d1-bcae-83dfe89bb85e&_gl=1*10hbwsa*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5NTg4Njc0OC42LjEuMTY5NTg4NzQ3Ni40OC4wLjA.",
+      "therapist": "Habiba Youssry",
       "description": "Maintaining healthy boundaries in relationships is crucial for self-care, mutual respect, and stress management. Learn to set and enforce them effectively.",
-      "duration": "5 mins read",
+      "topic": "Boundaries",
       "body": "Life presents various relationships where understanding and maintaining appropriate boundaries are vital. While some boundaries arise naturally, others require conscious establishment and communication. Healthy boundaries are essential for self-care, stress management, and fostering mutual respect. This article explores strategies for identifying and effectively setting boundaries.<br />  <strong style=\"text-align:left;width:'100%';\">What are boundaries?</strong><br />  Boundaries are personal guidelines that safeguard your identity within relationships. They encompass comfort levels, values, and limitations regarding what you accept from others in different contexts. For instance, valuing morning solitude, requiring quiet during work, or limiting political discussions with specific family members are examples. Boundaries encompass behavior, communication styles, physical space, emotional energy, finances, secrets, roles, and more. Recognizing unique boundaries within each relationship balances mutual care with self-care.<br />  <strong style=\"text-align:left;width:'100%';\">Why are boundaries important?</strong><br />  Clear boundaries reduce misunderstandings, resentment, and hurt feelings. They enable you to authentically be yourself, control what you contribute and receive in relationships, and conserve emotional energy. This allows for replenishment. Boundaries also convey self-respect and establish patterns that promote mutual growth.<br />  <strong style=\"text-align:left;width:'100%';\">How to set boundaries?</strong><br />  <ol> <li>Self-reflection: Assess your needs, values, capacities, and priorities. Identify situations or behaviors that cause discomfort or emotional exhaustion, indicating areas where stronger boundaries may be necessary.</li>  <li>Clear communication: Engage in honest, compassionate conversations to convey your boundaries. Frame them in terms of your feelings and needs rather than assigning blame.</li>  <li>Establish consequences: Calmly explain how you will respond if a boundary is crossed, such as ending a conversation or temporarily limiting contact. Consistently enforce these consequences.</li>  <li>Learn to say no: Prioritize your health and well-being by not succumbing to pressure to say yes when it goes against your comfort zone or desires.</li>  <li>Be assertive: Address boundary violations promptly to prevent further issues. Do not allow minor infractions to slide.</li>  <li>Prioritize self-care: Strengthen your identity through hobbies, relationships, health, and spiritual practices that nurture your well-being.</li>  <li>Stand firm: Maintain composure if others resist or protest your boundaries. Your needs are valid.</li> </ol><br /> <strong style=\"text-align:left;width:'100%';\">Handling boundary crossers:</strong><br />  <ul> <li>Reassert boundaries: Clearly and firmly restate your boundaries, emphasizing that they are non-negotiable, and communicate that you expect them to be respected.</li>  <li>Explain consequences: Specify what action you will take if boundaries continue to be violated. Be prepared to follow through.</li>  <li>Seek support: Talk to supportive friends or family who can validate your boundaries and provide emotional strength.</li>  <li>Limit exposure: Reduce time spent with boundary crossers and avoid situations conducive to violations.</li>  <li>Use self-affirming statements: Remind yourself of your right to feel safe and comfortable. Repeat affirmations such as \"I deserve to have my boundaries respected.\"</li>  <li>Release guilt: Understand that setting boundaries is your right, even if others disagree. Trust your judgment.</li>  <li>Consider professional help: If someone persistently violates boundaries in an abusive manner, seek assistance from a counselor or other support resources.</li>  <li>Exercise compassion without compromise: Recognize that others may have unhealthy patterns, but don't abandon your needs.</li> </ul><br /> Maintain your sense of worth and well-being. Through consistency, care, and support, you can guide others in healthy interactions with you.<br />  Healthy relationships involve mutual give-and-take. Empower yourself to communicate your needs. Establishing loving, compassionate boundaries benefits everyone involved. With time, boundary setting becomes more comfortable. The personal growth and improved relationships are well worth the initial discomfort. Begin with small steps, stay consistent, and commit to self-care through boundaries that honor your worth.<br />",
       "title": "Hold Your Ground: Standing Firm on Your Boundaries Gracefully",
-      "therapist": "Habiba Youssry",
+      "duration": "5 mins read",
       "id": "kXcA96yItOsWQXevm6sW",
       "createTime": "2023-09-21T16:45:38.210988Z",
       "updateTime": "2023-10-10T16:27:40.549731Z"
     },
     {
-      "therapist": "Engy Helmy",
-      "topic": "Negative Thoughts",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp10.png?alt=media&token=50f8b5d3-c24f-4f8b-8b73-0c3369277df0",
-      "body": "I think most people have heard voices in their head. I don’t mean movie-style voices directing us to be serial killers. I mean thoughts that contradict us, that challenge whether we can succeed, that tell us we aren’t good enough. Those voices and thoughts that pop up in us in a moment of doubt. For some people those thoughts and voices come from some unknown place. For others they know the source. It is a parent or other family member. It is a teacher or a boss. It may be a partner. What is interesting is how differently those voices affect each of us. Some people can hear those voices, give them thought and dismiss them. They may have moments of doubt about themselves or their abilities, but they can overcome them. They can acknowledge the risk that we may not succeed and choose to move forward despite that. They recognize that the voices are only have opinions...not absolute truths. Yet for others those voices can’t so easily be dismissed. They hear those voices in their head. And they believe them. The voices sound just as loud as if a person was standing right there saying those words of doubt and criticism. The person doubts themself to the point where they often don’t act. They don’t even try to accomplish things, to grow or to have hopes because the voices have them convinced that they will just fail anyway. How did those voices get to be so strong for those people? Often it is because those words of doubt were repeated to them over and over in real life. They heard the same message again and again, to the point that it crowded out all other voices. Sometimes it was malicious. A person that wanted to drag down another in order to create a false sense of superiority. Other times it was well intentioned...a misguided attempt to try to make a person stronger. Regardless, the voices were heard criticizing, putting down, discouraging. They were often backed up with examples that supposedly proved those points. And they were presented as fact. To make things worse. These voices often started when these people were children. They weren’t able to make rational arguments against the voices, to say “hey, there is lots of evidence that says this isn’t true.” And, those voices came from people that supposedly loved them, that they could trust unconditionally. Those words of defeat were stamped at an emotional level on trusting, loving children, unable to distinguish destructive perspectives from fact. It would be great if when those people became adults, with full capacity to use logic and reason, that they could suddenly shift and say, hey, that’s not right. But it doesn’t work that way. When we learn things at an emotional level they become embedded in there. It doesn’t mean they can’t  change but it isn’t as easy as just saying, “I’m not going to think that way now.” The voices don’t go away and can’t be dismissed that easily. But there is a process for change. Change starts with recognizing the voices – where they came from, what they are saying. Then it is creating the understanding that the voices aren’t truth...they are perspectives. And then starts the process of finding facts that don’t support those perspectives...that support healthy, positive aspects. Because those facts are there. I’ve seen it over and over. People that are so focused on the voices that they completely overlook the evidence in their life that says the voices are wrong. And then it takes time. The voices have had years to make their case. It isn’t easy to combat the years of “proof” and emotional embedding. It takes time with repeated demonstrations that there are facts that contradict the voices. It means taking the risk of not believing them. Because if the voices have worked to prove one thing it is that taking risks and not believing the voices will result in very bad things. Taking the leap to consciously ignore them is scary and difficult. That’s where support comes in. We often surround ourselves with people that share our view...of the world, of ourselves. And too often people that hear these destructive voices have surrounded themselves with friends and acquaintances that act like the voices are true. Being around people that have high expectations feels scary and like a recipe for disaster. They will find out that the voices are right and you’ll disappoint them so it is easier to be around people that assume you will fail. But that is another risk that needs to be faced. Change needs to hear other voices. Supportive ones that present another perspective. Ones that are supportive and encouraging. Ones that don’t think one mistake proves the voices right. The voices in our head don’t own the truth. They have their own perspectives. And those perspectives may very well be wrong. The way to find out is to allow in other voices. To give those voices weight and value. It can be scary. It may take time. But change can happen. Those voices are not entitled to run your life...don’t let them.",
       "title": "Conquering Inner Critics: A Guide to Challenging Negative Voices",
-      "description": "Explore the power of internal voices that challenge self-worth. Discover how recognizing, understanding, and seeking support can dismantle these destructive perspectives, paving the way for positive change.",
+      "topic": "Negative Thoughts",
       "duration": "5 mins read",
+      "therapist": "Engy Helmy",
+      "description": "Explore the power of internal voices that challenge self-worth. Discover how recognizing, understanding, and seeking support can dismantle these destructive perspectives, paving the way for positive change.",
+      "body": "I think most people have heard voices in their head. I don’t mean movie-style voices directing us to be serial killers. I mean thoughts that contradict us, that challenge whether we can succeed, that tell us we aren’t good enough. Those voices and thoughts that pop up in us in a moment of doubt. For some people those thoughts and voices come from some unknown place. For others they know the source. It is a parent or other family member. It is a teacher or a boss. It may be a partner. What is interesting is how differently those voices affect each of us. Some people can hear those voices, give them thought and dismiss them. They may have moments of doubt about themselves or their abilities, but they can overcome them. They can acknowledge the risk that we may not succeed and choose to move forward despite that. They recognize that the voices are only have opinions...not absolute truths. Yet for others those voices can’t so easily be dismissed. They hear those voices in their head. And they believe them. The voices sound just as loud as if a person was standing right there saying those words of doubt and criticism. The person doubts themself to the point where they often don’t act. They don’t even try to accomplish things, to grow or to have hopes because the voices have them convinced that they will just fail anyway. How did those voices get to be so strong for those people? Often it is because those words of doubt were repeated to them over and over in real life. They heard the same message again and again, to the point that it crowded out all other voices. Sometimes it was malicious. A person that wanted to drag down another in order to create a false sense of superiority. Other times it was well intentioned...a misguided attempt to try to make a person stronger. Regardless, the voices were heard criticizing, putting down, discouraging. They were often backed up with examples that supposedly proved those points. And they were presented as fact. To make things worse. These voices often started when these people were children. They weren’t able to make rational arguments against the voices, to say “hey, there is lots of evidence that says this isn’t true.” And, those voices came from people that supposedly loved them, that they could trust unconditionally. Those words of defeat were stamped at an emotional level on trusting, loving children, unable to distinguish destructive perspectives from fact. It would be great if when those people became adults, with full capacity to use logic and reason, that they could suddenly shift and say, hey, that’s not right. But it doesn’t work that way. When we learn things at an emotional level they become embedded in there. It doesn’t mean they can’t  change but it isn’t as easy as just saying, “I’m not going to think that way now.” The voices don’t go away and can’t be dismissed that easily. But there is a process for change. Change starts with recognizing the voices – where they came from, what they are saying. Then it is creating the understanding that the voices aren’t truth...they are perspectives. And then starts the process of finding facts that don’t support those perspectives...that support healthy, positive aspects. Because those facts are there. I’ve seen it over and over. People that are so focused on the voices that they completely overlook the evidence in their life that says the voices are wrong. And then it takes time. The voices have had years to make their case. It isn’t easy to combat the years of “proof” and emotional embedding. It takes time with repeated demonstrations that there are facts that contradict the voices. It means taking the risk of not believing them. Because if the voices have worked to prove one thing it is that taking risks and not believing the voices will result in very bad things. Taking the leap to consciously ignore them is scary and difficult. That’s where support comes in. We often surround ourselves with people that share our view...of the world, of ourselves. And too often people that hear these destructive voices have surrounded themselves with friends and acquaintances that act like the voices are true. Being around people that have high expectations feels scary and like a recipe for disaster. They will find out that the voices are right and you’ll disappoint them so it is easier to be around people that assume you will fail. But that is another risk that needs to be faced. Change needs to hear other voices. Supportive ones that present another perspective. Ones that are supportive and encouraging. Ones that don’t think one mistake proves the voices right. The voices in our head don’t own the truth. They have their own perspectives. And those perspectives may very well be wrong. The way to find out is to allow in other voices. To give those voices weight and value. It can be scary. It may take time. But change can happen. Those voices are not entitled to run your life...don’t let them.",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp10.png?alt=media&token=50f8b5d3-c24f-4f8b-8b73-0c3369277df0",
       "id": "pV2HTYGvNRD1Vzn7Uojr",
       "createTime": "2024-02-04T16:30:10.113320Z",
       "updateTime": "2024-02-04T16:30:10.113320Z"
     },
     {
-      "topic": "Boundaries",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp5.png?alt=media&token=e7e3d792-7a01-47df-869d-934e80e77f8d&_gl=1*545ua6*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4Nzk5NDAuNTUuMC4w",
       "body": "Are you stuck in a cycle of unhealthy relationships where you often feel like you're giving too much or seeking approval all the time? It's time to explore how growing up with emotionally immature parents can affect your life and learn how to break free from these patterns.<br />  <strong>Understanding Emotionally Immature Parents</strong><br />  Emotionally immature parents are those who struggle to control their feelings and often act in ways that are selfish or childlike. They might not always be there for you emotionally, and this can impact your own emotional growth. Living with such parents can lead to codependent behaviors when you're older.<br />  Here are some common traits of emotionally immature parents:<br /> <ol> <li>Self-Centeredness: They often focus on themselves and their needs, sometimes ignoring yours.</li>  <li>Mood Swings: Their emotions can be unpredictable, making it hard for you to know how they'll react.</li>  <li>Lack of Empathy: They might not understand or care about your feelings, making you feel unheard.</li>  <li>Depending on You: Sometimes, they may rely on you for emotional support, turning the parent-child relationship upside down.</li> </ol><br /> <strong>How Codependency Develops</strong><br />  Growing up with emotionally immature parents can lead to codependency. This means you might become overly focused on meeting others' needs and forget about your own (aka: People Pleasing). Here's what codependency can look like:<br /> <ol> <li>Taking Care of Others: You might feel like you always have to solve other people's problems, even if it means neglecting your own needs.</li>  <li>Low Self-Esteem: You often seek validation from others, which can make you feel like you're not good enough.</li>  <li>Fear of Rejection: You're scared of people leaving you, so you have a hard time saying no or setting boundaries.</li>  <li>Difficulty Setting Boundaries: You struggle to tell people when they're crossing the line because you don't want to upset them.</li> </ol><br /> <strong>How to Break Free from Codependency</strong><br />  The journey to breaking free from codependency starts with understanding yourself and being kind to yourself. Here's what you can do:<br /> <ol> <li>Therapy and Support: Talk to a therapist who knows about codependency and childhood experiences. They can help you explore your feelings, set healthy boundaries, and develop new ways to cope.</li>  <li>Take Care of Yourself: Remember to look after yourself, both physically and emotionally. Make sure your needs are a priority too.</li>  <li>Set Boundaries: Learn how to say no and set limits in your relationships. It's okay to take care of yourself.</li>  <li>Mindfulness: Try mindfulness techniques to stay in the present moment, manage your emotions, and stop reacting in codependent ways.</li>  <li>Personal Growth: Healing takes time, so be patient with yourself. As you work on breaking free from codependency, you'll grow and have more fulfilling relationships.</li> </ol><br /> In conclusion, growing up with emotionally immature parents can lead to codependency, but you can break free from these patterns. By understanding how your upbringing affects you and taking steps to heal and grow, you can have healthier and happier relationships. Remember, you deserve love and respect, and your journey to recovery is valuable.<br />",
-      "title": "Breaking Free from Codependency",
+      "topic": "Boundaries",
       "therapist": "Weaam Elaidy",
-      "duration": "4 mins read",
+      "title": "Breaking Free from Codependency",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp5.png?alt=media&token=e7e3d792-7a01-47df-869d-934e80e77f8d&_gl=1*545ua6*_ga*MjAwNTQ2NzgzNi4xNjk1MzA4NTcy*_ga_CW55HF8NVT*MTY5Njg3MzI3Ni4xNi4xLjE2OTY4Nzk5NDAuNTUuMC4w",
       "description": "Learn to break free from codependency rooted in emotionally immature parents for healthier, happier relationships.",
+      "duration": "4 mins read",
       "id": "tzHyzlP8upRuRlE6pQQO",
       "createTime": "2023-10-09T19:30:54.805039Z",
       "updateTime": "2023-10-10T16:32:27.601760Z"
@@ -1045,14 +1045,106 @@
     {
       "title": "Parenting Styles and Child Well-being: Quality over Quantity",
       "topic": "Parenting",
-      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp12.jpeg?alt=media&token=546586ae-e7cf-4f87-aa75-000220236b95",
-      "description": "Explore the profound impact of parenting styles on a child's mental health. Quality, not quantity, is emphasized. The blog navigates diverse parenting approaches and their consequences, urging acceptance, autonomy, and unconditional love for children's holistic well-being.",
-      "body": "Nowadays, unfortunately, some parents think that “parenting style” is all about the time spent with their children. Yet, being physically active and around your children all day doesn’t mean that you are spending and enjoying the true meaning of “quality time” with them. To illustrate, many parents can stay the entire night with their children without showing any interests towards them, while others can only spend a couple of minutes with the kid and still, can manage to have a huge positive impact on their child’s wellbeing and mental health. In other words, the quality of parenting is much more important than the quantity spent with your children. Likewise, it is important to note that the child’s behavior mainly depends on the way they were raised. That’s why parenting styles play a significant role in the child’s personal growth, development, and behavior.   To clarify, throughout my researches, I realized that parents are the main characters in the child’s life. They are able to develop the child’s personality and help them to figure out who they really are AKA their identities! Some parents tend to be either authoritative or permissive, while others simply choose to be uninvolved. Anyhow, it is certain that all types of parenting styles have an influence on the child’s academic, social, emotional and psychological development, to the extent that, in some cases, children can suffer from depression and anxiety disorders because of the way they are being raised!    As a parent you need to know that being different does not necessarily mean being wrong or bad. We are human beings, we don’t look, think, dress or act alike. We need to start accepting the fact that we are different and we are not expected to act or behave in the same way. We don’t have to think or interpret a situation in the same manner, we are not required to solve a certain problem in a certain way, we don’t have to raise our children the way we were raised, we don’t have to have the same morals or values, we don’t have to share the same opinions, we don’t have to have the same beliefs. Also, we don’t need to celebrate, grief or express our emotions in a certain manner. We don’t have to accept things that we don’t want to just because “everyone else does”. We need to accept the fact that there isn’t a one-size fits-all solution to life. Not all our solutions, ways of thinking, and choices workout for everyone else. Equally, we don’t have to force our children to attend social events if he or she does not want to. We don’t have to force kids to celebrate birthdays, take part of event, play a certain sport, eat certain type of food, study or learn subjects that they don’t like or enjoy JUST because we think it is the right thing to do. Being a parent does not mean being controlling or in charge of our child’s life decisions, choices, and destinies…    Remember it is your child’s life and not yours’s. Let your children express their needs, make their own decisions, fail, make mistakes and learn on their own. Listen to your child’s interests and thoughts. Communicate with them. Respect their feelings and opinions. Fulfill their emotional and psychological needs. Validate their feelings. Spend more time with them. Laugh and cry with them. Hug them. Accept them. Love them unconditionally. Let them be who they really are and not who you want them to be! ",
       "duration": "4 mins read",
       "therapist": "Mirna Mostafa",
+      "body": "Nowadays, unfortunately, some parents think that “parenting style” is all about the time spent with their children. Yet, being physically active and around your children all day doesn’t mean that you are spending and enjoying the true meaning of “quality time” with them. To illustrate, many parents can stay the entire night with their children without showing any interests towards them, while others can only spend a couple of minutes with the kid and still, can manage to have a huge positive impact on their child’s wellbeing and mental health. In other words, the quality of parenting is much more important than the quantity spent with your children. Likewise, it is important to note that the child’s behavior mainly depends on the way they were raised. That’s why parenting styles play a significant role in the child’s personal growth, development, and behavior.   To clarify, throughout my researches, I realized that parents are the main characters in the child’s life. They are able to develop the child’s personality and help them to figure out who they really are AKA their identities! Some parents tend to be either authoritative or permissive, while others simply choose to be uninvolved. Anyhow, it is certain that all types of parenting styles have an influence on the child’s academic, social, emotional and psychological development, to the extent that, in some cases, children can suffer from depression and anxiety disorders because of the way they are being raised!    As a parent you need to know that being different does not necessarily mean being wrong or bad. We are human beings, we don’t look, think, dress or act alike. We need to start accepting the fact that we are different and we are not expected to act or behave in the same way. We don’t have to think or interpret a situation in the same manner, we are not required to solve a certain problem in a certain way, we don’t have to raise our children the way we were raised, we don’t have to have the same morals or values, we don’t have to share the same opinions, we don’t have to have the same beliefs. Also, we don’t need to celebrate, grief or express our emotions in a certain manner. We don’t have to accept things that we don’t want to just because “everyone else does”. We need to accept the fact that there isn’t a one-size fits-all solution to life. Not all our solutions, ways of thinking, and choices workout for everyone else. Equally, we don’t have to force our children to attend social events if he or she does not want to. We don’t have to force kids to celebrate birthdays, take part of event, play a certain sport, eat certain type of food, study or learn subjects that they don’t like or enjoy JUST because we think it is the right thing to do. Being a parent does not mean being controlling or in charge of our child’s life decisions, choices, and destinies…    Remember it is your child’s life and not yours’s. Let your children express their needs, make their own decisions, fail, make mistakes and learn on their own. Listen to your child’s interests and thoughts. Communicate with them. Respect their feelings and opinions. Fulfill their emotional and psychological needs. Validate their feelings. Spend more time with them. Laugh and cry with them. Hug them. Accept them. Love them unconditionally. Let them be who they really are and not who you want them to be! ",
+      "description": "Explore the profound impact of parenting styles on a child's mental health. Quality, not quantity, is emphasized. The blog navigates diverse parenting approaches and their consequences, urging acceptance, autonomy, and unconditional love for children's holistic well-being.",
+      "image": "https://firebasestorage.googleapis.com/v0/b/the-sonder-hood.appspot.com/o/Images%2FBlogs%2Fbp12.jpeg?alt=media&token=546586ae-e7cf-4f87-aa75-000220236b95",
       "id": "xlXZzbyqyAEixDHKfE6j",
       "createTime": "2024-02-04T16:38:12.305453Z",
       "updateTime": "2024-02-04T16:38:12.305453Z"
+    }
+  ],
+  "testimonials": [
+    {
+      "testimonial": "The experience is just fantastic and your assistant is so friendly.",
+      "id": "5czPPD4PsEgx2nzdLp6E",
+      "createTime": "2023-10-09T19:03:18.356722Z",
+      "updateTime": "2023-10-09T19:03:18.356722Z"
+    },
+    {
+      "testimonial": "It has been a month and half since I last came in.. The session scheduled after a long break makes me feel cleansed!!",
+      "id": "5oEIuHZRsmN1ZQFc9dib",
+      "createTime": "2023-10-09T19:04:12.518890Z",
+      "updateTime": "2023-10-09T19:04:12.518890Z"
+    },
+    {
+      "testimonial": "Thank you for the most comforting first session :)",
+      "id": "EZEVm82P6r0dzaYTul6E",
+      "createTime": "2023-10-09T19:01:58.502296Z",
+      "updateTime": "2023-10-09T19:01:58.502296Z"
+    },
+    {
+      "testimonial": "The smell of the reception is Always my happy place!",
+      "id": "EZeKnIwDYyvx9x6qxSAG",
+      "createTime": "2023-10-09T19:02:57.658625Z",
+      "updateTime": "2023-10-09T19:02:57.658625Z"
+    },
+    {
+      "testimonial": "Everything turned out to be better than expected.. So I am glad I chose your counseling space",
+      "id": "GxFwgMuHq17COznp1La0",
+      "createTime": "2023-10-09T19:00:56.068162Z",
+      "updateTime": "2023-10-09T19:00:56.068162Z"
+    },
+    {
+      "testimonial": "Keep up the amazing smiles you put on our faces, and the peace you instill into our troubled souls, and the creative minds you’re putting at ease.",
+      "id": "IVVgzu6WY0dH9czSS7pm",
+      "createTime": "2023-10-09T19:03:48.438271Z",
+      "updateTime": "2023-10-09T19:03:48.438271Z"
+    },
+    {
+      "testimonial": "with this premium and amazing service a high ticket price is acceptable. I love that about the Sonder hood.",
+      "id": "J4GAf1JS3BMjpXbxzqBh",
+      "createTime": "2023-10-09T19:03:31.408241Z",
+      "updateTime": "2023-10-09T19:03:31.408241Z"
+    },
+    {
+      "testimonial": "Wana gayya ba7es eni msh hala2y haga atkalem feeha, And then I look at my phone in the session and find out we’re almost running out of time!! How do you even manage to make me this comfortable? And what kind of questions do you ask that make me talk non-stop?!! I’m truly grateful for this space.",
+      "id": "SgigPBtlE9PIqVu7sDH6",
+      "createTime": "2023-10-09T19:04:01.899035Z",
+      "updateTime": "2023-10-09T19:04:01.899035Z"
+    },
+    {
+      "testimonial": "Payment is very easy, thankfully someone in Egypt is fully digital and IS COMFORTABLE about it.",
+      "id": "T4r5NYfkgBJdyFokdBNq",
+      "createTime": "2023-10-09T19:03:08.952649Z",
+      "updateTime": "2023-10-09T19:03:08.952649Z"
+    },
+    {
+      "testimonial": "Thank you so much for providing a safe environment for your clients.",
+      "id": "W7dJIMlFF56DYF7qO7vR",
+      "createTime": "2023-10-09T19:01:46.080027Z",
+      "updateTime": "2023-10-09T19:01:46.080027Z"
+    },
+    {
+      "testimonial": "It’s my very first therapy session ever and I am looking forward to the coming ones.",
+      "id": "iJdNOnWVGS0c5WXE1ZoQ",
+      "createTime": "2023-10-09T19:02:07.949194Z",
+      "updateTime": "2023-10-09T19:02:07.949194Z"
+    },
+    {
+      "testimonial": "I feel like everything is scrammed up in my head but my therapist in TSH manages to put them so organized and clear in front of me choosing just the right words!",
+      "id": "ipITPA0AMIsAN73e4QG3",
+      "createTime": "2023-10-09T19:04:32.514546Z",
+      "updateTime": "2023-10-09T19:04:32.514546Z"
+    },
+    {
+      "testimonial": "Lamma bagy, msh ba7es bel wa2t fe3lan wala bakoon 3ayez amshy",
+      "id": "ir2kcJ9PtaqE3jgVbZsF",
+      "createTime": "2023-10-09T19:02:17.928970Z",
+      "updateTime": "2023-10-09T19:02:17.928970Z"
+    },
+    {
+      "testimonial": "The office space is great, it offers great facilities! and The place is quiet relaxing :)",
+      "id": "mM9jbOQF84gD3eWJtScZ",
+      "createTime": "2023-10-09T19:02:37.895388Z",
+      "updateTime": "2023-10-09T19:02:37.895388Z"
+    },
+    {
+      "testimonial": "I have progressed in a very nice way in this place and I would recommend it to friends.",
+      "id": "qeIZo5PSCiHJElBm0OyQ",
+      "createTime": "2023-10-09T19:01:27.944347Z",
+      "updateTime": "2023-10-09T19:01:27.944347Z"
     }
   ]
 }

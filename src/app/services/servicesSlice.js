@@ -1,14 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, getDocsFromServer, orderBy, query } from "firebase/firestore";
-import { db } from "../../Config/firebaseConfig";
+import { loadCollection } from "../content";
 
-// Async thunk to fetch services
+// Async thunk to fetch services (from the content baked into the build), in their set order
 export const fetchServices = createAsyncThunk(
     'services/fetchServices',
     async () => {
-        const servicesCollection = collection(db, "services")
-        const servicesData = await getDocsFromServer(query(servicesCollection, orderBy('order')))
-        return servicesData.docs.map(service => ({ ...service.data(), id: service.id }))
+        const services = await loadCollection('services')
+        return services.filter(service => typeof service.order === 'number').sort((a, b) => a.order - b.order)
     }
 )
 

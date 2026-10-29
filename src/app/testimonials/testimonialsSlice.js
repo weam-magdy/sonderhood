@@ -1,15 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, getDocsFromServer } from "firebase/firestore";
-import { db } from "../../Config/firebaseConfig";
+import { loadCollection } from "../content";
 
-// Async thunk to fetch testimonials
+// Async thunk to fetch testimonials (from the content baked into the build)
 export const fetchTestimonials = createAsyncThunk(
     'testimonials/fetchTestimonials',
-    async () => {
-        const testimonialsCollection = collection(db, "testimonials")
-        const testimonialsData = await getDocsFromServer(testimonialsCollection)
-        return testimonialsData.docs.map(testimonial => ({ ...testimonial.data(), id: testimonial.id }))
-    }
+    () => loadCollection('testimonials')
 )
 
 export const testimonialsSlice = createSlice({

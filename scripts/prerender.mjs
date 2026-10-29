@@ -5,7 +5,9 @@
 // of its content, so search engines, WhatsApp/Facebook link previews and AI
 // crawlers that do not run JavaScript still see the page. The React app replaces
 // that content as soon as it loads. It also writes sitemap.xml, 404.html and the
-// .htaccess rules Hostinger needs (clean URLs, 301s from the old addresses, real 404s).
+// .htaccess rules Hostinger needs (clean URLs, 301s from the old addresses, real 404s),
+// and content.json: the services, therapists, articles and testimonials the app
+// shows, served from the site itself so visitors never wait on Firestore.
 //
 // Content comes from Firestore's public REST API. If that cannot be reached, the
 // committed scripts/content-snapshot.json is used instead.
@@ -16,55 +18,21 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as M from '../src/seo/meta.mjs'
+import { fetchCollection } from '../src/seo/firestore.mjs'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const BUILD = path.join(ROOT, 'build')
 const SNAPSHOT = path.join(ROOT, 'scripts', 'content-snapshot.json')
 const LEGACY = path.join(ROOT, 'scripts', 'legacy-paths.json')
 const PROJECT = process.env.REACT_APP_projectId || 'the-sonder-hood'
-const COLLECTIONS = ['services', 'therapists', 'blogs']
+const COLLECTIONS = ['services', 'therapists', 'blogs', 'testimonials']
 
 // ---------------------------------------------------------------- content
 
-// Firestore REST values to plain JS, shaped like the browser SDK's doc.data():
-// document references become { id } like a DocumentReference.
-function plain(value)
-{
-    if ('stringValue' in value) return value.stringValue
-    if ('integerValue' in value) return Number(value.integerValue)
-    if ('doubleValue' in value) return value.doubleValue
-    if ('booleanValue' in value) return value.booleanValue
-    if ('nullValue' in value) return null
-    if ('timestampValue' in value) return value.timestampValue
-    if ('referenceValue' in value) return { id: value.referenceValue.split('/').pop() }
-    if ('arrayValue' in value) return (value.arrayValue.values || []).map(plain)
-    if ('mapValue' in value) return Object.fromEntries(Object.entries(value.mapValue.fields || {}).map(([k, v]) => [k, plain(v)]))
-    return null
-}
-
-async function fetchCollection(name)
-{
-    const docs = []
-    let pageToken = ''
-    do
-    {
-        const url = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/${name}?pageSize=300${pageToken ? `&pageToken=${pageToken}` : ''}`
-        const response = await fetch(url, { signal: AbortSignal.timeout(20000) })
-        if (!response.ok) throw new Error(`${name}: HTTP ${response.status}`)
-        const json = await response.json()
-        for (const doc of json.documents || [])
-        {
-            docs.push({ ...plain({ mapValue: { fields: doc.fields || {} } }), id: doc.name.split('/').pop(), createTime: doc.createTime, updateTime: doc.updateTime })
-        }
-        pageToken = json.nextPageToken || ''
-    } while (pageToken)
-    return docs
-}
-
 async function fetchContent()
 {
-    const [services, therapists, blogs] = await Promise.all(COLLECTIONS.map(fetchCollection))
-    return { services, therapists, blogs }
+    const lists = await Promise.all(COLLECTIONS.map(name => fetchCollection(name, { project: PROJECT, signal: AbortSignal.timeout(60000) })))
+    return Object.fromEntries(COLLECTIONS.map((name, i) => [name, lists[i]]))
 }
 
 async function loadContent()
@@ -72,7 +40,7 @@ async function loadContent()
     try
     {
         const content = await fetchContent()
-        console.log(`prerender: content from Firestore (${content.services.length} services, ${content.therapists.length} therapists, ${content.blogs.length} articles)`)
+        console.log(`prerender: content from Firestore (${content.services.length} services, ${content.therapists.length} therapists, ${content.blogs.length} articles, ${content.testimonials.length} testimonials)`)
         return content
     }
     catch (error)
@@ -408,6 +376,14 @@ async function main()
         .replace('<div id="root"></div>', () => `<div id="root">${body}</div>`)
 
     const content = await loadContent()
+
+    // The app's copy keeps the photo addresses, so the photos appear as soon as
+    // Firebase Storage serves them again; a collection the snapshot lacks is left
+    // out, and src/app/content.js then reads it from Firestore.
+    const missing = COLLECTIONS.filter(name => !Array.isArray(content[name]))
+    if (missing.length) console.warn(`prerender: content.json has no ${missing.join(', ')}; the app reads them from Firestore`)
+    fs.writeFileSync(path.join(BUILD, 'content.json'), JSON.stringify(Object.fromEntries(COLLECTIONS.filter(name => !missing.includes(name)).map(name => [name, content[name]]))))
+
     await dropUnreachablePhotos(content)
     const pages = buildPages(content)
 

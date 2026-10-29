@@ -1,15 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, getDocsFromServer } from "firebase/firestore";
-import { db } from "../../Config/firebaseConfig";
+import { loadCollection } from "../content";
 
-// Async thunk to fetch therapists
+// Async thunk to fetch therapists (from the content baked into the build)
 export const fetchTherapists = createAsyncThunk(
     'therapists/fetchTherapists',
-    async () => {
-        const therapistsCollection = collection(db, "therapists")
-        const therapistsData = await getDocsFromServer(therapistsCollection)
-        return therapistsData.docs.map(therapist => ({ ...therapist.data(), id: therapist.id }))
-    }
+    () => loadCollection('therapists')
 )
 
 export const therapistsSlice = createSlice({

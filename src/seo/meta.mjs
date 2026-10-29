@@ -325,6 +325,10 @@ export const HOME_FAQS = [
         answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best. Sessions are available in Arabic and English.',
     },
     {
+        question: 'Where is your therapy center in New Cairo, and when are you open?',
+        answer: `Our therapy center is at ${SITE.address.street} in ${SITE.address.locality}, Cairo, and we are open ${SITE.hours.display}. You can see a therapist face to face at the center, or online by video call from anywhere in Egypt or abroad, in Arabic or English. For directions, open the map on our Contact page or message us on WhatsApp at ${SITE.phoneDisplay}.`,
+    },
+    {
         question: 'How do I book a session with a therapist?',
         answer: `The quickest way is to message us on WhatsApp at ${SITE.phoneDisplay}, or send a booking request through our website. Let us know whether you prefer an in-person or online session and any preferred days, and we will help you choose a therapist and find the nearest available slot. We are open ${SITE.hours.display}.`,
     },
