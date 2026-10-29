@@ -10,6 +10,7 @@ import { blogSlug, legacySlug, therapistLd, therapistMeta, therapistSlug } from 
 import { bookingMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneInput from 'react-phone-input-2'
 import SafeImage from '../SafeImage'
+import FormNotice from '../FormNotice'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
 const colors = ['#F9F3D0', '#FFDEB5', '#D6DCA2']
 // const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -128,15 +129,15 @@ export default function Therapist()
     )
 
     const error = (
-        <div className='BookError'>
+        <FormNotice>
             <p> Please enter your first and last name and a valid mobile number.</p>
-        </div>
+        </FormNotice>
     )
 
     const success = (
-        <div className='BookError'>
+        <FormNotice>
             <p style={{ color: 'green' }}> Your request is ready in WhatsApp. Tap Send to reach us.</p>
-        </div>
+        </FormNotice>
     )
 
     return (

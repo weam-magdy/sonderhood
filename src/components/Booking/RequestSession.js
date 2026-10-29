@@ -4,6 +4,7 @@ import useSeo from '../../seo/useSeo';
 import { INTROS, PAGES, SITE, pageLd, whatsappUrl } from '../../seo/meta.mjs';
 import { bookingMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
 import PhoneInput from 'react-phone-input-2';
+import FormNotice from '../FormNotice';
 
 const days = ['Any day', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -56,15 +57,15 @@ export default function BookSession()
     const daysOptions = days.map(day => <option value={day} key={day}>{day}</option>)
 
     const error = (
-        <div className='BookError'>
+        <FormNotice>
             <p> Please enter your first and last name and a valid mobile number.</p>
-        </div>
+        </FormNotice>
     )
 
     const success = (
-        <div className='BookError'>
+        <FormNotice>
             <p style={{ color: 'green' }}> Your request is ready in WhatsApp. Tap Send to reach us.</p>
-        </div>
+        </FormNotice>
     )
 
     return (

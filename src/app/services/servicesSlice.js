@@ -7,7 +7,8 @@ export const fetchServices = createAsyncThunk(
     async () => {
         const services = await loadCollection('services')
         return services.filter(service => typeof service.order === 'number').sort((a, b) => a.order - b.order)
-    }
+    },
+    { condition: (_, { getState }) => !['loading', 'succeeded'].includes(getState().services.status) }
 )
 
 export const servicesSlice = createSlice({

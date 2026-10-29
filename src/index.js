@@ -5,13 +5,23 @@ import App from './App';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { fetchTherapists } from './app/therapists/therapistsSlice';
+import { fetchServices } from './app/services/servicesSlice';
+import { fetchBlogs } from './app/blogs/blogsSlice';
+import { fetchTestimonials } from './app/testimonials/testimonialsSlice';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
 if (process.env.NODE_ENV === 'production') disableReactDevTools()
 
+// Load the site content (/content.json) before the first render, so a page goes
+// straight from its prerendered HTML to the finished app instead of flashing a
+// "Loading…" screen. If the file is slow, render anyway after two seconds.
+const contentReady = Promise.all([fetchTherapists, fetchServices, fetchBlogs, fetchTestimonials].map(load => store.dispatch(load())))
+const timeout = new Promise(resolve => setTimeout(resolve, 2000))
+
 //@ts-ignore
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+Promise.race([contentReady, timeout]).then(() => root.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<BrowserRouter>
@@ -21,7 +31,7 @@ root.render(
 			</BrowserRouter>
 		</Provider>
 	</React.StrictMode>
-);
+));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

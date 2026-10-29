@@ -66,7 +66,7 @@ export default function HomeHeader()
 
     let content = ["left"].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button style={{ alignSelf: 'flex-start', margin: '5%', fontSize: '6.5vw', fontWeight: '600', color: 'var(--Sonder-olive)' }} onClick={toggleDrawer(anchor, true)}><FontAwesomeIcon style={{ marginLeft: '5%', width: '5vh', height: '5vh' }} icon={faBars} /></Button>
+          <Button aria-label='Open menu' style={{ alignSelf: 'flex-start', margin: '5%', fontSize: '6.5vw', fontWeight: '600', color: 'var(--Sonder-olive)' }} onClick={toggleDrawer(anchor, true)}><FontAwesomeIcon style={{ marginLeft: '5%', width: '5vh', height: '5vh' }} icon={faBars} /></Button>
           <SwipeableDrawer
             //@ts-ignore
             anchor={anchor}

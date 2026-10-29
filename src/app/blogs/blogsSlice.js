@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loadCollection } from "../content";
 
-// Async thunk to fetch blogs (from the content baked into the build)
+// Async thunk to fetch blogs (from the content baked into the build); runs once
 export const fetchBlogs = createAsyncThunk(
     'blogs/fetchBlogs',
-    () => loadCollection('blogs')
+    () => loadCollection('blogs'),
+    { condition: (_, { getState }) => !['loading', 'succeeded'].includes(getState().blogs.status) }
 )
 
 export const blogsSlice = createSlice({

@@ -91,11 +91,12 @@ function stripHead(html)
         .replace(/<script\s+type="application\/ld\+json"[\s\S]*?<\/script>/gi, '')
 }
 
-function headTags({ title, description, path: pagePath, image, type = 'website', noindex = false, ld })
+function headTags({ title, description, path: pagePath, image, type = 'website', noindex = false, ld, preload = [] })
 {
     const url = pagePath ? M.absoluteUrl(pagePath) : ''
     const img = M.absoluteUrl(image || M.SITE.image)
     return [
+        ...preload.map(p => `<link rel="preload" as="image" href="${esc(p.href)}" media="${esc(p.media)}" fetchpriority="high"/>`),
         `<title>${esc(title)}</title>`,
         `<meta name="description" content="${esc(description)}"/>`,
         `<meta name="robots" content="${noindex ? 'noindex, follow' : 'index, follow'}"/>`,
@@ -332,11 +333,9 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# A service, therapist or article added in Firebase after the last build:
-# the app renders it until the next build prerenders it.
-RewriteRule ^(services|therapists|blog)/[A-Za-z0-9-]+$ /_pages/_app.html [NC,L]
-
-# Anything else matches no file, so the server answers 404 with /404.html.
+# Anything else matches no file, so the server answers 404 with /404.html. A
+# service, therapist or article added in Firebase gets its page (and its place in
+# content.json) at the next build.
 </IfModule>
 `
 }
@@ -387,6 +386,18 @@ async function main()
     await dropUnreachablePhotos(content)
     const pages = buildPages(content)
 
+    // The home hero is a CSS background, which the browser only finds after the
+    // app's JavaScript runs; preloading it makes it the first thing fetched.
+    const media = JSON.parse(fs.readFileSync(path.join(BUILD, 'asset-manifest.json'), 'utf8')).files
+    const home = pages.find(page => page.file === 'index.html')
+    if (home && media['static/media/main.jpeg'] && media['static/media/mainmob.jpeg'])
+    {
+        home.head.preload = [
+            { href: media['static/media/main.jpeg'], media: '(min-width: 769px)' },
+            { href: media['static/media/mainmob.jpeg'], media: '(max-width: 768px)' },
+        ]
+    }
+
     fs.rmSync(path.join(BUILD, '_pages'), { recursive: true, force: true })
     for (const page of pages)
     {
@@ -394,9 +405,6 @@ async function main()
         fs.mkdirSync(path.dirname(file), { recursive: true })
         fs.writeFileSync(file, render({ ...page.head, path: page.path || '/' }, page.body))
     }
-
-    // Shell for pages added after this build; the app fills in everything.
-    fs.writeFileSync(path.join(BUILD, '_pages', '_app.html'), render({ title: M.SITE.name, description: M.PAGES.home.description }))
 
     const notFound = `<h1>Page not found</h1><p>The page you were looking for does not exist or has moved.</p>`
         + list([link('/', 'Home'), link('/services', 'Our services'), ...M.SERVICE_LINKS.map(s => link(s.path, s.name)), link('/therapists', 'Our therapists'), link('/blog', 'Blog'), link('/contact', 'Contact us')])

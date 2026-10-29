@@ -3388,7 +3388,8 @@ textarea
 .ArticlePageMainImage img
 {
 	width: 100%;
-	object-fit: fill;
+	max-height: min(60vh, 560px);
+	object-fit: cover;
 	border-radius: 0;
 }
 
@@ -3474,6 +3475,7 @@ textarea
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	gap: 0.3em;
 	margin-top: 0%;
 	margin-bottom: 2%;
 }

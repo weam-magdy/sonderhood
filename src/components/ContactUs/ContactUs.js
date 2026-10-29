@@ -9,6 +9,7 @@ import useSeo from '../../seo/useSeo'
 import { INTROS, PAGES, SITE, pageLd, whatsappUrl } from '../../seo/meta.mjs'
 import { contactMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneInput from "react-phone-input-2";
+import FormNotice from '../FormNotice';
 import "react-phone-input-2/lib/bootstrap.css";
 
 export default function ContactUs() {
@@ -52,15 +53,15 @@ export default function ContactUs() {
     }
 
     const error = (
-        <div className='BookError'>
+        <FormNotice>
             <p> Please fill in your name, a valid number, a subject and your message.</p>
-        </div>
+        </FormNotice>
     )
 
     const success = (
-        <div className='BookError'>
+        <FormNotice>
             <p style={{ color: 'green' }}> Your message is ready in WhatsApp. Tap Send to reach us.</p>
-        </div>
+        </FormNotice>
     )
 
     return (

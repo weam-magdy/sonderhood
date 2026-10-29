@@ -43,6 +43,5 @@ http.createServer((req, res) =>
     if (isFile(page)) return send(res, 200, page)
     const file = path.join(BUILD, rel)
     if (file.startsWith(BUILD) && isFile(file)) return send(res, 200, file)
-    if (/^(services|therapists|blog)\/[A-Za-z0-9-]+$/i.test(rel)) return send(res, 200, path.join(BUILD, '_pages', '_app.html'))
     return send(res, 404, path.join(BUILD, '404.html'))
 }).listen(PORT, () => console.log(`Serving build/ like Hostinger at http://localhost:${PORT}`))
