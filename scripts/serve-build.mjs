@@ -32,10 +32,11 @@ http.createServer((req, res) =>
     const pathname = decodeURIComponent(url.pathname)
     const rel = pathname.replace(/^\/+/, '')
 
+    if (/(^|\/)\.git(\/|$)/.test(rel)) return res.writeHead(403).end()
     if (pathname === '/index.html') return res.writeHead(301, { Location: '/' }).end()
     if (rel.endsWith('/') && rel.length > 1) return res.writeHead(301, { Location: `/${rel.replace(/\/+$/, '')}${url.search}` }).end()
     for (const { re, target } of redirects) if (re.test(rel)) return res.writeHead(301, { Location: target }).end()
-    if (/^_pages(\/|$)/i.test(rel)) return send(res, 404, path.join(BUILD, '404.html'))
+    if (/^_pages(\/|$)/i.test(rel)) return res.writeHead(403).end()
 
     if (!rel) return send(res, 200, path.join(BUILD, 'index.html'))
     const page = path.join(BUILD, '_pages', `${rel}.html`)
