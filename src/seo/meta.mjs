@@ -252,7 +252,7 @@ export const TEAM_CHANGES = {
         image: '/images/team/inji-farid.jpg',
         quote: '',
         certificates: [
-            { year: '', title: 'MSc in Clinical Psychology', description: 'The British University in Egypt and London South Bank University' },
+            { year: '2026', title: 'MSc in Clinical Psychology', description: 'The British University in Egypt and London South Bank University' },
             { year: '2024', title: 'BA in Clinical Psychology', description: 'Université Toulouse 2 Jean Jaurès, France' },
         ],
         updateTime: '2026-10-29T19:00:00Z',
@@ -271,11 +271,27 @@ export const TEAM_CHANGES = {
     },
 }
 
+// Team photos served from this site, by Firestore id, from the practice's photo
+// shoot (sent by the owner on 29 October 2026). They replace the Firebase Storage
+// photos, which the free Firebase plan no longer serves.
+export const TEAM_PHOTOS = {
+    HJNGY0HUGgR9hmAbu7OP: '/images/team/weaam-elaidy.jpg',
+    X4BxaEE7wk7eX89xknzz: '/images/team/ingie-el-saady.jpg',
+    KFxjskC9AHfryZNIeQ92: '/images/team/mirna-mostafa.jpg',
+    VvjHvkCbDzu05GDOSqSb: '/images/team/sahar-farid.jpg',
+    T9wWRmQihJCyH0VVuQM5: '/images/team/jana-radwan.jpg',
+    '34YNM9NMyuXgT9KbZ3DC': '/images/team/shahd-zanaty.jpg',
+    iEhvRoHYHNipJ8vCbkuo: '/images/team/nadia-fahmy.jpg',
+    pPoI0CEo3PAAKSZfwQ8L: '/images/team/farida-talaat.jpg',
+    J9Odp0mxyUYUYQWZoNyT: '/images/team/heidi-fares.jpg',
+}
+
 export function applyTeamChanges(therapists = []) {
     return therapists.map(therapist => {
-        if (!TEAM_CHANGES[therapist.id]) return therapist
+        const photo = TEAM_PHOTOS[therapist.id] ? { image: TEAM_PHOTOS[therapist.id] } : {}
+        if (!TEAM_CHANGES[therapist.id]) return { ...therapist, ...photo }
         const { replaces, ...change } = TEAM_CHANGES[therapist.id]
-        return { ...therapist, ...change }
+        return { ...therapist, ...photo, ...change }
     })
 }
 
@@ -567,7 +583,7 @@ export const PAGES = {
     },
     services: {
         path: '/services',
-        title: titled('Therapy Services: Adults, Couples, Families & CBT'),
+        title: titled('Therapy Services in New Cairo: Adults, Couples, Families & CBT'),
         description: 'Individual adult therapy, couples therapy, family therapy, child and teen therapy, CBT, group therapy, assessments and online therapy in New Cairo.',
     },
     blog: {
@@ -643,15 +659,15 @@ export function therapistMeta(therapist) {
     const article = /^founder/i.test(position) ? 'the' : /^[aeiou]/i.test(speaking || position) ? 'an' : 'a'
     const describe = (clients, topics) => `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at The Sonder Hood in New Cairo`
         + (clients.length ? `, working with ${sentenceList(clients)}` : '')
-        + (topics.length ? ` on ${sentenceList(topics)}` : '')
-        + '. Sessions in person or online.'
+        + (topics.length ? `${clients.length ? '' : ', working'} on ${sentenceList(topics)}` : '')
+        + `. Sessions in ${sentenceList(therapistLanguages(therapist))}.`
     // Search results show about 160 characters: fewer focus areas, then no client
     // groups, until the description fits.
     const tries = [[clientele, focus], [clientele, focus.slice(0, 2)], [clientele, focus.slice(0, 1)], [[], focus.slice(0, 2)], [[], focus.slice(0, 1)], [[], []]]
     const description = tries.map(([clients, topics]) => describe(clients, topics)).find(text => text.length <= 160) || describe([], [])
     return {
         path: `/therapists/${therapistSlug(therapist)}`,
-        title: titled(`${therapist.name}, ${speaking.replace('-speaking', '-Speaking')}${cleanPosition(position)} in New Cairo`),
+        title: titled(`${therapist.name}, ${speaking.replace('-speaking', '-Speaking')}${/under training/i.test(position) ? 'Trainee ' : ''}${cleanPosition(position)} in New Cairo`),
         description,
         image: therapist.image || SITE.image,
         type: 'profile',
