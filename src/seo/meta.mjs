@@ -26,7 +26,6 @@ export const SITE = {
     socials: {
         facebook: 'https://www.facebook.com/profile.php?id=100092881591617',
         instagram: 'https://www.instagram.com/thesonderhood/',
-        linkedin: 'https://www.linkedin.com/company/94863370/',
     },
 }
 

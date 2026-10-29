@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { instagram } from '../../imgs/InstagramIcon'
-import { In } from '../../imgs/inIcon'
 import { whatsappTile } from '../../imgs/WhatsAppIcon'
 import { Link } from 'react-router-dom'
 import { collection, addDoc } from 'firebase/firestore'
@@ -110,9 +109,6 @@ export default function Footer()
                         </Link> */}
                         <a href={SITE.socials.instagram} target='_blank' rel='noopener noreferrer' aria-label='Instagram'>
                             {instagram}
-                        </a>
-                        <a href={SITE.socials.linkedin} target='_blank' rel='noopener noreferrer' aria-label='LinkedIn'>
-                            {In}
                         </a>
                     </div>
                 </div>
