@@ -269,6 +269,8 @@ export const TEAM_CHANGES = {
         ],
         updateTime: '2026-10-29T19:00:00Z',
     },
+    // Heidi Fares finished her training and supervision (the owner, 29 October 2026).
+    J9Odp0mxyUYUYQWZoNyT: { position: 'Clinical Psychologist' },
 }
 
 // Team photos served from this site, by Firestore id, from the practice's photo

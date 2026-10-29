@@ -18,7 +18,7 @@ function Choice({ legend, name, options, value, onChange })
 {
     return (
         <fieldset className='FinderQuestion'>
-            <legend>{legend}</legend>
+            <legend>{legend} <span className='FinderLegendHint'>(choose one)</span></legend>
             <div className='FinderOptions'>
                 {options.map(option => (
                     <label key={option.id} className='FinderOption'>
@@ -82,8 +82,8 @@ export default function FindTherapist()
                 <p className='FinderIntro'>{INTROS.finder}</p>
 
                 <fieldset className='FinderQuestion'>
-                    <legend>1. What would you like help with?</legend>
-                    <p className='FinderHint'>Choose any that fit, or none if you are not sure.</p>
+                    <legend>1. What would you like help with? <span className='FinderLegendHint'>(choose all that apply)</span></legend>
+                    <p className='FinderHint'>Not sure? You can skip this question.</p>
                     <div className='FinderOptions'>
                         {FINDER_TOPICS.map(topic => (
                             <label key={topic.id} className='FinderOption'>

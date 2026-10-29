@@ -26,15 +26,24 @@
 	font-display: swap;
 }
 
+/* The page itself scrolls. #root keeps the screen's height so sections sized in % still
+   fill the first screen, but it is no longer a scroll box of its own: on iPhone Safari a
+   100%-high scroll box can end up shorter than the screen (after the keyboard or the
+   toolbars change it), leaving a blank band at the bottom (29 October 2026). */
 html, body, #root
 {
 	height: 100%;
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	overflow: auto;
+	overflow: visible;
 	box-sizing: border-box;
 	background: var(--Sonder-white);
+}
+
+#root
+{
+	overflow-x: clip;
 }
 
 textarea
@@ -4603,7 +4612,9 @@ textarea
 
 @media (max-width: 768px)
 {
-	html, body, #root
+	/* On the body only: browsers hand it to the page itself, so it never turns the
+	   body or #root into a scroll box of its own (that left a blank band on iPhones). */
+	body
 	{
 		overflow-x: hidden;
 	}
@@ -6878,16 +6889,25 @@ a.OurBlogItemContainer,
 	min-width: 0;
 }
 
+/* Questions read as questions: large and bold, with what to do in brackets. */
 .FinderQuestion legend, .FinderName label
 {
 	display: block;
 	margin-bottom: 0.7em;
 	padding: 0;
 	color: var(--Sonder-olive);
-	font-family: Raglika, serif;
-	font-size: max(21px, 1.7vw);
-	line-height: 120%;
-	text-transform: uppercase;
+	font-family: 'DM Sans', Arial, sans-serif;
+	font-size: max(22px, 1.75vw);
+	font-weight: 700;
+	line-height: 130%;
+}
+
+.FinderLegendHint
+{
+	color: #6B6E4E;
+	font-size: 0.72em;
+	font-weight: 400;
+	white-space: nowrap;
 }
 
 .FinderQuestion .FinderHint
@@ -7016,6 +7036,8 @@ a.OurBlogItemContainer,
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	/* The photos are tall portraits: keep the face in the wide frame. */
+	object-position: 50% 18%;
 }
 
 .FinderMatchInfo
@@ -7169,7 +7191,7 @@ form input:focus-visible, form select:focus-visible, form textarea:focus-visible
 }
 
 /* While the cookie notice is open, the end of the page and focused fields stay clear of it */
-body.ConsentOpen #root
+html:has(body.ConsentOpen)
 {
 	scroll-padding-bottom: 170px;
 }
@@ -7281,5 +7303,28 @@ body.ConsentOpen .FooterDetails
 	.ConsentOpen .WhatsAppFloat
 	{
 		bottom: 150px;
+	}
+}
+
+/* Booking forms on phones and tablets grow with their six fields instead of taking a
+   fixed share of the screen height, so the send button never covers the last field
+   (iPhone Safari sizes vh and text differently from Chrome, 29 October 2026). This sits
+   last so it wins over the older fixed heights above. */
+@media (max-width: 900px)
+{
+	.BookSessionInfo,
+	.TherapistBookSession .BookSession .BookSessionInfo
+	{
+		height: auto !important;
+		grid-template-rows: none !important;
+		grid-auto-rows: auto;
+		row-gap: 16px;
+	}
+
+	.BookSessionInfoCredentials input,
+	.BookSessionInfoCredentials select,
+	.BookSessionInfo .react-tel-input
+	{
+		height: 44px !important;
 	}
 }
