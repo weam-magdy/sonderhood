@@ -18,9 +18,19 @@ export default function FAQItem({ faq, faqs, index })
         </svg>
     )
 
+    const toggle = () => setShown(prev => !prev)
+
     return (
         <>
-        <div style={ faqs.length === (index+1) ? {} : shown ? {} : {borderBottom: '1px solid #000'} } onClick={() => setShown(prev => !prev)} className='FAQItem'>
+        <div
+            style={ faqs.length === (index+1) ? {} : shown ? {} : {borderBottom: '1px solid #000'} }
+            onClick={toggle}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle() } }}
+            role='button'
+            tabIndex={0}
+            aria-expanded={shown}
+            className='FAQItem'
+        >
             <div className='FAQItemHeading'>
                 <div className='FAQItemHeadingNumber'>
                     { Math.floor((index+1) / 10) === 0 ? `0${index+1}` : index+1 }
@@ -33,12 +43,11 @@ export default function FAQItem({ faq, faqs, index })
                 </div>
             </div>
         </div>
+        {/* Always in the page (search engines read it); CSS collapses it until opened. */}
         <div className={shown ? 'FAQItemAnswerWrapper open' : 'FAQItemAnswerWrapper'}>
-            {shown && 
-                <div style={ faqs.length === (index+1) ? {} : {borderBottom: '1px solid #000'} } className={'FAQItemAnswerTemp'}>
-                    {faq.answer}    
-                </div>
-            }
+            <div style={ faqs.length === (index+1) || !shown ? {} : {borderBottom: '1px solid #000'} } className={'FAQItemAnswerTemp'}>
+                {faq.answer}
+            </div>
         </div>
         </>
     )

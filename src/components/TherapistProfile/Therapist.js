@@ -1,26 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useRef, useState } from 'react'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import book from '../../imgs/mainmob.jpeg'
 import { useSelector } from 'react-redux'
-import { selectedTherapists } from '../../app/therapists/therapistsSlice'
+import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
 import { selectedBlogs } from '../../app/blogs/blogsSlice'
-import useTitle from '../../hooks/useTitle'
-import emailjs from '@emailjs/browser';
+import useSeo from '../../seo/useSeo'
+import { blogSlug, legacySlug, therapistLd, therapistMeta, therapistSlug } from '../../seo/meta.mjs'
+import { bookingMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneInput from 'react-phone-input-2'
+import SafeImage from '../SafeImage'
+import NotFound, { PageError, PageLoading } from '../PageStatus'
 const colors = ['#F9F3D0', '#FFDEB5', '#D6DCA2']
 // const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 // const therapyTypes = ['Individual Therapy', 'Group Therapy', 'Child Therapy']
 // const slots = ['7:00AM-8:00AM', '7:00AM-8:00AM', '7:00AM-8:00AM', '7:00AM-8:00AM', '7:00AM-8:00AM', '7:00AM-8:00AM']
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
-const NAME_REGEX = /^[A-z]{2,24}/
-const NUMBER_REGEX = /^[1-9]{1,3}[0][1][0125][0-9]{8}/
+const days = ['Any day', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 
-export default function Therapist() 
+export default function Therapist()
 {
     const therapists = useSelector(selectedTherapists)
+    const therapistsStatus = useSelector(selectTherapistsStatus)
     const blogs = useSelector(selectedBlogs)
 
     const { therapist } = useParams()
@@ -32,43 +33,52 @@ export default function Therapist()
     // const [width, setWidth] = useState(window.innerWidth <= 900)
 
     const [firstName, setFirstName] = useState('')
-    const [verifyFirstName, setVerifyFirstName] = useState(false)
     const [lastName, setLastName] = useState('')
-    const [verifyLastName, setVerifyLastName] = useState(false)
     const [email, setEmail] = useState('')
-    const [day, setDay] = useState('Day')
-    const [prefWay, setPrefWay] = useState('')
+    const [day, setDay] = useState('Any day')
+    const [prefWay, setPrefWay] = useState('WhatsApp')
     const [number, setNumber] = useState('')
-    const [verifyNumber, setVerifyNumber] = useState(false)
 
     const [err, setErr] = useState(false)
     const [succ, setSucc] = useState(false)
 
-    const onFirstNameChanged = (e) => setFirstName(e.target.value)
-    const onLastNameChanged = (e) => setLastName(e.target.value)
-    const onEmailChanged = (e) => setEmail(e.target.value)
-    const onDayChanged = (e) => setDay(e.target.value)
-    const onPrefWayChanged = (e) => setPrefWay(e.target.value)
-
     const form = useRef();
 
-    const sendEmail = (e) => {
-        console.log(verifyFirstName, verifyLastName, verifyNumber)
+    const selectedTherapist = therapists.find(therapistProfile => therapistSlug(therapistProfile) === String(therapist).toLowerCase())
+    // Old links such as /Therapists/WeaamElaidy
+    const movedTherapist = !selectedTherapist && therapists.find(therapistProfile => legacySlug(therapistProfile.name) === legacySlug(therapist))
+
+    useSeo(selectedTherapist ? { ...therapistMeta(selectedTherapist), jsonLd: therapistLd(selectedTherapist) } : {})
+
+    if (movedTherapist) return <Navigate to={`/therapists/${therapistSlug(movedTherapist)}`} replace />
+    if (!selectedTherapist)
+    {
+        if (therapistsStatus === 'failed') return <PageError />
+        if (therapistsStatus === 'succeeded') return <NotFound />
+        return <PageLoading />
+    }
+
+    const changed = (setter) => (e) =>
+    {
+        setter(e.target.value)
+        setErr(false)
+        setSucc(false)
+    }
+
+    const canRequest = isValidName(firstName) && isValidName(lastName) && isValidPhone(number)
+
+    // Opens WhatsApp with the request filled in; the visitor only has to tap Send.
+    const sendRequest = (e) => {
         e.preventDefault();
         if(canRequest)
         {
+            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay, therapist: selectedTherapist.name }))
+            sendEmailCopy(process.env.REACT_APP_templateBook_id, form.current)
             setSucc(true)
             setFirstName('')
             setLastName('')
             setEmail('')
             setNumber('')
-            //@ts-ignore
-            emailjs.sendForm(process.env.REACT_APP_service_id, process.env.REACT_APP_templateBook_id, form.current, process.env.REACT_APP_public_key)
-                .then((result) => {
-    
-                }, (error) => {
-    
-                });
         }
         else
         {
@@ -76,42 +86,16 @@ export default function Therapist()
         }
     };
     const daysOptions = days.map(day => <option value={day} key={day}>{day}</option>)
-    
-    useEffect(() => 
-    {
-        setVerifyFirstName(NAME_REGEX.test(firstName))
-    }, [firstName])
 
-    useEffect(() => 
-    {
-        setVerifyLastName(NAME_REGEX.test(lastName))
-    }, [lastName])
+    const services = (selectedTherapist.clientele || []).map((service) => <div key={service} className='TherapistProfileService'>{service}</div>)
 
-    useEffect(() => 
-    {
-        setVerifyNumber(NUMBER_REGEX.test(number.replace(/\s/g,'')))
-    }, [number])
-
-    useEffect(() => 
-    {
-        setErr(false)
-    }, [firstName, lastName, email, number, prefWay, day])
-
-    const canRequest = [verifyFirstName, verifyLastName, verifyNumber].every(Boolean)
-
-    const selectedTherapist = therapists.find(therapistProfile => therapistProfile.name.split(" ").join("") === therapist)
-
-    useTitle(`${selectedTherapist.name}`)
-
-    const services = selectedTherapist?.clientele.map((service) => <div key={service} className='TherapistProfileService'>{service}</div>)
-    
-    const orderedCerts = [...selectedTherapist?.certificates]
+    const orderedCerts = [...(selectedTherapist.certificates || [])]
 
     orderedCerts.sort((a, b) => parseInt(a.year) === parseInt(b.year) ? 0 : parseInt(a.year) > parseInt(b.year) ? -1 : 1)
-    
-    const certificates = orderedCerts.map((certificate, index) => 
+
+    const certificates = orderedCerts.map((certificate, index) =>
         (
-            <div key={index} className='OurServicesItemContainer' style={{ background: colors[Math.floor(Math.random() * 3)] }}>
+            <div key={index} className='OurServicesItemContainer' style={{ background: colors[index % colors.length] }}>
                 <div className='OurServicesItemNumber'>
                     {certificate.year}
                 </div>
@@ -123,16 +107,15 @@ export default function Therapist()
                 </div>
             </div>
         ))
-    
-    const haveBlogs = blogs.filter(blog => blog.therapist === selectedTherapist.name).length
 
-    const displayedBlogs = blogs.map(blog => 
-        blog.therapist === selectedTherapist.name
-        ?
+    // Author names are typed by hand ("Ingie ElSaady"), so compare without spaces or case.
+    const therapistBlogs = blogs.filter(blog => legacySlug(blog.therapist) === legacySlug(selectedTherapist.name))
+
+    const displayedBlogs = therapistBlogs.map(blog =>
         (
-            <div onClick={() => navigate(`/ArticlePage/${blog.title.split(" ").join("")}`)} key={blog.id} className='OurBlogItemContainer'>
+            <Link to={`/blog/${blogSlug(blog)}`} key={blog.id} className='OurBlogItemContainer'>
                 <div className='OurBlogItemImage'>
-                    <img src={blog.image} alt='c1' />
+                    <SafeImage src={blog.image} alt={blog.title} />
                 </div>
                 <div className='OurBlogItemTitle'>
                     {blog.title}
@@ -140,44 +123,42 @@ export default function Therapist()
                 <div className='OurBlogItemBody'>
                     {blog.description}
                 </div>
-            </div>
+            </Link>
         )
-        :
-        <React.Fragment key={blog.id}></React.Fragment>
     )
 
     const error = (
         <div className='BookError'>
-            <p> All Fields Must Be Filled!</p>
+            <p> Please enter your first and last name and a valid mobile number.</p>
         </div>
     )
 
     const success = (
         <div className='BookError'>
-            <p style={{ color: 'green' }}> Request Sent Successfully!</p>
+            <p style={{ color: 'green' }}> Your request is ready in WhatsApp. Tap Send to reach us.</p>
         </div>
     )
-    
+
     return (
         <>
         <div className='TherapistProfileContainer'>
             <PagesHeader />
             <div className='TherapistProfile'>
                 <div className='TherapistProfileImage'>
-                    <img src={selectedTherapist?.image} alt='profile' />
+                    <SafeImage src={selectedTherapist.image} alt={`${selectedTherapist.name}, ${String(selectedTherapist.position || 'therapist').trim()} at The Sonderhood in New Cairo`} label={selectedTherapist.name} loading='eager' />
                 </div>
                 <div className='TherapistProfileInfo'>
-                    <div className='TherapistProfileName'>
-                        {selectedTherapist?.name}
-                    </div>
+                    <h1 className='TherapistProfileName'>
+                        {selectedTherapist.name}
+                    </h1>
                     <div className='TherapistProfileDesc'>
-                        {selectedTherapist?.position}
+                        {selectedTherapist.position}
                     </div>
                     <div className='TherapistProfileServices'>
                         {services}
                     </div>
                     <div className='TherapistProfileButton'>
-                        <button onClick={() => navigate('/RequestASession')}>REQUEST A BOOKING</button>
+                        <button onClick={() => navigate('/book')}>REQUEST A BOOKING</button>
                     </div>
                 </div>
             </div>
@@ -210,25 +191,25 @@ export default function Therapist()
                     <h1>BLOGS</h1>
                 </div>
                 <div className='OurBlogItems'>
-                    {haveBlogs ? displayedBlogs : (
+                    {therapistBlogs.length ? displayedBlogs : (
                         <div style={{ marginRight: '7.5%' }} className='NoTherapists'>
                             No Blogs Available
                         </div>
                     )}
                 </div>
                 <div className='OurBlogItemsButtons'>
-                    <button onClick={() => navigate('/Blogs')} className='OurBlogItemBookButton'>SEE ALL BLOGS</button>
+                    <button onClick={() => navigate('/blog')} className='OurBlogItemBookButton'>SEE ALL BLOGS</button>
                 </div>
             </div>
         }
         <div className='TherapistBookSession'>
             <div className='TherapistBookSessionImage'>
-                <img src={book} alt='book' />
+                <img src={book} alt='A calm therapy room at The Sonderhood' loading='lazy' />
             </div>
             <div className='BookSession'>
-                <div className='BookSessionTitle'>
+                <h2 className='BookSessionTitle'>
                     REQUEST TO BOOK A SESSION
-                </div>
+                </h2>
                 {err && error}
                 {succ && success}
                 <div className='BookSessionLocation'>
@@ -236,25 +217,26 @@ export default function Therapist()
                         Location
                     </div>
                     <div className='BookSessionLocationButtons'>
-                        <button className={location === 'Online' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('Online')}>Online</button>
-                        <button className={location === 'At The Center' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('At The Center')}>At The Center</button>
+                        <button type='button' className={location === 'Online' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('Online')}>Online</button>
+                        <button type='button' className={location === 'At The Center' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('At The Center')}>At The Center</button>
                     </div>
                 </div>
                 {/*//@ts-ignore*/}
-                <form ref={form} style={{ height: '40vh', gridTemplateRows: '1fr 1fr 1fr' }} className='BookSessionInfo'>
-                    <input hidden={true} value={location} name='location' />
-                    <input hidden={true} value={number} name='number' />
+                <form ref={form} onSubmit={sendRequest} style={{ height: '40vh', gridTemplateRows: '1fr 1fr 1fr' }} className='BookSessionInfo'>
+                    <input hidden={true} readOnly value={location} name='location' />
+                    <input hidden={true} readOnly value={number} name='number' />
+                    <input hidden={true} readOnly value={selectedTherapist.name} name='therapist' />
                     <div className='BookSessionInfoCredentials BookSessionInfoFirstName'>
                         <label htmlFor='FirstName'>First Name</label>
-                        <input onChange={onFirstNameChanged} value={firstName} placeholder='First Name...' id='FirstName' type='text' name='firstname' />
+                        <input onChange={changed(setFirstName)} value={firstName} placeholder='First Name...' id='FirstName' type='text' name='firstname' autoComplete='given-name' />
                     </div>
                     <div className='BookSessionInfoCredentials BookSessionInfoLastName'>
                         <label htmlFor='LastName'>Last Name</label>
-                        <input onChange={onLastNameChanged} value={lastName} placeholder='Last Name...' id='LastName' type='text' name='lastname' />
+                        <input onChange={changed(setLastName)} value={lastName} placeholder='Last Name...' id='LastName' type='text' name='lastname' autoComplete='family-name' />
                     </div>
                     <div className='BookSessionInfoCredentials BookSessionInfoEmail'>
                         <label htmlFor='Email'>Email</label>
-                        <input onChange={onEmailChanged} value={email} placeholder='Email...' id='Email' type='email' name='email' />
+                        <input onChange={changed(setEmail)} value={email} placeholder='Email...' id='Email' type='email' name='email' autoComplete='email' />
                     </div>
                     <div style={{ gridColumn: '3 / span 2' }} className='BookSessionInfoCredentials BookSessionInfoTherapist'>
                         <label >Mobile Number</label>
@@ -262,7 +244,7 @@ export default function Therapist()
                             country={"eg"}
                             enableSearch={true}
                             value={number}
-                            onChange={(phone) => setNumber(phone)}
+                            onChange={(phone) => { setNumber(phone); setErr(false); setSucc(false) }}
                             specialLabel='Number: '
                             inputStyle={{
                                 width: "100%",
@@ -287,13 +269,13 @@ export default function Therapist()
                     </div>
                     <div className='BookSessionInfoCredentials BookSessionInfoEmail'>
                         <label htmlFor='Day'>Day</label>
-                        <select onChange={onDayChanged} value={day} id='Day' name='day'>
+                        <select onChange={changed(setDay)} value={day} id='Day' name='day'>
                             {daysOptions}
                         </select>
                     </div>
                     <div style={{ gridColumn: '3 / span 2' }} className='BookSessionInfoCredentials BookSessionInfoEmail'>
                         <label htmlFor='Reach'>How Do We Reach You?</label>
-                        <select onChange={onPrefWayChanged} value={prefWay} id='Reach' name='reach'>
+                        <select onChange={changed(setPrefWay)} value={prefWay} id='Reach' name='reach'>
                             <option value='WhatsApp'>WhatsApp</option>
                             <option value='Email'>Email</option>
                             <option value='Call'>Call</option>
@@ -301,7 +283,7 @@ export default function Therapist()
                     </div>
                 </form>
                 <div className='BookSessionButton'>
-                    <button onClick={sendEmail} >REQUEST A BOOKING</button>
+                    <button onClick={sendRequest} >SEND ON WHATSAPP</button>
                 </div>
             </div>
         </div>

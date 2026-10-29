@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Therapist from '../HomePage/Therapists'
 import { useNavigate } from 'react-router-dom'
-import { selectedServices } from '../../app/services/servicesSlice'
+import { selectAllServices } from '../../seo/selectors'
 import { useSelector } from 'react-redux'
 import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
 
@@ -9,7 +9,7 @@ export default function AboutMeetTheTeam() {
     const [selectedService, setSelectedService] = useState('All Services')
     const [filteredTherapists, setFilteredTherapists] = useState(null)
 
-    const services = useSelector(selectedServices)
+    const services = useSelector(selectAllServices)
     const therapistsData = useSelector(selectedTherapists)
     const therapistsStatus = useSelector(selectTherapistsStatus)
 
@@ -100,7 +100,7 @@ export default function AboutMeetTheTeam() {
                 {therapistsDisplay}
             </div>
             <div className='MeetTheTeamItemsButtons'>
-                <button onClick={() => navigate('/RequestASession')} className='MeetTheTeamItemBookButton'>REQUEST A BOOKING</button>
+                <button onClick={() => navigate('/book')} className='MeetTheTeamItemBookButton'>REQUEST A BOOKING</button>
             </div>
         </div>
     )

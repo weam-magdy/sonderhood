@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import map from '../../imgs/map2.png'
 import topleft from '../../imgs/topl.jpeg'
@@ -6,75 +6,61 @@ import botleft from '../../imgs/botl.jpeg'
 import topright from '../../imgs/topr.jpeg'
 import botright from '../../imgs/botr.jpeg'
 import mid from '../../imgs/midpics.jpeg'
-import { Link } from 'react-router-dom'
-import emailjs from '@emailjs/browser';
-import useTitle from '../../hooks/useTitle'
+import useSeo from '../../seo/useSeo'
+import { INTROS, PAGES, SITE, pageLd, whatsappUrl } from '../../seo/meta.mjs'
+import { contactMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 
-const NAME_REGEX = /^[A-z]{2,24}\s[A-z]{2,24}/
-const NUMBER_REGEX = /^[1-9]{1,3}[0][1][0125][0-9]{8}/
-
 export default function ContactUs() {
-    useTitle('Contact Us')
+    useSeo({ ...PAGES.contact, jsonLd: pageLd({ name: 'Contact Us', path: PAGES.contact.path }) })
 
     const [name, setName] = useState('')
-    const [verifyName, setVerifyName] = useState(false)
     const [email, setEmail] = useState('')
     const [message, setMessage] = useState('')
     const [number, setNumber] = useState('')
-    const [verifyNumber, setVerifyNumber] = useState(false)
     const [subject, setSubject] = useState('')
 
     const [err, setErr] = useState(false)
     const [succ, setSucc] = useState(false)
 
-    useEffect(() => {
-        setVerifyName(NAME_REGEX.test(name))
-    }, [name])
+    const changed = (setter) => (e) => {
+        setter(e.target.value)
+        setErr(false)
+        setSucc(false)
+    }
 
-    useEffect(() => {
-        setVerifyNumber(NUMBER_REGEX.test(number.replace(/\s/g, '')))
-    }, [number])
-
-    const canSend = [verifyName, verifyNumber, message.length, subject.length].every(Boolean)
+    const canSend = isValidName(name) && isValidPhone(number) && message.trim().length > 0 && subject.trim().length > 0
 
     const form = useRef();
 
-    const sendEmail = (e) => {
+    // Opens WhatsApp with the message filled in; the visitor only has to tap Send.
+    const sendMessage = (e) => {
         e.preventDefault();
         if (canSend) {
+            openWhatsApp(contactMessage({ name, number, email, subject, message }))
+            sendEmailCopy(process.env.REACT_APP_template_id, form.current)
             setSucc(true)
             setName('')
             setEmail('')
             setMessage('')
             setNumber('')
-            //@ts-ignore
-            emailjs.sendForm(process.env.REACT_APP_service_id, process.env.REACT_APP_template_id, form.current, process.env.REACT_APP_public_key)
-                .then((result) => {
-
-                }, (error) => {
-
-                });
+            setSubject('')
         }
         else {
             setErr(true)
         }
     }
 
-    useEffect(() => {
-        setErr(false)
-    }, [name, email, message, number, subject])
-
     const error = (
         <div className='BookError'>
-            <p> All Fields Must Be Filled!</p>
+            <p> Please fill in your name, a valid number, a subject and your message.</p>
         </div>
     )
 
     const success = (
         <div className='BookError'>
-            <p style={{ color: 'green' }}> Message Sent Successfully!</p>
+            <p style={{ color: 'green' }}> Your message is ready in WhatsApp. Tap Send to reach us.</p>
         </div>
     )
 
@@ -84,46 +70,50 @@ export default function ContactUs() {
                 <PagesHeader />
                 <div className='ContactUsPage'>
                     <div className='ContactUsPageOurStory'>
-                        <div className='ContactUsPageOurStoryTitle'>
+                        <h1 className='ContactUsPageOurStoryTitle'>
                             FIND US
-                        </div>
+                        </h1>
                         <div className='ContactUsPageOurStoryDesc'>
                             <div className='ContactUsPageDescFirstPart'>
-                                {/* Lorem ipsum dolor sit amet consectetur. Sed urna diam lacus cum. Facilisi quis fames suscipit malesuada. Tincidunt velit in dolor cursus cursus neque. Et turpis eget pellentesque vitae eu. Non nulla urna dictum pharetra pellentesque faucibus vel. */}
+                                {INTROS.contact[0]}
                             </div>
                             <div className='ContactUsPageDescSecPart'>
-                                {/* Lorem ipsum dolor sit amet consectetur. Sed urna diam lacus cum. Facilisi quis fames suscipit malesuada. Tincidunt velit in dolor cursus cursus neque. Et turpis eget pellentesque vitae eu. Non nulla urna dictum pharetra pellentesque faucibus vel. */}
+                                {INTROS.contact[1]}
                             </div>
                         </div>
                     </div>
                     <div className='ContactUsContact'>
                         <div className='ContactUsContactMap'>
                             <div className='ContactUsContactMapImage'>
-                                <Link to='https://maps.app.goo.gl/6ib172QZdKsUx8ja6?g_st=ic'><img src={map} alt='map' /></Link>
+                                <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'><img src={map} alt='Map showing The Sonderhood therapy centre in New Cairo' /></a>
                             </div>
                             <div className='ContactUsContactMapInfo'>
-                                Reach us out on<br />
-                                Email: inquiries@the-sonderhood.com<br />
-                                Cellular: +201094292553<br />
+                                <address className='ContactUsContactDetails'>
+                                    Reach us out on<br />
+                                    WhatsApp: <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>{SITE.phoneDisplay}</a><br />
+                                    Cellular: <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a><br />
+                                    Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
+                                    Address: <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'>{SITE.address.display}</a><br />
+                                </address>
                             </div>
                         </div>
                         <div className='ContactUsContactMessage'>
                             <div className='ContactUsContactMessageContainer'>
-                                <div className='ContactUsContactMessageTitle'>
+                                <h2 className='ContactUsContactMessageTitle'>
                                     SEND US A MESSAGE
-                                </div>
+                                </h2>
                                 {err && error}
                                 {succ && success}
                                 {/*//@ts-ignore*/}
-                                <form ref={form} className='ContactUsContactMessageInfo'>
-                                    <input hidden={true} value={number} name='number' />
+                                <form ref={form} onSubmit={sendMessage} className='ContactUsContactMessageInfo'>
+                                    <input hidden={true} readOnly value={number} name='number' />
                                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageName'>
                                         <label htmlFor='Name'>Full Name:</label>
-                                        <input onChange={(e) => setName(e.target.value)} value={name} placeholder='Name...' id='Name' type='text' name='name' />
+                                        <input onChange={changed(setName)} value={name} placeholder='Name...' id='Name' type='text' name='name' autoComplete='name' />
                                     </div>
                                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageEmail'>
                                         <label htmlFor='Email'>Email</label>
-                                        <input onChange={(e) => setEmail(e.target.value)} value={email} name='email' placeholder='Email...' id='Email' type='email' />
+                                        <input onChange={changed(setEmail)} value={email} name='email' placeholder='Email...' id='Email' type='email' autoComplete='email' />
                                     </div>
                                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageNumber'>
                                         <label >Number</label>
@@ -131,7 +121,7 @@ export default function ContactUs() {
                                             country={"eg"}
                                             enableSearch={true}
                                             value={number}
-                                            onChange={(phone) => setNumber(phone)}
+                                            onChange={(phone) => { setNumber(phone); setErr(false); setSucc(false) }}
                                             specialLabel='Number: '
                                             inputStyle={{
                                                 width: "75%",
@@ -156,16 +146,16 @@ export default function ContactUs() {
                                     </div>
                                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageDOB'>
                                         <label htmlFor='Subject'>Subject:</label>
-                                        <input onChange={(e) => setSubject(e.target.value)} placeholder='Subject...' id='Subject' type='text' />
+                                        <input onChange={changed(setSubject)} value={subject} placeholder='Subject...' id='Subject' type='text' name='subject' />
                                     </div>
                                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageMessage'>
-                                        <label htmlFor='Send us a message'>Send us a message:</label>
-                                        <textarea onChange={(e) => setMessage(e.target.value)} value={message} name='message' style={{ paddingTop: '2.5%', textIndent: '0%', paddingLeft: '2.5%', justifyContent: 'flex-start', alignItems: 'flex-start' }} placeholder='' id='Send us a message' />
+                                        <label htmlFor='Message'>Send us a message:</label>
+                                        <textarea onChange={changed(setMessage)} value={message} name='message' style={{ paddingTop: '2.5%', textIndent: '0%', paddingLeft: '2.5%', justifyContent: 'flex-start', alignItems: 'flex-start' }} placeholder='' id='Message' />
                                     </div>
                                 </form>
                                 <div className='ContactUsContactMessageButton'>
                                     {/* <button onClick={() => navigate('/BookASession')}>BOOK A SESSION</button> */}
-                                    <button onClick={sendEmail}>SEND MESSAGE</button>
+                                    <button onClick={sendMessage}>SEND ON WHATSAPP</button>
                                 </div>
                             </div>
                         </div>
@@ -179,15 +169,15 @@ export default function ContactUs() {
                     </div>
                     <div className='OurSpaceImages'>
                         <div className='OurSpaceImagesLeft'>
-                            <img src={topleft} alt='tl' />
-                            <img src={botleft} alt='bl' />
+                            <img src={topleft} alt='An hourglass and a candle on a wooden table at The Sonderhood' loading='lazy' />
+                            <img src={botleft} alt='Refreshment shelves with a kettle and plants at The Sonderhood' loading='lazy' />
                         </div>
                         <div className='OurSpaceImagesMid'>
-                            <img src={mid} alt='m' />
+                            <img src={mid} alt='An armchair by a sunlit window in a therapy room at The Sonderhood, New Cairo' loading='lazy' />
                         </div>
                         <div className='OurSpaceImagesRight'>
-                            <img src={topright} alt='tr' />
-                            <img src={botright} alt='br' />
+                            <img src={topright} alt='A wooden wall clock in a therapy room at The Sonderhood' loading='lazy' />
+                            <img src={botright} alt='A desk with a lamp, notebooks and plants at The Sonderhood' loading='lazy' />
                         </div>
                     </div>
                     <div className='OurSpaceButton'>

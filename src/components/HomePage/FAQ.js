@@ -1,30 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import FAQItem from './FAQItem'
-import { collection, getDocs } from 'firebase/firestore'
-import { db } from '../../Config/firebaseConfig'
+import { HOME_FAQS } from '../../seo/meta.mjs'
 
-export default function FAQ({ faqs }) 
+// The home page questions live in src/seo/meta.mjs, so they are part of the
+// prerendered HTML and the FAQPage data. Service pages pass their own.
+export default function FAQ({ faqs })
 {
-    const [faqsHomePage, setFaqsHomePage] = useState([])
+    const faqsData = faqs?.length ? faqs : HOME_FAQS
 
-    const homepageFaqsCollection = collection(db, 'homepageFaqs')
-    useEffect(() => 
-    {
-        const getFaqs = async () => 
-        {
-            const data = await getDocs(homepageFaqsCollection)
-            //@ts-ignore
-            setFaqsHomePage(data.docs.map(doc => ({...doc.data(), id: doc.id})))
-        }
-
-        getFaqs()
-        //eslint-disable-next-line
-    }, [])
-
-    //@ts-ignore
-    const faqsData = faqs?.length !== 0 ? faqs : faqsHomePage[0]?.faqs ? faqsHomePage[0]?.faqs : []
-
-    const faqItems = faqsData?.map((question, index) => <FAQItem key={index} faq={question} faqs={faqsData} index={index} />)
+    const faqItems = faqsData.map((question, index) => <FAQItem key={index} faq={question} faqs={faqsData} index={index} />)
 
     return (
         <div className='FAQContainer'>

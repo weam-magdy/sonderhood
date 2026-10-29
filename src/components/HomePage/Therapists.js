@@ -1,12 +1,12 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import SafeImage from '../SafeImage'
+import { therapistSlug } from '../../seo/meta.mjs'
 
-export default function Therapists({ therapist }) 
+export default function Therapists({ therapist })
 {
-    const navigate = useNavigate()
-
     //eslint-disable-next-line
-    const services = therapist?.clientele?.map(service => 
+    const services = therapist?.clientele?.map(service =>
         {
             if(service !== 'All Services')
             {
@@ -23,9 +23,9 @@ export default function Therapists({ therapist })
 
     return (
         <>
-        { therapist ?<div onClick={() => navigate(`/Therapists/${therapist.name.split(" ").join("")}`)} className='MeetTheTeamItem'>
+        { therapist ?<Link to={`/therapists/${therapistSlug(therapist)}`} className='MeetTheTeamItem'>
             <div className='MeetTheTeamItemImage'>
-                <img src={therapist.image} alt='t4' />
+                <SafeImage src={therapist.image} alt={`${therapist.name}, ${String(therapist.position || 'therapist').trim()} at The Sonderhood`} label={therapist.name} />
             </div>
             <div className='MeetTheTeamItemInfo'>
                 <div className='MeetTheTeamItemName'>
@@ -38,8 +38,8 @@ export default function Therapists({ therapist })
             <div className='MeetTheTeamItemProf'>
                 {services}
             </div>
-        </div>
-        : 
+        </Link>
+        :
         <div className='NoTherapists'>
             No Therapists Available
         </div>

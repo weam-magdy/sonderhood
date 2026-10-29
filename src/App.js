@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import HomePage from './components/HomePage/HomePage';
 import Layout from './components/HomePage/Layout';
@@ -9,16 +9,18 @@ import Service from './components/Services/Service';
 import ContactUs from './components/ContactUs/ContactUs';
 import { AnimatePresence } from 'framer-motion';
 import Therapist from './components/TherapistProfile/Therapist';
+import TherapistsPage from './components/TherapistProfile/TherapistsPage';
 import Blogs from './components/Blogs/Blogs';
 import Article from './components/Blogs/Article';
 // import BookSession from './components/Booking/BookSession';
 import RequestSession from './components/Booking/RequestSession';
+import NotFound from './components/PageStatus';
 import { fetchTherapists } from './app/therapists/therapistsSlice';
 import { fetchServices } from './app/services/servicesSlice';
 import { fetchBlogs } from './app/blogs/blogsSlice';
 import { fetchTestimonials } from './app/testimonials/testimonialsSlice';
 
-function App() 
+function App()
 {
     const location = useLocation()
     const dispatch = useDispatch()
@@ -30,44 +32,41 @@ function App()
         dispatch(fetchTestimonials())
     }, [dispatch])
 
+    // Paths match case-insensitively, so /About and /Services/... still land here.
     return (
         <AnimatePresence mode='wait'>
             <Routes location={location} key={location.key}>
                 <Route path='/' element={<Layout />}>
                     <Route index element={<HomePage />} />
 
-                    <Route path='About' element={<About />} />
                     <Route path='about' element={<About />} />
 
-                    <Route path='Services'>
-                        <Route index element={<Services />} />
-                        <Route path=':service' element={<Service />} />
-        
-                    </Route>
                     <Route path='services'>
                         <Route index element={<Services />} />
                         <Route path=':service' element={<Service />} />
-        
                     </Route>
 
-                    <Route path='ContactUs' element={<ContactUs />} />
-                    <Route path='contactus' element={<ContactUs />} />
+                    <Route path='therapists'>
+                        <Route index element={<TherapistsPage />} />
+                        <Route path=':therapist' element={<Therapist />} />
+                    </Route>
 
-                    <Route path='Therapists/:therapist' element={<Therapist />} />
-                    <Route path='therapists/:therapist' element={<Therapist />} />
+                    <Route path='blog'>
+                        <Route index element={<Blogs />} />
+                        <Route path=':slug' element={<Article />} />
+                    </Route>
 
-                    <Route path='Blogs' element={<Blogs />} />
-                    <Route path='blogs' element={<Blogs />} />
+                    <Route path='contact' element={<ContactUs />} />
+                    <Route path='book' element={<RequestSession />} />
 
+                    {/* Addresses used before October 2026. The server also answers them with 301s. */}
+                    <Route path='blogs' element={<Navigate to='/blog' replace />} />
                     <Route path='ArticlePage/:title' element={<Article />} />
-                    <Route path='ArticlePage/:title' element={<Article />} />
-
+                    <Route path='contactus' element={<Navigate to='/contact' replace />} />
+                    <Route path='requestasession' element={<Navigate to='/book' replace />} />
                     {/* <Route path='BookASession' element={<BookSession />} /> */}
-                    {/* <Route path='BookASession' element={<BookSession />} /> */}
-                    <Route path='RequestASession' element={<RequestSession />} />
-                    <Route path='requestasession' element={<RequestSession />} />
 
-
+                    <Route path='*' element={<NotFound />} />
                 </Route>
 
             </Routes>

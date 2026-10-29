@@ -31,8 +31,8 @@ export default function MatchingTherapists({ therapists, search })
                     { therapistsDisplay }
                 </div>
                 <div className='MeetTheTeamItemsButtons'>
-                        <button onClick={() => navigate('/RequestASession')} className='MeetTheTeamItemBookButton'>REQUEST A BOOKING</button>
-                        <button onClick={() => navigate('/ContactUs')} className='MeetTheTeamItemContactButton'>CONTACT US</button>
+                        <button onClick={() => navigate('/book')} className='MeetTheTeamItemBookButton'>REQUEST A BOOKING</button>
+                        <button onClick={() => navigate('/contact')} className='MeetTheTeamItemContactButton'>CONTACT US</button>
                 </div>
             </div>
             :

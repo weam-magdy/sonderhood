@@ -1,25 +1,25 @@
 import React from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
-import { selectedServices } from '../../app/services/servicesSlice'
+import { selectAllServices } from '../../seo/selectors'
 import WhySonderHoodSec from './WhySonderHoodSec'
-import useTitle from '../../hooks/useTitle'
+import useSeo from '../../seo/useSeo'
+import { INTROS, PAGES, pageLd } from '../../seo/meta.mjs'
 const colors = ['#F9F3D0', '#FFDEB5', '#D6DCA2']
 
-export default function Serives() 
+export default function Serives()
 {
-    useTitle('Services')
-    const navigate = useNavigate()
+    useSeo({ ...PAGES.services, jsonLd: pageLd({ name: 'Services', path: PAGES.services.path }) })
 
-    const services = useSelector(selectedServices)
+    const services = useSelector(selectAllServices)
 
-    const displayServices = services?.map((service, index) => 
+    const displayServices = services.map((service, index) =>
     {
         const number = Math.floor((index+1) / 10) === 0 ? `0${index+1}` : index+1
         return(
-            <div key={index} onClick={() => navigate(`/Services/${service.title.replace(/\s/g, '')}`)} className='OurServicesItemContainer' style={{ background: colors[Math.floor(Math.random() * 3)], marginTop: '10%' }}>
+            <Link key={service.slug} to={`/services/${service.slug}`} className='OurServicesItemContainer' style={{ background: colors[index % colors.length], marginTop: '10%' }}>
                 <div className='OurServicesItemNumber'>
                     {number}
                 </div>
@@ -29,7 +29,7 @@ export default function Serives()
                 <div className='OurServicesItemBody'>
                     {service.description}
                 </div>
-            </div>
+            </Link>
         )
     })
 
@@ -39,10 +39,13 @@ export default function Serives()
             <PagesHeader />
             <div className='ServicesPage'>
                 <div className='ServicesPageHeader'>
-                    <div className='ServicesPageHeaderTitle'>
+                    <h1 className='ServicesPageHeaderTitle'>
                         OUR SERVICES
-                    </div>
+                    </h1>
                 </div>
+                <p className='ServicesPageIntro'>
+                    {INTROS.services}
+                </p>
                 <div className='ServicesPageItems'>
                     <div className='ServicesPageItemsTopPart'>
                         {displayServices}

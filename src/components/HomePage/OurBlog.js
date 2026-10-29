@@ -1,19 +1,21 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { selectedBlogs } from '../../app/blogs/blogsSlice'
+import { blogSlug } from '../../seo/meta.mjs'
+import SafeImage from '../SafeImage'
 
-export default function OurBlog() 
+export default function OurBlog()
 {
     const blogs = useSelector(selectedBlogs)
 
     const navigate = useNavigate()
 
-    const displayedBlogs = blogs.map(blog => 
+    const displayedBlogs = blogs.map(blog =>
         (
-            <div onClick={() => navigate(`/ArticlePage/${blog.title.split(" ").join("")}`)} key={blog.id} className='OurBlogItemContainer'>
+            <Link to={`/blog/${blogSlug(blog)}`} key={blog.id} className='OurBlogItemContainer'>
                 <div className='OurBlogItemImage'>
-                    <img src={blog.image} alt='c1' />
+                    <SafeImage src={blog.image} alt={blog.title} />
                 </div>
                 <div className='OurBlogItemInfo'>
                     <div className='OurBlogItemTitle'>
@@ -26,7 +28,7 @@ export default function OurBlog()
                         {blog.description}
                     </div>
                 </div>
-            </div>
+            </Link>
         ))
 
     return (
@@ -38,7 +40,7 @@ export default function OurBlog()
                 {displayedBlogs}
             </div>
             <div className='OurBlogItemsButtons'>
-                <button onClick={() => navigate('/Blogs')} className='OurBlogItemBookButton'>SEE ALL BLOGS</button>
+                <button onClick={() => navigate('/blog')} className='OurBlogItemBookButton'>SEE ALL BLOGS</button>
                 {/* <button onClick={() => navigate('/ContactUs')} className='OurBlogItemContactButton'>CONTACT US</button> */}
             </div>
         </div>

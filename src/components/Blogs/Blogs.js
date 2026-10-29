@@ -2,27 +2,33 @@ import React from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectedBlogs } from '../../app/blogs/blogsSlice'
-import useTitle from '../../hooks/useTitle'
+import { selectedBlogs, selectBlogsStatus } from '../../app/blogs/blogsSlice'
+import useSeo from '../../seo/useSeo'
+import { PAGES, blogSlug, pageLd } from '../../seo/meta.mjs'
+import SafeImage from '../SafeImage'
+import { PageError, PageLoading } from '../PageStatus'
 
 export default function Blogs()
 {
-    useTitle('Blogs')
+    useSeo({ ...PAGES.blog, jsonLd: pageLd({ name: 'Blog', path: PAGES.blog.path }) })
 
     const blogs = useSelector(selectedBlogs)
+    const blogsStatus = useSelector(selectBlogsStatus)
 
     const navigate = useNavigate()
+
+    if (!blogs.length) return blogsStatus === 'failed' ? <PageError /> : <PageLoading />
 
     const restofBlogs = blogs.slice(1)
     const firstBlog = blogs.slice(0, 1)
 
-    const displayedBlogs = restofBlogs.map(blog => 
+    const displayedBlogs = restofBlogs.map(blog =>
         (
-            <div key={blog.id} className='TopicMain'> 
+            <div key={blog.id} className='TopicMain'>
                 <div className='TopicMainImage'>
-                    <img src={blog.image} alt='mid' />
+                    <SafeImage src={blog.image} alt={blog.title} />
                 </div>
                 <div className='TopicMainInfo'>
                     <div className='TopicMainInfoService'>
@@ -33,9 +39,9 @@ export default function Blogs()
                             {blog.duration}
                         </div>
                     </div>
-                    <div className='TopicMainInfoTitle'>
-                        {blog.title}
-                    </div>
+                    <h2 className='TopicMainInfoTitle'>
+                        <Link className='PlainLink' to={`/blog/${blogSlug(blog)}`}>{blog.title}</Link>
+                    </h2>
                     <div className='TopicMainInfoAuthor'>
                         By: {blog.therapist}
                     </div>
@@ -43,7 +49,7 @@ export default function Blogs()
                         {blog.description}
                     </div>
                     <div className='TopicMainInfoButton'>
-                        <button onClick={() => navigate(`/ArticlePage/${blog.title.split(" ").join("")}`)}>Read more <FontAwesomeIcon style={{width: '7%'}} icon={faChevronRight} /></button>
+                        <button onClick={() => navigate(`/blog/${blogSlug(blog)}`)}>Read more <FontAwesomeIcon style={{width: '7%'}} icon={faChevronRight} /></button>
                     </div>
                 </div>
             </div>
@@ -55,9 +61,9 @@ export default function Blogs()
             <PagesHeader />
             <div className='BlogsPage'>
                 <div className='BlogsPageOurBlogs'>
-                    <div className='AboutPageOurStoryTitle'>
+                    <h1 className='AboutPageOurStoryTitle'>
                         OUR BLOG
-                    </div>
+                    </h1>
                     <div className='AboutPageOurStoryDesc'>
                         <div className='AboutPageDescFirstPart'>
                             Our blog section is a valuable resource for insights into mental health, well-being, and personal growth. Our expert therapists regularly share informative articles, practical tips, and strategies to help you navigate life's challenges.
@@ -67,9 +73,9 @@ export default function Blogs()
                         </div>
                     </div>
                 </div>
-                <div className='BlogsMain'> 
+                <div className='BlogsMain'>
                     <div className='BlogsMainImage'>
-                        <img src={firstBlog[0].image} alt='mid' />
+                        <SafeImage src={firstBlog[0].image} alt={firstBlog[0].title} loading='eager' />
                     </div>
                     <div className='BlogsMainInfo'>
                         <div className='BlogsMainInfoService'>
@@ -80,9 +86,9 @@ export default function Blogs()
                                 {firstBlog[0].duration}
                             </div>
                         </div>
-                        <div className='BlogsMainInfoTitle'>
-                            {firstBlog[0].title}
-                        </div>
+                        <h2 className='BlogsMainInfoTitle'>
+                            <Link className='PlainLink' to={`/blog/${blogSlug(firstBlog[0])}`}>{firstBlog[0].title}</Link>
+                        </h2>
                         <div className='BlogsMainInfoServiceAuthor'>
                             By: {firstBlog[0].therapist}
                         </div>
@@ -90,7 +96,7 @@ export default function Blogs()
                             {firstBlog[0].description}
                         </div>
                         <div className='BlogsMainInfoButton'>
-                            <button onClick={() => navigate(`/ArticlePage/${firstBlog[0].title.split(" ").join("")}`)}>READ MORE</button>
+                            <button onClick={() => navigate(`/blog/${blogSlug(firstBlog[0])}`)}>READ MORE</button>
                         </div>
                     </div>
                 </div>

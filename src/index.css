@@ -8,20 +8,22 @@
 @font-face 
 {
 	font-family: Raglika;
-	src: url("./WebFonts/raglika-6yzwq.woff") format('woff');
-	src: url("./WebFonts/raglika-6yzwq.otf") format('otf');
+	src: url("./WebFonts/raglika-6yzwq.woff") format('woff'), url("./WebFonts/raglika-6yzwq.otf") format('opentype');
+	font-display: swap;
 }
 
 @font-face
 {
 	font-family: Optima;
 	src: url("./WebFonts/OPTIMA.woff") format('woff');
+	font-display: swap;
 }
 
 @font-face
 {
 	font-family: OptimaB;
 	src: url("./WebFonts/OPTIMA_B.woff") format('woff');
+	font-display: swap;
 }
 
 html, body, #root
@@ -6482,4 +6484,277 @@ textarea
 {
 	margin-left: 2.5vw !important;
 	margin-top: 2.5vw !important;
+}
+
+/* ------------------------------------------------------------------
+   October 2026: search, WhatsApp and accessibility additions
+   ------------------------------------------------------------------ */
+
+/* Headings that replaced plain divs. :where() keeps this at zero specificity, so
+   each class's own margins and fonts still win; it only removes the browser's
+   default heading margins and bold weight. */
+:where(h1.AboutPageOurStoryTitle, h1.ServicesPageHeaderTitle, h1.ContactUsPageOurStoryTitle, h1.BookSessionTitle, h2.BookSessionTitle, h1.TherapistProfileName, h1.ArticleMainInfoTitle, h2.TopicMainInfoTitle, h2.BlogsMainInfoTitle, h2.ContactUsContactMessageTitle)
+{
+	margin: 0;
+	font-size: inherit;
+	font-weight: inherit;
+}
+
+/* Cards that became real links */
+a.OurServicesItemContainer,
+a.MeetTheTeamItem,
+a.OurBlogItemContainer,
+.PlainLink
+{
+	color: inherit;
+	text-decoration: none;
+}
+
+.PlainLink:hover
+{
+	text-decoration: underline;
+}
+
+/* FAQ answers stay in the page and are collapsed with CSS, so any length fits */
+.FAQItemAnswerWrapper
+{
+	grid-template-rows: 0fr;
+}
+
+.FAQItemAnswerWrapper.open
+{
+	grid-template-rows: 1fr;
+}
+
+.FAQItemAnswerWrapper > .FAQItemAnswerTemp
+{
+	min-height: 0;
+}
+
+/* Padding cannot shrink to 0fr, so a closed answer drops it. */
+.FAQItemAnswerWrapper:not(.open) > .FAQItemAnswerTemp
+{
+	padding-bottom: 0;
+}
+
+.FAQItem:focus-visible
+{
+	outline: 2px solid var(--Sonder-olive);
+	outline-offset: 2px;
+}
+
+.HomePageHeadline
+{
+	margin: 4% 10% 0;
+	color: var(--Sonder-yellow);
+	font-family: 'DM Sans', Arial, sans-serif;
+	font-size: max(11px, 0.8vw);
+	font-weight: 400;
+	line-height: 1.45;
+	letter-spacing: 0.06em;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.ServicesPageIntro
+{
+	width: 70%;
+	margin: 0 0 2%;
+	color: var(--Text, #90946B);
+	font-family: Arial, sans-serif;
+	font-size: max(14px, 1.1vw);
+	line-height: 155%;
+}
+
+.SingleServicePageIntro
+{
+	margin-top: 1em;
+}
+
+.BookSessionNote
+{
+	margin: 0 5% 2%;
+	color: var(--Text, #90946B);
+	font-family: Arial, sans-serif;
+	font-size: max(14px, 1vw);
+	line-height: 150%;
+}
+
+.BookSessionNote a,
+.ContactUsContactDetails a,
+.NoTherapists a,
+.SimplePage a
+{
+	color: var(--Sonder-olive);
+}
+
+.ContactUsContactDetails
+{
+	font-style: normal;
+}
+
+.ImageFallback
+{
+	width: 100%;
+	height: 100%;
+	min-height: 8rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #D6DCA2;
+	color: var(--Sonder-olive);
+	font-family: Raglika, serif;
+	font-size: 3rem;
+	letter-spacing: 0.05em;
+}
+
+/* Not found, loading and the therapists page intro */
+.SimplePageContainer
+{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	background: var(--Sonder-white);
+}
+
+.SimplePage
+{
+	width: 86%;
+	margin: 6% 7% 2%;
+	color: var(--Text, #90946B);
+	font-family: Arial, sans-serif;
+	font-size: max(15px, 1.1vw);
+	line-height: 160%;
+}
+
+.SimplePage p
+{
+	max-width: 60em;
+	margin: 1em 0 0;
+}
+
+.SimplePage ul
+{
+	columns: 2;
+	margin: 1em 0 0;
+	padding-left: 1.2em;
+}
+
+.SimplePageStatus
+{
+	padding: 8vh 0;
+	color: var(--Sonder-olive);
+	font-size: max(18px, 1.5vw);
+}
+
+/* Contact details and links under the footer */
+.FooterDetails
+{
+	padding: 1.5% 5% 2.5%;
+	background: var(--Sonder-olive);
+	border-top: 1px solid rgba(249, 243, 208, 0.25);
+	color: var(--Sonder-white);
+	font-family: Arial, sans-serif;
+	font-size: max(12px, 0.85vw);
+	line-height: 180%;
+	text-align: center;
+}
+
+.FooterDetailsLinks
+{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 0 1.6em;
+}
+
+.FooterDetailsLinks a,
+.FooterDetailsAddress a
+{
+	color: var(--Sonder-yellow);
+	text-decoration: none;
+}
+
+.FooterDetailsLinks a:hover,
+.FooterDetailsAddress a:hover
+{
+	text-decoration: underline;
+}
+
+.FooterDetailsAddress
+{
+	margin-top: 0.6em;
+	font-style: normal;
+	opacity: 0.9;
+}
+
+/* Floating WhatsApp button */
+.WhatsAppFloat
+{
+	position: fixed;
+	right: 24px;
+	bottom: 24px;
+	z-index: 1000;
+	width: 56px;
+	height: 56px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: #25D366;
+	color: #FFFFFF;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.WhatsAppFloat:hover,
+.WhatsAppFloat:focus-visible
+{
+	transform: scale(1.06);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+}
+
+.WhatsAppFloat svg
+{
+	width: 30px;
+	height: 30px;
+}
+
+@media (max-width: 768px)
+{
+	.WhatsAppFloat
+	{
+		right: 16px;
+		bottom: 16px;
+		width: 52px;
+		height: 52px;
+	}
+
+	.WhatsAppFloat svg
+	{
+		width: 28px;
+		height: 28px;
+	}
+
+	.ServicesPageIntro
+	{
+		width: 100%;
+		margin-bottom: 6%;
+	}
+
+	.SimplePage ul
+	{
+		columns: 1;
+	}
+
+	.FooterDetailsLinks
+	{
+		gap: 0 1em;
+	}
+
+	/* Room for the floating WhatsApp button at the end of the page */
+	.FooterDetails
+	{
+		padding-bottom: 96px;
+	}
 }

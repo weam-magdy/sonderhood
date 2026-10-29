@@ -1,78 +1,56 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import React, { useMemo } from 'react'
+import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import AvailableTherapists from './AvailableTherapists'
 import FAQ from '../HomePage/FAQ'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import { motion } from 'framer-motion'
 import { useSelector } from 'react-redux'
-import { selectedServices } from '../../app/services/servicesSlice'
+import { selectServicesStatus } from '../../app/services/servicesSlice'
 import { selectedTherapists } from '../../app/therapists/therapistsSlice'
-import useTitle from '../../hooks/useTitle'
+import { selectAllServices } from '../../seo/selectors'
+import useSeo from '../../seo/useSeo'
+import { legacySlug, serviceLd, serviceMeta } from '../../seo/meta.mjs'
+import NotFound, { PageError, PageLoading } from '../PageStatus'
 
-export default function Service() 
+export default function Service()
 {
     const { service } = useParams()
     const navigate = useNavigate()
-    const services = useSelector(selectedServices)
+    const services = useSelector(selectAllServices)
+    const servicesStatus = useSelector(selectServicesStatus)
     const therapists = useSelector(selectedTherapists)
-    const [availableTherapists, setAvailableTherapists] = useState(therapists)
 
-    const selectedService = services?.find(serviceItem => serviceItem.title.replace(/\s/g, '') === service)
+    const selectedService = services.find(serviceItem => serviceItem.slug === String(service).toLowerCase())
+    // Old links such as /Services/CouplesTherapy
+    const movedService = !selectedService && services.find(serviceItem => serviceItem.legacySlug === legacySlug(service))
 
-    useTitle(`${selectedService.title}`)
-    
-    //@ts-ignore
-    useEffect(() => 
+    // Firestore stores references to therapist documents; resolve them against the loaded list.
+    const availableTherapists = useMemo(() => (selectedService?.therapists || [])
+        .map(therapist => therapists.find(data => data.id === therapist.id))
+        .filter(Boolean), [selectedService, therapists])
+
+    useSeo(selectedService ? { ...serviceMeta(selectedService), jsonLd: serviceLd(selectedService) } : {})
+
+    if (movedService) return <Navigate to={`/services/${movedService.slug}`} replace />
+    if (!selectedService)
     {
-        // if(effRan.current === true || process.env.NODE_ENV !== 'development')
-        // {
-        //     const getFaqs = async (therapist) => 
-        //     {
-        //         const dataRef = doc(db, "therapists", therapist.id)
-        //         const data = await getDoc(dataRef)
-        //         //@ts-ignore
-        //         setAvailableTherapists(prev => {
-        //             const array = prev
-        //             //@ts-ignore
-        //             array.push(data.data())
-        //             return array
-        //         })
-        //         setRan(true)
-        //     }
+        if (servicesStatus === 'failed') return <PageError />
+        if (servicesStatus === 'succeeded') return <NotFound />
+        return <PageLoading />
+    }
 
-        //     selectedService?.therapists?.length && selectedService.therapists?.map(therapist => getFaqs(therapist))
-        // }
+    const title = selectedService.title.split(' ')
 
-        // return () => effRan.current = true
+    const selectedServiceTitle = title.map((text, index) => index === 0 ? text : <span key={index}> {text}</span>)
 
-        if(selectedService)
-        {
-            let therapistsArray = []
-            //eslint-disable-next-line
-            selectedService.therapists.map(therapist => 
-                {
-                    const foundTherapist = therapists.find(data => data.id === therapist.id)
-                    therapistsArray.push(foundTherapist)
-                })
-            setAvailableTherapists(therapistsArray)
-        }
-        else setAvailableTherapists(therapists)
-        //eslint-disable-next-line
-    }, [])
+    const displayPoints = selectedService.points?.map((point, index) => <li key={index}> {point}</li>)
 
-
-    const title = selectedService?.title.split(' ')
-
-    const selectedServiceTitle = title?.map((text, index) => index === 0 ? text : <span key={index}> {text}</span>)
-    
-    const displayPoints = selectedService?.points?.map((point, index) => <li key={index}> {point}</li>)
-    
     return (
         <>
-            <motion.div 
+            <motion.div
                 initial={{ x: '100vw' }}
                 animate={{ x: 0 }}
-                transition={{ duration: 0.5, type: 'tween', ease: 'easeInOut' }} 
+                transition={{ duration: 0.5, type: 'tween', ease: 'easeInOut' }}
                 className='SingleServicePageContainer'
             >
                 <PagesHeader />
@@ -80,12 +58,16 @@ export default function Service()
                     <div className='SingleServicePageDetails'>
                         <div className='SingleServicePageHeader'>
                             <div className='SingleServicePageHeaderTitle'>
-                                {/*//@ts-ignore*/}
                                 <h1>{selectedServiceTitle}</h1>
                             </div>
                             <div className='SingleServicePageHeaderDesc'>
-                                {selectedService?.description}    
+                                {selectedService.description}
                             </div>
+                            {selectedService.seo?.intro &&
+                                <div className='SingleServicePageHeaderDesc SingleServicePageIntro'>
+                                    {selectedService.seo.intro}
+                                </div>
+                            }
                         </div>
                         <div className='SingleServicePagePoints'>
                             <ul>
@@ -93,7 +75,7 @@ export default function Service()
                             </ul>
                         </div>
                         <div className='SingleServicePageBook'>
-                            <button onClick={() => navigate('/RequestASession')} className='SingleServicePageBookButton'>REQUEST A BOOKING</button>
+                            <button onClick={() => navigate('/book')} className='SingleServicePageBookButton'>REQUEST A BOOKING</button>
                         </div>
                     </div>
                     <div className='SingleServicePageShapes'>
@@ -102,22 +84,22 @@ export default function Service()
 
                             </div>
                             <div className='IVector'>
-                                
+
                             </div>
                             <div className='IVectorTilted'>
-                                
+
                             </div>
                         </div>
                         <div className='ICircles'>
                             <div className='ICircle'>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
             </motion.div>
-            <AvailableTherapists availableTherapists={availableTherapists} therapists={therapists} selectedService={selectedService} />
-            <FAQ faqs={selectedService?.faqs} />
+            <AvailableTherapists availableTherapists={availableTherapists} />
+            <FAQ faqs={selectedService.faqs} />
         </>
     )
 }

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
 import { motion, useAnimation, useInView } from 'framer-motion'
+import { HOME_HEADLINE } from '../../seo/meta.mjs'
 
 export default function Home() 
 {
@@ -65,8 +66,9 @@ export default function Home()
                         <h6>Your</h6> <h6>Safe</h6> <h6>Haven</h6>
                     </div>
                     <div className='HomePageBookSessionButton'>
-                        <button onClick={() => navigate('/RequestASession')}>Request A Booking <FontAwesomeIcon icon={faArrowRight} /></button>
+                        <button onClick={() => navigate('/book')}>Request A Booking <FontAwesomeIcon icon={faArrowRight} /></button>
                     </div>
+                    <h1 className='HomePageHeadline'>{HOME_HEADLINE}</h1>
                 </motion.div>
             </div>
         </div>

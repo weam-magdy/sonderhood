@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { selectedServices } from '../../app/services/servicesSlice'
+import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { motion, useAnimation, useInView } from 'framer-motion'
+import { selectAllServices } from '../../seo/selectors'
 
 const colors = ['#F9F3D0', '#FFDEB5', '#D6DCA2']
+const MotionLink = motion(Link)
 
-export default function OurServices() 
+export default function OurServices()
 {
-    const navigate = useNavigate()
     const ref = useRef(null)
     const refInView = useInView(ref)
 
@@ -16,7 +16,7 @@ export default function OurServices()
 
     useEffect(() =>
     {
-        if(refInView) 
+        if(refInView)
         {
             mainRefAnimation.start('visible')
         }
@@ -27,22 +27,22 @@ export default function OurServices()
         //eslint-disable-next-line
     }, [refInView])
 
-    const services = useSelector(selectedServices)
+    const services = useSelector(selectAllServices)
 
-    const displayServices = services?.map((service, index) => 
+    const displayServices = services.map((service, index) =>
     {
-        
+
         const number = Math.floor((index+1) / 10) === 0 ? `0${index+1}` : index+1
         return(
-            <motion.div 
-                key={index} 
-                onClick={() => navigate(`/Services/${service.title.replace(/\s/g, '')}`)} 
-                className='OurServicesItemContainer' 
-                style={{ background: colors[Math.floor(Math.random() * 3)] }}
-                variants={{ 
-                    hidden: { opacity: 0, y: 300 }, 
+            <MotionLink
+                key={service.slug}
+                to={`/services/${service.slug}`}
+                className='OurServicesItemContainer'
+                style={{ background: colors[index % colors.length] }}
+                variants={{
+                    hidden: { opacity: 0, y: 300 },
                     visible: { opacity: 1, y: 0 }
-                }} 
+                }}
                 initial='hidden'
                 animate={mainRefAnimation}
                 transition={{ duration: 0.75, delay: 0.25 }}
@@ -56,7 +56,7 @@ export default function OurServices()
                 <div className='OurServicesItemBody'>
                     {service.description}
                 </div>
-            </motion.div>
+            </MotionLink>
         )
     })
 

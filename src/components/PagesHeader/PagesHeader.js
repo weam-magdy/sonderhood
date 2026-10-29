@@ -12,6 +12,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useInView } from 'framer-motion';
 
+const MENU = [['Home', '/'], ['About', '/about'], ['Our Therapists', '/therapists'], ['Blog', '/blog'], ['Services', '/services'], ['Contact Us', '/contact'], ['Request A Session', '/book']]
+
 export default function PagesHeader() 
 {
     const HeaderRef = useRef(null)
@@ -51,8 +53,8 @@ export default function PagesHeader()
           className='TESTT'
         >
           <List>
-            {['Home', 'About', 'Blogs', 'Services', 'Contact Us', 'Request A Session'].map((text, index) => (
-              <Link key={text} to ={text === 'Home' ? '/' : `/${text.replace(/\s/g, '')}`}>
+            {MENU.map(([text, path]) => (
+              <Link key={text} to={path}>
                 <ListItem style={{ textDecoration: 'none' }} disablePadding>
                   <ListItemButton>
                     <ListItemText primary={text} />
@@ -96,9 +98,9 @@ export default function PagesHeader()
             <div className='PagesHeaderContent'>
             {/*//@ts-ignore*/}
                 <div ref={HeaderRef} className='PagesHeaderAnchor'><Link to='/'>HOME</Link></div>
-                <div className='PagesHeaderAnchor'><Link to='/About'>ABOUT</Link></div>
-                <div className='PagesHeaderAnchor'><Link to='/Blogs'>BLOG</Link></div>
-                <div className='PagesHeaderAnchor'><Link to='/Services'>OUR SERVICES</Link></div>
+                <div className='PagesHeaderAnchor'><Link to='/about'>ABOUT</Link></div>
+                <div className='PagesHeaderAnchor'><Link to='/blog'>BLOG</Link></div>
+                <div className='PagesHeaderAnchor'><Link to='/services'>OUR SERVICES</Link></div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" width="52" height="76" viewBox="0 0 52 76" fill="none">
                 <path d="M22.7106 28.0581V27.8081H22.4606H20.9175H20.6675V28.0581V74.7204V74.9704H20.9175H22.4606H22.7106V74.7204V28.0581Z" fill="#464834" stroke="#464834" strokeWidth="0.5"/>
@@ -109,9 +111,9 @@ export default function PagesHeader()
                 <path d="M16.3506 14.9016C16.3506 20.2738 20.6759 24.6484 25.9997 24.6484C31.3228 24.6484 35.6487 20.2738 35.6487 14.9016C35.6487 9.5294 31.3228 5.15479 25.9997 5.15479C20.6765 5.15479 16.3506 9.5294 16.3506 14.9016ZM18.3937 14.9016C18.3937 10.6603 21.8089 7.21396 25.9997 7.21396C30.1911 7.21396 33.6056 10.6603 33.6056 14.9016C33.6056 19.1429 30.1911 22.5892 25.9997 22.5892C21.8083 22.5892 18.3937 19.1429 18.3937 14.9016Z" fill="#464834" stroke="#464834" strokeWidth="0.5"/>
             </svg>
             <div className='PagesHeaderContent'>
-                <div className='PagesHeaderAnchor'><Link to='/ContactUs'>CONTACT US</Link></div>
+                <div className='PagesHeaderAnchor'><Link to='/contact'>CONTACT US</Link></div>
                 {/* <div className='PagesHeaderAnchor'><Link to='/BookASession'>BOOK A SESSION</Link></div> */}
-                <div className='PagesHeaderAnchor'><Link to='/RequestASession'>REQUEST A BOOKING</Link></div>
+                <div className='PagesHeaderAnchor'><Link to='/book'>REQUEST A BOOKING</Link></div>
             </div>
         </div>}
         </>

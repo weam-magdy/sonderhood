@@ -1,58 +1,51 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
-import emailjs from '@emailjs/browser';
-import useTitle from '../../hooks/useTitle';
+import useSeo from '../../seo/useSeo';
+import { INTROS, PAGES, SITE, pageLd, whatsappUrl } from '../../seo/meta.mjs';
+import { bookingMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
 import PhoneInput from 'react-phone-input-2';
 
-const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+const days = ['Any day', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-const NAME_REGEX = /^[A-z]{2,36}/
-const NUMBER_REGEX = /^[1-9]{1,3}[0][1][0125][0-9]{8}/
-
-export default function BookSession() 
-{   
-    useTitle('Request A Booking')
+export default function BookSession()
+{
+    useSeo({ ...PAGES.book, jsonLd: pageLd({ name: 'Book a Session', path: PAGES.book.path }) })
 
     const [firstName, setFirstName] = useState('')
-    const [verifyFirstName, setVerifyFirstName] = useState(false)
     const [lastName, setLastName] = useState('')
-    const [verifyLastName, setVerifyLastName] = useState(false)
     const [email, setEmail] = useState('')
-    const [day, setDay] = useState('Day')
-    const [prefWay, setPrefWay] = useState('')
+    const [day, setDay] = useState('Any day')
+    const [prefWay, setPrefWay] = useState('WhatsApp')
     const [number, setNumber] = useState('')
-    const [verifyNumber, setVerifyNumber] = useState(false)
 
     const [location, setLocation] = useState('At The Center')
 
     const [err, setErr] = useState(false)
     const [succ, setSucc] = useState(false)
 
-    const onFirstNameChanged = (e) => setFirstName(e.target.value)
-    const onLastNameChanged = (e) => setLastName(e.target.value)
-    const onEmailChanged = (e) => setEmail(e.target.value)
-    const onDayChanged = (e) => setDay(e.target.value)
-    const onPrefWayChanged = (e) => setPrefWay(e.target.value)
+    const changed = (setter) => (e) =>
+    {
+        setter(e.target.value)
+        setErr(false)
+        setSucc(false)
+    }
 
     const form = useRef();
 
-    const sendEmail = (e) => {
-        console.log(verifyFirstName, verifyLastName, verifyNumber)
+    const canRequest = isValidName(firstName) && isValidName(lastName) && isValidPhone(number)
+
+    // Opens WhatsApp with the request filled in; the visitor only has to tap Send.
+    const sendRequest = (e) => {
         e.preventDefault();
         if(canRequest)
         {
+            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay }))
+            sendEmailCopy(process.env.REACT_APP_templateBook_id, form.current)
             setSucc(true)
             setFirstName('')
             setLastName('')
             setEmail('')
             setNumber('')
-            //@ts-ignore
-            emailjs.sendForm(process.env.REACT_APP_service_id, process.env.REACT_APP_templateBook_id, form.current, process.env.REACT_APP_public_key)
-                .then((result) => {
-    
-                }, (error) => {
-    
-                });
         }
         else
         {
@@ -62,37 +55,15 @@ export default function BookSession()
 
     const daysOptions = days.map(day => <option value={day} key={day}>{day}</option>)
 
-    useEffect(() => 
-    {
-        setVerifyFirstName(NAME_REGEX.test(firstName))
-    }, [firstName])
-
-    useEffect(() => 
-    {
-        setVerifyLastName(NAME_REGEX.test(lastName))
-    }, [lastName])
-
-    useEffect(() => 
-    {
-        setVerifyNumber(NUMBER_REGEX.test(number.replace(/\s/g,'')))
-    }, [number])
-
-    useEffect(() => 
-    {
-        setErr(false)
-    }, [firstName, lastName, email, number, prefWay, day])
-
-    const canRequest = [verifyFirstName, verifyLastName, verifyNumber].every(Boolean)
-
     const error = (
         <div className='BookError'>
-            <p> All Fields Must Be Filled!</p>
+            <p> Please enter your first and last name and a valid mobile number.</p>
         </div>
     )
 
     const success = (
         <div className='BookError'>
-            <p style={{ color: 'green' }}> Request Sent Successfully!</p>
+            <p style={{ color: 'green' }}> Your request is ready in WhatsApp. Tap Send to reach us.</p>
         </div>
     )
 
@@ -101,9 +72,12 @@ export default function BookSession()
         <div className='BookSessionContainer'>
             <PagesHeader />
             <div className='BookSession'>
-                <div className='BookSessionTitle'>
+                <h1 className='BookSessionTitle'>
                     REQUEST TO BOOK A SESSION
-                </div>
+                </h1>
+                <p className='BookSessionNote'>
+                    {INTROS.book} <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>{SITE.phoneDisplay}</a>.
+                </p>
                 {err && error}
                 {succ && success}
                 <div className='BookSessionLocation'>
@@ -111,25 +85,25 @@ export default function BookSession()
                         Location
                     </div>
                     <div className='BookSessionLocationButtons'>
-                        <button className={location === 'Online' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('Online')}>Online</button>
-                        <button className={location === 'At The Center' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('At The Center')}>At The Center</button>
+                        <button type='button' className={location === 'Online' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('Online')}>Online</button>
+                        <button type='button' className={location === 'At The Center' ? 'BookSessionLocationSelectedButton' : 'BookSessionLocationNotSelectedButton'} onClick={() => setLocation('At The Center')}>At The Center</button>
                     </div>
                 </div>
                 {/*//@ts-ignore*/}
-                <form ref={form} style={{ height: '40vh', gridTemplateRows: '1fr 1fr 1fr' }} className='BookSessionInfo'>
-                    <input hidden={true} value={number} name='number' />
-                    <input hidden={true} value={location} name='location' />
+                <form ref={form} onSubmit={sendRequest} style={{ height: '40vh', gridTemplateRows: '1fr 1fr 1fr' }} className='BookSessionInfo'>
+                    <input hidden={true} readOnly value={number} name='number' />
+                    <input hidden={true} readOnly value={location} name='location' />
                     <div className='BookSessionInfoCredentials BookSessionInfoFirstName'>
                         <label htmlFor='FirstName'>First Name</label>
-                        <input onChange={onFirstNameChanged} value={firstName} placeholder='First Name...' id='FirstName' type='text' name='firstname' />
+                        <input onChange={changed(setFirstName)} value={firstName} placeholder='First Name...' id='FirstName' type='text' name='firstname' autoComplete='given-name' />
                     </div>
                     <div className='BookSessionInfoCredentials BookSessionInfoLastName'>
                         <label htmlFor='LastName'>Last Name</label>
-                        <input onChange={onLastNameChanged} value={lastName} placeholder='Last Name...' id='LastName' type='text' name='lastname' />
+                        <input onChange={changed(setLastName)} value={lastName} placeholder='Last Name...' id='LastName' type='text' name='lastname' autoComplete='family-name' />
                     </div>
                     <div className='BookSessionInfoCredentials BookSessionInfoEmail'>
                         <label htmlFor='Email'>Email</label>
-                        <input onChange={onEmailChanged} value={email} placeholder='Email...' id='Email' type='email' name='email' />
+                        <input onChange={changed(setEmail)} value={email} placeholder='Email...' id='Email' type='email' name='email' autoComplete='email' />
                     </div>
                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageNumber'>
                         <label >Mobile Number</label>
@@ -137,7 +111,7 @@ export default function BookSession()
                             country={"eg"}
                             enableSearch={true}
                             value={number}
-                            onChange={(phone) => setNumber(phone)}
+                            onChange={(phone) => { setNumber(phone); setErr(false); setSucc(false) }}
                             specialLabel='Number: '
                             inputStyle={{
                                 width: "100%",
@@ -162,13 +136,13 @@ export default function BookSession()
                     </div>
                     <div className='BookSessionInfoCredentials BookSessionInfoEmail'>
                         <label htmlFor='Day'>Day</label>
-                        <select onChange={onDayChanged} value={day} id='Day' name='day'>
+                        <select onChange={changed(setDay)} value={day} id='Day' name='day'>
                             {daysOptions}
                         </select>
                     </div>
                     <div className='BookSessionInfoCredentials BookSessionInfoReach'>
                         <label htmlFor='Reach'>How Do We Reach You?</label>
-                        <select onChange={onPrefWayChanged} value={prefWay} id='Reach' name='Reach'>
+                        <select onChange={changed(setPrefWay)} value={prefWay} id='Reach' name='Reach'>
                             <option value='WhatsApp'>WhatsApp</option>
                             <option value='Email'>Email</option>
                             <option value='Call'>Call</option>
@@ -176,7 +150,7 @@ export default function BookSession()
                     </div>
                 </form>
                 <div className='BookSessionButton'>
-                    <button onClick={sendEmail}>REQUEST A BOOKING</button>
+                    <button onClick={sendRequest}>SEND ON WHATSAPP</button>
                 </div>
             </div>
         </div>

@@ -1,46 +1,21 @@
-import { motion, useAnimation, useInView } from 'framer-motion'
-import React, { useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import SafeImage from '../SafeImage'
+import { therapistSlug } from '../../seo/meta.mjs'
 
-export default function MeetTheTeamTherapist({ index, therapist }) 
+export default function MeetTheTeamTherapist({ therapist })
 {
-    const navigate = useNavigate()
-    const ref = useRef(null)
-    const refInView = useInView(ref)
-
-    const mainRefAnimation = useAnimation()
-
-    useEffect(() =>
-    {
-        if(refInView) 
-        {
-            mainRefAnimation.start('visible')
-        }
-        else
-        {
-            mainRefAnimation.start('hidden')
-        }
-        //eslint-disable-next-line
-    }, [refInView])
-
-    const services = therapist.clientele.map((service) => <div key={service} className='MeetTheTeamItemProfItem'>{service}</div>)
+    const services = (therapist.clientele || []).map((service) => <div key={service} className='MeetTheTeamItemProfItem'>{service}</div>)
 
     // if(therapist.name === 'Mirna Mostafa' || therapist.name === 'Leena Abdelgawad') return (<></>)
 
     return (
-        <motion.div 
-            onClick={() => navigate(`/Therapists/${therapist.name.split(" ").join("")}`)} 
+        <Link
+            to={`/therapists/${therapistSlug(therapist)}`}
             className='MeetTheTeamItem'
-            // variants={{ 
-            //     hidden: { opacity: 0 }, 
-            //     visible: { opacity: 1 }
-            // }} 
-            // initial='hidden'
-            // animate={mainRefAnimation}
-            // transition={{ duration: 0.25, delay: 0.35 }}
         >
             <div className='MeetTheTeamItemImage'>
-                <img src={therapist.image} alt='t4' />
+                <SafeImage src={therapist.image} alt={`${therapist.name}, ${String(therapist.position || 'therapist').trim()} at The Sonderhood`} label={therapist.name} />
             </div>
             <div className='MeetTheTeamItemInfo'>
                 <div className='MeetTheTeamItemName'>
@@ -53,6 +28,6 @@ export default function MeetTheTeamTherapist({ index, therapist })
             <div className='MeetTheTeamItemProf'>
                 {services}
             </div>
-        </motion.div>
+        </Link>
     )
 }

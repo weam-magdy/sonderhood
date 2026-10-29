@@ -1,29 +1,47 @@
 import React from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { useSelector } from 'react-redux'
-import { selectedBlogs } from '../../app/blogs/blogsSlice'
-import useTitle from '../../hooks/useTitle'
+import { selectedBlogs, selectBlogsStatus } from '../../app/blogs/blogsSlice'
+import { selectedTherapists } from '../../app/therapists/therapistsSlice'
+import useSeo from '../../seo/useSeo'
+import { blogLd, blogMeta, blogSlug, findTherapistByName, legacySlug, therapistSlug } from '../../seo/meta.mjs'
+import SafeImage from '../SafeImage'
+import NotFound, { PageError, PageLoading } from '../PageStatus'
 
-export default function Article() 
+export default function Article()
 {
     const blogs = useSelector(selectedBlogs)
+    const blogsStatus = useSelector(selectBlogsStatus)
+    const therapists = useSelector(selectedTherapists)
 
-    const { title } = useParams()
+    // /blog/:slug, or an old /ArticlePage/:title link (the title with its spaces removed)
+    const { slug, title } = useParams()
 
     const navigate = useNavigate()
 
-    const selectedBlog = blogs.find(blog => blog.title.split(" ").join("") === title)
+    const selectedBlog = slug ? blogs.find(blog => blogSlug(blog) === slug.toLowerCase()) : undefined
+    const movedBlog = title ? blogs.find(blog => legacySlug(blog.title) === legacySlug(title)) : undefined
+    const author = selectedBlog ? findTherapistByName(therapists, selectedBlog.therapist) : undefined
+
+    useSeo(selectedBlog ? { ...blogMeta(selectedBlog), jsonLd: blogLd(selectedBlog, author) } : {})
+
+    if (movedBlog) return <Navigate to={`/blog/${blogSlug(movedBlog)}`} replace />
+    if (!selectedBlog)
+    {
+        if (blogsStatus === 'failed') return <PageError />
+        if (blogsStatus === 'succeeded') return <NotFound />
+        return <PageLoading />
+    }
+
     const readMoreBlogs = blogs.filter(blog => blog.id !== selectedBlog.id)
 
-    useTitle(`${selectedBlog.title}`)
-
     const displayedSelectedBlog = (
-        <div className='ArticlePageMain'> 
+        <div className='ArticlePageMain'>
             <div className='ArticlePageMainImage'>
-                <img src={selectedBlog.image} alt='mid' />
+                <SafeImage src={selectedBlog.image} alt={selectedBlog.title} loading='eager' />
             </div>
             <div className='ArticlePageMainInfo'>
                 <div className='ArticlePageMainInfoService'>
@@ -34,20 +52,20 @@ export default function Article()
                         {selectedBlog.duration}
                     </div>
                 </div>
-                <div className='ArticleMainInfoTitle'>
+                <h1 className='ArticleMainInfoTitle'>
                     {selectedBlog.title}
-                </div>
+                </h1>
                 <div className='ArticlePageMainInfoServiceAuthor'>
-                    By: {selectedBlog.therapist}
+                    By: {author ? <Link className='PlainLink' to={`/therapists/${therapistSlug(author)}`}>{selectedBlog.therapist}</Link> : selectedBlog.therapist}
                 </div>
             </div>
         </div>
     )
 
     const displayedReadMoreBlogs = readMoreBlogs.map(blog => (
-        <div className='TopicMain'> 
+        <div key={blog.id} className='TopicMain'>
             <div className='TopicMainImage'>
-                <img src={blog.image} alt='mid' />
+                <SafeImage src={blog.image} alt={blog.title} />
             </div>
             <div className='TopicMainInfo'>
                 <div className='TopicMainInfoService'>
@@ -58,9 +76,9 @@ export default function Article()
                         {blog.duration}
                     </div>
                 </div>
-                <div className='TopicMainInfoTitle'>
-                    {blog.title}
-                </div>
+                <h2 className='TopicMainInfoTitle'>
+                    <Link className='PlainLink' to={`/blog/${blogSlug(blog)}`}>{blog.title}</Link>
+                </h2>
                 <div className='TopicMainInfoAuthor'>
                     By: {blog.therapist}
                 </div>
@@ -68,7 +86,7 @@ export default function Article()
                     {blog.description}
                 </div>
                 <div className='TopicMainInfoButton'>
-                    <button onClick={() => navigate(`/ArticlePage/${blog.title.split(" ").join("")}`)}>Read more <FontAwesomeIcon icon={faChevronRight} /></button>
+                    <button onClick={() => navigate(`/blog/${blogSlug(blog)}`)}>Read more <FontAwesomeIcon icon={faChevronRight} /></button>
                 </div>
             </div>
         </div>

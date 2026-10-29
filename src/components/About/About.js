@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import AboutMeetTheTeam from './AboutMeetTheTeam'
 import AboutTherapistsPledge from './AboutTherapistsPledge'
-import useTitle from '../../hooks/useTitle'
+import useSeo from '../../seo/useSeo'
+import { PAGES, pageLd } from '../../seo/meta.mjs'
 import ReactPlayer from 'react-player'
 //@ts-ignore
 import video from '../../video/vid.mp4'
 
 export default function About() {
-    useTitle('About Us')
+    useSeo({ ...PAGES.about, jsonLd: pageLd({ name: 'About Us', path: PAGES.about.path }) })
 
     const [playing, setPlaying] = useState(true)
 
@@ -18,9 +19,9 @@ export default function About() {
                 <PagesHeader />
                 <div className='AboutPage'>
                     <div className='AboutPageOurStory'>
-                        <div className='AboutPageOurStoryTitle'>
+                        <h1 className='AboutPageOurStoryTitle'>
                             OUR STORY
-                        </div>
+                        </h1>
                         <div className='AboutPageOurStoryDesc'>
                             <div className='AboutPageDescFirstPart'>
                                 "The most valuable aspect of my undergraduate years was the university campus's 24/7 accessibility. It was the sole location where I felt truly accommodated at any hour. This place bore witness to my moments of reflection, intensive study, pivotal decision-making, genuine laughter with cherished companions, and much more. In contrast, all other environments seemed to exert pressure, preventing these activities from occurring with peace of mind. As a graduate student, I continued to frequent this place,

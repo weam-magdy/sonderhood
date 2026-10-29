@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { instagram } from '../../imgs/InstagramIcon'
 import { In } from '../../imgs/inIcon'
+import { whatsappTile } from '../../imgs/WhatsAppIcon'
 import { Link } from 'react-router-dom'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../../Config/firebaseConfig'
+import { SERVICE_LINKS, SITE, whatsappUrl } from '../../seo/meta.mjs'
 
 export default function Footer()
 {   
@@ -17,9 +19,17 @@ export default function Footer()
         e.preventDefault()
         if(email.length)
         {
-            await addDoc(newsLetterCollection, { email })
-            setEmail('')
-            setSubscribed(true)
+            try
+            {
+                await addDoc(newsLetterCollection, { email })
+                setEmail('')
+                setSubscribed(true)
+            }
+            catch(error)
+            {
+                console.error('Newsletter sign-up failed', error)
+                setErr(true)
+            }
         }
         else
         {
@@ -38,6 +48,7 @@ export default function Footer()
     }, [err])
     
     return (
+        <>
         <footer className='HomeFooter'>
                 <div className='HomeFooterInfo'>
                     <div className='HomeFooterInfoLogo'>
@@ -71,12 +82,12 @@ export default function Footer()
                         </svg>
                     </div>
                     <div className='HomeFooterInfoCopyRights'>
-                        Copyright © 2023 The Sonderhood<br />
+                        Copyright © {new Date().getFullYear()} The Sonderhood<br />
                         | All Rights Reserved 
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className='HomeFooterSubscribe'>
-                    <label style={subscribed ? {color: '#4BB543'} : err ? {color: '#FF3333'} : {}} htmlFor='newsletter'>{subscribed ? 'Subscribed Successfully!' : err ? 'Please Enter an Email!' : 'Subscribe to our newsletter'}</label>
+                    <label style={subscribed ? {color: '#4BB543'} : err ? {color: '#FF3333'} : {}} htmlFor='newsletter'>{subscribed ? 'Subscribed Successfully!' : err ? (email.length ? 'Something went wrong, please try again.' : 'Please Enter an Email!') : 'Subscribe to our newsletter'}</label>
                     <input value={email} onChange={(e) => setEmail(e.target.value)} id='newsletter' type='email' placeholder='Email...' />
                     <button className='HomeFooterSubscribeButton'>Send</button>
                 </form>
@@ -85,23 +96,46 @@ export default function Footer()
                         Follow us
                     </div>
                     <div className='HomeFooterSocialsIcons'>
-                        <Link to='https://www.facebook.com/profile.php?id=100092881591617'>
+                        <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer' aria-label='WhatsApp'>
+                            {whatsappTile}
+                        </a>
+                        <a href={SITE.socials.facebook} target='_blank' rel='noopener noreferrer' aria-label='Facebook'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
                                 <rect width="36" height="36" rx="8" fill="#F9F3D0"/>
                                 <path d="M19.4638 27V18.7894H22.3585L22.7919 15.5895H19.4637V13.5465C19.4637 12.6201 19.7339 11.9888 21.1293 11.9888L22.909 11.988V9.12607C22.6012 9.08715 21.5447 9 20.3157 9C17.7497 9 15.9929 10.4912 15.9929 13.2297V15.5895H13.0908V18.7894H15.9929V26.9999H19.4638V27Z" fill="#90946B"/>
                             </svg>
-                        </Link>
+                        </a>
                         {/* <Link to=''>
                             {twitter}
                         </Link> */}
-                        <Link to='https://www.instagram.com/thesonderhood/'>
+                        <a href={SITE.socials.instagram} target='_blank' rel='noopener noreferrer' aria-label='Instagram'>
                             {instagram}
-                        </Link>
-                        <Link to='https://www.linkedin.com/company/94863370/admin/feed/posts/'>
+                        </a>
+                        <a href={SITE.socials.linkedin} target='_blank' rel='noopener noreferrer' aria-label='LinkedIn'>
                             {In}
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </footer>
+            <section className='FooterDetails' aria-label='Contact details and site links'>
+                <nav className='FooterDetailsLinks' aria-label='Services'>
+                    {SERVICE_LINKS.map(service => <Link key={service.path} to={service.path}>{service.name}</Link>)}
+                </nav>
+                <nav className='FooterDetailsLinks' aria-label='Pages'>
+                    <Link to='/therapists'>Our Therapists</Link>
+                    <Link to='/about'>About Us</Link>
+                    <Link to='/blog'>Blog</Link>
+                    <Link to='/contact'>Contact Us</Link>
+                    <Link to='/book'>Book a Session</Link>
+                </nav>
+                <address className='FooterDetailsAddress'>
+                    The Sonderhood, therapy centre in {SITE.address.display}
+                    {' · '}<a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp {SITE.phoneDisplay}</a>
+                    {' · '}<a href={`tel:${SITE.phone}`}>Call</a>
+                    {' · '}<a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+                    {' · '}<a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'>Directions</a>
+                </address>
+            </section>
+        </>
     )
 }
