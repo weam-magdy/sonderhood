@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import useSeo from '../../seo/useSeo';
 import { INTROS, PAGES, SITE, pageLd, whatsappUrl } from '../../seo/meta.mjs';
-import { bookingMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
+import { bookingMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
 import PhoneInput from 'react-phone-input-2';
 import FormNotice from '../FormNotice';
 
@@ -40,7 +40,7 @@ export default function BookSession()
         e.preventDefault();
         if(canRequest)
         {
-            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay }))
+            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay }), 'booking_form')
             sendEmailCopy(process.env.REACT_APP_templateBook_id, form.current)
             setSucc(true)
             setFirstName('')
@@ -107,12 +107,13 @@ export default function BookSession()
                         <input onChange={changed(setEmail)} value={email} placeholder='Email...' id='Email' type='email' name='email' autoComplete='email' />
                     </div>
                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageNumber'>
-                        <label >Mobile Number</label>
+                        <label htmlFor='Phone'>Mobile Number</label>
                         <PhoneInput
                             country={"eg"}
+                            inputProps={{ id: 'Phone', name: 'phone', autoComplete: 'tel' }}
                             enableSearch={true}
                             value={number}
-                            onChange={(phone) => { setNumber(phone); setErr(false); setSucc(false) }}
+                            onChange={(phone, country) => { setNumber(normalizePhone(phone, country)); setErr(false); setSucc(false) }}
                             specialLabel='Number: '
                             inputStyle={{
                                 width: "100%",
@@ -120,7 +121,6 @@ export default function BookSession()
                                 padding: '0%',
                                 background: "transparent",
                                 border: "1px solid #90946B",
-                                outline: "none",
                                 boxSizing: "border-box",
                                 boxShadow: "none",
                                 color: "var(--Text, #90946B)",

@@ -11,7 +11,10 @@ export default function SafeImage({ src, alt, label, loading = 'lazy', ...rest }
 {
     const [failed, setFailed] = useState(!src)
 
-    useEffect(() => setFailed(!src), [src])
+    useEffect(() =>
+    {
+        setFailed(!src)
+    }, [src])
 
     if (failed)
     {

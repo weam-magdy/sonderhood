@@ -2,8 +2,9 @@ import React from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import Footer from './Footer'
 import WhatsAppButton from '../WhatsAppButton'
+import ConsentBanner from '../ConsentBanner'
 
-const SECTIONS = ['/about', '/services', '/therapists', '/blog', '/contact', '/book']
+const SECTIONS = ['/about', '/services', '/therapists', '/blog', '/contact', '/book', '/find-a-therapist', '/privacy']
 
 export default function Layout()
 {
@@ -15,6 +16,8 @@ export default function Layout()
 
     return (
         <>
+            {/* First in the tab order; it is fixed to the bottom of the screen. */}
+            <ConsentBanner />
             <Outlet />
             <Footer />
             <WhatsAppButton />

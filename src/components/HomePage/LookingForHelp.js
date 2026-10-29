@@ -1,76 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import HelpButton from './HelpButton'
-import { useSelector } from 'react-redux'
-import { selectedTherapists } from '../../app/therapists/therapistsSlice'
-import MatchingTherapists from './MatchingTherapists'
+import { FINDER_PATH, FINDER_TOPICS } from '../../seo/finder.mjs'
 
-export default function LookingForHelp() 
+// The home page's "I am looking for a therapist to help me with my..." buttons.
+// "Find a therapist" opens the finder with these topics already chosen, handed over
+// as navigation state so they never appear in the address or browser history; it
+// asks the rest and sends the answers to the practice on WhatsApp.
+export default function LookingForHelp()
 {
-    const therapists = useSelector(selectedTherapists)
-
+    const navigate = useNavigate()
     const [search, setSearch] = useState([])
-    const [showResults, setShowResults] = useState(false)
 
-    useEffect(() => 
-    {
-        if(!search.length) setShowResults(false)
-    }, [search])
+    const toggle = (id) => setSearch(list => (list.includes(id) ? list.filter(topic => topic !== id) : [...list, id]))
 
-    function handleClick(button)
-    {
-        const array = search || []
-        if(array.find(elem => elem === button) !== undefined && array.find(elem => elem === button) !== null)
-        {
-            const filteredArray = array.filter(elem => elem !== button)
-            //@ts-ignore
-            setSearch(filteredArray)
-        }
-        else
-        {
-            const finalArray = [...array, button]
-            //@ts-ignore
-            setSearch(finalArray)
-        }
-    }
-
-    const buttons = ['Depression', 'Eating Disorder', 'Anxiety', 'Marriage', 'Body Dysmorphia', 'Relationship', 'Personality Disorder', 'Addiction', 'Self Esteem', 'Social Anxiety', 'OCD', 'Trauma', 'Codependency', 'Abusive parents', 'Family Problems', 'Psychosis', 'Delusional Disorders']
-    const buttonItems = buttons.map((button, index) => <HelpButton handleClick={() => handleClick(button)} key={index} button={button} />)
-
-    useEffect(() => 
-    {
-        if(!search) setShowResults(false)
-    }, [search])
+    const buttonItems = FINDER_TOPICS.map(topic => <HelpButton handleClick={() => toggle(topic.id)} key={topic.id} button={topic.short} pressed={search.includes(topic.id)} />)
 
     return (
-        <>
         <div className='LookingForHelpContainer'>
             <div className='LookingForHelpHeader'>
                 <h1>I AM LOOKING FOR A THERAPIST TO HELP ME WITH MY:</h1>
             </div>
-            {/* <form onSubmit={handleSubmit} className='LookingForHelpSearch'>
-                <input
-                    type='text'
-                    placeholder='How are you feeling...'
-                    value={searchValue}
-                    onChange={(e) => setSearchValue(e.target.value)}
-                />
-                <img src={searchImage} alt='search'/>
-            </form> */}
             <div className='LookingForHelpItemsContainer'>
                 <div className='LookingForHelpItemsMostSearched'>
-                    {/* Most Searched: */}
                 </div>
                 <div className='LookingForHelpItems'>
                     {buttonItems}
                 </div>
                 <div className='LookingForHelpItemsButtons'>
-                    <button onClick={() => setShowResults(true)} className='LookingForHelpItemsFindButton'>FIND A THERAPIST</button>
-                    {/* <button onClick={() => navigate('/About')} className='LookingForHelpItemsAboutButton'>ABOUT US</button> */}
-                    
+                    <button type='button' onClick={() => navigate(FINDER_PATH, { state: { help: search } })} className='LookingForHelpItemsFindButton'>FIND A THERAPIST</button>
                 </div>
             </div>
         </div>
-        { showResults && <MatchingTherapists therapists={therapists} search={search} /> }
-        </>
     )
 }

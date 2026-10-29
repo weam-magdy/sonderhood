@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { SITE, absoluteUrl } from './meta.mjs'
+import { trackPageView } from '../analytics'
 
 function setMeta(attr, key, value)
 {
@@ -83,5 +84,6 @@ export default function useSeo({ title, description, path, image, type = 'websit
         setMeta('name', 'twitter:description', description)
         setMeta('name', 'twitter:image', img)
         setJsonLd(json, path)
+        trackPageView()
     }, [title, description, path, image, type, noindex, json])
 }

@@ -4,7 +4,7 @@ import { whatsappTile } from '../../imgs/WhatsAppIcon'
 import { Link } from 'react-router-dom'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../../Config/firebaseConfig'
-import { SERVICE_LINKS, SITE, whatsappUrl } from '../../seo/meta.mjs'
+import { SERVICE_LINKS, SITE, sentenceList, sessionLanguages, whatsappUrl } from '../../seo/meta.mjs'
 
 export default function Footer()
 {   
@@ -87,7 +87,7 @@ export default function Footer()
                 </div>
                 <form onSubmit={handleSubmit} className='HomeFooterSubscribe'>
                     <label style={subscribed ? {color: '#4BB543'} : err ? {color: '#FF3333'} : {}} htmlFor='newsletter'>{subscribed ? 'Subscribed Successfully!' : err ? (email.length ? 'Something went wrong, please try again.' : 'Please Enter an Email!') : 'Subscribe to our newsletter'}</label>
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} id='newsletter' type='email' placeholder='Email...' />
+                    <input value={email} onChange={(e) => setEmail(e.target.value)} id='newsletter' type='email' name='email' autoComplete='email' placeholder='Email...' />
                     <button className='HomeFooterSubscribeButton'>Send</button>
                 </form>
                 <div className='HomeFooterSocials'>
@@ -119,15 +119,18 @@ export default function Footer()
                 </nav>
                 <nav className='FooterDetailsLinks' aria-label='Pages'>
                     <Link to='/therapists'>Our Therapists</Link>
+                    <Link to='/find-a-therapist'>Find a Therapist</Link>
                     <Link to='/about'>About Us</Link>
                     <Link to='/blog'>Blog</Link>
                     <Link to='/contact'>Contact Us</Link>
                     <Link to='/book'>Book a Session</Link>
+                    <Link to='/privacy'>Privacy</Link>
+                    <button type='button' className='FooterCookieButton' onClick={() => window.dispatchEvent(new Event('sonderhood:consent'))}>Cookie settings</button>
                 </nav>
                 <address className='FooterDetailsAddress'>
                     The Sonderhood, therapy center in {SITE.address.display}
                     {' · '}Open {SITE.hours.display}
-                    {' · '}Sessions in {SITE.languages.join(' and ')}
+                    {' · '}Sessions in {sentenceList(sessionLanguages())}
                     {' · '}<a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp {SITE.phoneDisplay}</a>
                     {' · '}<a href={`tel:${SITE.phone}`}>Call</a>
                     {' · '}<a href={`mailto:${SITE.email}`}>{SITE.email}</a>

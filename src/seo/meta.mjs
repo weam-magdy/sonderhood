@@ -26,7 +26,10 @@ export const SITE = {
     // Opening hours and session languages, confirmed by the owner in October 2026.
     // Session prices are deliberately kept off the site, so the structured data has no priceRange.
     hours: { opens: '10:00', closes: '22:00', display: 'every day, 10 am to 10 pm' },
+    // Every therapist works in Arabic and English. `otherLanguages` are offered by one
+    // therapist only (Inji Farid's French, from the owner on 29 October 2026).
     languages: ['Arabic', 'English'],
+    otherLanguages: { French: 'Inji Farid' },
     socials: {
         facebook: 'https://www.facebook.com/profile.php?id=100092881591617',
         instagram: 'https://www.instagram.com/thesonderhood/',
@@ -42,6 +45,21 @@ export function whatsappUrl(text = DEFAULT_WHATSAPP_TEXT) {
 export function absoluteUrl(path = '/') {
     if (/^https?:\/\//.test(path)) return path
     return SITE.url + (path.startsWith('/') ? path : `/${path}`)
+}
+
+// Every language sessions are offered in: Arabic, English and French.
+export function sessionLanguages() {
+    return [...SITE.languages, ...Object.keys(SITE.otherLanguages)]
+}
+
+// The languages one therapist works in.
+export function therapistLanguages(therapist) {
+    return [...SITE.languages, ...Object.keys(SITE.otherLanguages).filter(language => SITE.otherLanguages[language] === therapist?.name)]
+}
+
+// "Arabic and English, and French with Inji Farid", for the contact details.
+export function languagesText() {
+    return [sentenceList(SITE.languages), ...Object.entries(SITE.otherLanguages).map(([language, therapist]) => `${language} with ${therapist}`)].join(', and ')
 }
 
 export function slugify(text) {
@@ -97,8 +115,8 @@ export const SERVICE_SEO = {
         slug: 'online-therapy',
         name: 'Online Therapy',
         metaTitle: 'Online Therapy in Egypt by Video',
-        metaDescription: 'Online therapy in Arabic or English by secure video, for individuals, couples and teenagers anywhere in Egypt or abroad. Book on WhatsApp.',
-        intro: 'Online sessions are run by the same team of therapists who see clients at our center in New Cairo, in Arabic or English, so you can start therapy from anywhere in Egypt or abroad.',
+        metaDescription: 'Online therapy in Arabic, English or French by secure video, for individuals, couples and teenagers anywhere in Egypt or abroad. Book on WhatsApp.',
+        intro: 'Online sessions are run by the same team of therapists who see clients at our center in New Cairo, in Arabic or English, so you can start therapy from anywhere in Egypt or abroad. Inji Farid also offers sessions in French.',
     },
     ee4ZPo01CGhm2vK1Li4C: {
         slug: 'group-therapy',
@@ -221,6 +239,56 @@ export function therapistSlug(therapist) {
     return slugify(therapist?.name)
 }
 
+// Team changes made here rather than in Firestore, keyed by Firestore id. On
+// 29 October 2026 the owner had Inji Farid take over Yosra Elsewerky's profile and
+// Sally Roshdy take over Habiba Youssry's: each keeps that profile's title, client
+// groups, focus areas and services, with her own name, photo and credentials, and no
+// quote yet. `replaces` is the earlier profile's address, which now leads to the team
+// page. Habiba's articles keep her name as their author.
+export const TEAM_CHANGES = {
+    sxxYjLxrm23clMf8QYgY: {
+        replaces: 'yosra-elsewerky',
+        name: 'Inji Farid',
+        image: '/images/team/inji-farid.jpg',
+        quote: '',
+        certificates: [
+            { year: '', title: 'MSc in Clinical Psychology', description: 'The British University in Egypt and London South Bank University' },
+            { year: '2024', title: 'BA in Clinical Psychology', description: 'Université Toulouse 2 Jean Jaurès, France' },
+        ],
+        updateTime: '2026-10-29T19:00:00Z',
+    },
+    F1jzTtRVVh2PMFASVHVe: {
+        replaces: 'habiba-youssry',
+        name: 'Sally Roshdy',
+        image: '/images/team/sally-roshdy.jpg',
+        quote: '',
+        certificates: [
+            { year: '2021-2025', title: 'BA in Psychology, minor in Behavioral Neuroscience', description: 'High honors' },
+            { year: '2025-2026', title: 'MSc in Applied Clinical Psychology', description: 'Distinction grade' },
+            { year: '2025', title: 'Psychodynamic Therapy Training', description: 'Kasr El Maadi Hospital, July to August 2025' },
+        ],
+        updateTime: '2026-10-29T19:00:00Z',
+    },
+}
+
+export function applyTeamChanges(therapists = []) {
+    return therapists.map(therapist => {
+        if (!TEAM_CHANGES[therapist.id]) return therapist
+        const { replaces, ...change } = TEAM_CHANGES[therapist.id]
+        return { ...therapist, ...change }
+    })
+}
+
+// Credentials newest first, by the last year given ("2023-2025" counts as 2025);
+// undated ones last.
+export function sortCredentials(certificates = []) {
+    const year = (certificate) => {
+        const years = String(certificate?.year || '').match(/\d{4}/g)
+        return years ? Number(years[years.length - 1]) : 0
+    }
+    return [...certificates].sort((a, b) => year(b) - year(a))
+}
+
 // Hand-picked keyword slugs for the existing articles, keyed by Firestore id.
 export const BLOG_SLUGS = {
     '6bUES3MKKemrzhuPJavZ': 'embracing-change-self-recovery',
@@ -322,7 +390,7 @@ export const HOME_FAQS = [
     },
     {
         question: 'What types of therapy do you offer, and are sessions online or face to face?',
-        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best. Sessions are available in Arabic and English.',
+        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best. Sessions are available in Arabic and English, and in French with Inji Farid.',
     },
     {
         question: 'Where is your therapy center in New Cairo, and when are you open?',
@@ -331,6 +399,10 @@ export const HOME_FAQS = [
     {
         question: 'How do I book a session with a therapist?',
         answer: `The quickest way is to message us on WhatsApp at ${SITE.phoneDisplay}, or send a booking request through our website. Let us know whether you prefer an in-person or online session and any preferred days, and we will help you choose a therapist and find the nearest available slot. We are open ${SITE.hours.display}.`,
+    },
+    {
+        question: 'Do you have a French-speaking therapist in Cairo?',
+        answer: `Yes. Inji Farid, who studied clinical psychology in France, offers therapy in French as well as in Arabic and English, face to face at our center in New Cairo or online by video call from anywhere in Egypt or abroad. To book with her, message us on WhatsApp at ${SITE.phoneDisplay} and say you would like your sessions in French.`,
     },
 ]
 
@@ -341,7 +413,7 @@ export const HOME_HEADLINE = 'Therapy & psychotherapy in New Cairo, face to face
 export const INTROS = {
     services: 'The Sonderhood offers psychotherapy for adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt. Choose a service to see how it works, which of our therapists offer it and answers to common questions.',
     therapists: [
-        'The Sonderhood\'s psychologists and psychotherapists work with adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo and online across Egypt. Between them they offer individual therapy, couples and family therapy, cognitive behavioral therapy (CBT), DBT and psychological assessments.',
+        'The Sonderhood\'s psychologists and psychotherapists work with adults, couples, families, teenagers and children, face to face at our therapy center in New Cairo and online across Egypt. Between them they offer individual therapy, couples and family therapy, cognitive behavioral therapy (CBT), DBT and psychological assessments. Every therapist works in Arabic and English, and Inji Farid also offers sessions in French.',
         'Filter by service to find the right therapist for you, open a profile to read their credentials, then request a booking or message us on WhatsApp.',
     ],
     contact: [
@@ -349,7 +421,45 @@ export const INTROS = {
         'The quickest way to reach us is WhatsApp. Send us a message and we will help you choose a therapist and find the nearest available time.',
     ],
     book: 'Choose a session online or at our center in New Cairo. Your request opens in WhatsApp, ready to send to us, or message us directly at',
+    finder: 'Answer a few quick questions and we will suggest therapists from our team who work with what you are going through. Your answers then open in WhatsApp as your first message to us, so we can reply and help you book.',
 }
+
+// /privacy. Keep it true to what the site does: if EmailJS copies of the forms are
+// switched on, or another tool is added, say so here.
+export const PRIVACY = [
+    {
+        title: 'Who we are',
+        text: [`${SITE.name} is a psychotherapy practice at ${SITE.address.display}. For any question about your information, email ${SITE.email} or message us on WhatsApp at ${SITE.phoneDisplay}.`],
+    },
+    {
+        title: 'Analytics, only if you accept',
+        text: [
+            'If you accept the notice at the bottom of the page, we use Google Analytics to count visits and see which pages people read, the general area they visit from (city or country), their device and browser, and how they found us. It also records when someone taps WhatsApp, our phone number or a form\'s send button, by channel only. It does not receive your name, your phone number or anything you type into our forms or our therapist finder.',
+            'Google Analytics sets two cookies for this, _ga and _ga_542B109XJK, which last up to 13 months. It deletes visit-level data after 14 months; overall totals in its reports are kept longer. Google may process this data outside Egypt.',
+            'We use Google Analytics only with your consent. If you decline, it does not load at all. You can change your choice at any time with "Cookie settings" at the bottom of every page or the button at the end of this page, and we ask again after 12 months.',
+        ],
+    },
+    {
+        title: 'Services that load with our pages',
+        text: ['Like most websites, our pages load a few services from other companies, which receive your device\'s internet address: Google Fonts for the lettering on every page, Google Maps for the map on our contact page, and Google Firebase for our team photos and our newsletter.'],
+    },
+    {
+        title: 'WhatsApp, phone and email',
+        text: ['Our booking form, contact form and therapist finder do not store what you type on this website. They prepare a message in WhatsApp, and it reaches us only when you send it. WhatsApp, run by Meta, handles that message under its own privacy policy. Calls and emails reach us directly.'],
+    },
+    {
+        title: 'Newsletter',
+        text: [`If you subscribe to our newsletter, we keep your email address in our database (Google Firebase) to send you news from ${SITE.name}. Ask us at any time and we will delete it.`],
+    },
+    {
+        title: 'Your choices',
+        text: ['You can ask us what information we hold about you, and ask us to correct or delete it, by emailing us. What you share in therapy is confidential and is handled separately from this website.'],
+    },
+    {
+        title: 'Updates',
+        text: ['We will update this page if anything changes. Last updated 29 October 2026.'],
+    },
+]
 
 // ---------------------------------------------------------------- page titles and descriptions
 
@@ -359,7 +469,7 @@ export const PAGES = {
     home: {
         path: '/',
         title: `Therapists in New Cairo & Online Therapy in Egypt${BRAND}`,
-        description: 'Psychotherapy in Arabic or English for adults, couples, families and teens, face to face in New Cairo or online across Egypt. Book on WhatsApp.',
+        description: 'Psychotherapy in Arabic, English or French for adults, couples, families and teens, face to face in New Cairo or online across Egypt. Book on WhatsApp.',
     },
     about: {
         path: '/about',
@@ -391,6 +501,16 @@ export const PAGES = {
         title: `Book a Therapy Session in Cairo or Online${BRAND}`,
         description: 'Request a therapy session at our center in New Cairo or online. Send your request straight to our WhatsApp and we will find you the nearest available slot.',
     },
+    finder: {
+        path: '/find-a-therapist',
+        title: `Find Your Therapist in New Cairo or Online${BRAND}`,
+        description: 'Four quick questions show which of our therapists may suit you, in New Cairo or online, in Arabic, English or French. Then send your answers to us on WhatsApp.',
+    },
+    privacy: {
+        path: '/privacy',
+        title: `Privacy Policy${BRAND}`,
+        description: 'What The Sonderhood\'s website collects, why, and how to ask us to see or delete it: analytics only with your consent, WhatsApp messages and newsletter emails.',
+    },
     notFound: {
         path: '/404',
         title: `Page Not Found${BRAND}`,
@@ -398,7 +518,7 @@ export const PAGES = {
     },
 }
 
-function sentenceList(items) {
+export function sentenceList(items) {
     const list = items.filter(Boolean)
     if (list.length <= 1) return list.join('')
     return `${list.slice(0, -1).join(', ')} and ${list[list.length - 1]}`
@@ -432,14 +552,18 @@ export function therapistMeta(therapist) {
         .map(c => CLIENTELE_WORDS[c] || c)
         .filter(c => c && c !== 'all services'))]
     const focus = (therapist.search || []).slice(0, 3).map(lowerWords)
-    const article = /^founder/i.test(position) ? 'the' : /^[aeiou]/i.test(position) ? 'an' : 'a'
-    let description = `${therapist.name} is ${article} ${lowerWords(position)} at The Sonderhood in New Cairo`
+    // A language the rest of the team does not offer leads, so search results show it:
+    // "Inji Farid is a French-speaking clinical psychologist...".
+    const extra = therapistLanguages(therapist).slice(SITE.languages.length)
+    const speaking = extra.length ? `${sentenceList(extra)}-speaking ` : ''
+    const article = /^founder/i.test(position) ? 'the' : /^[aeiou]/i.test(speaking || position) ? 'an' : 'a'
+    let description = `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at The Sonderhood in New Cairo`
     if (clientele.length) description += `, working with ${sentenceList(clientele)}`
     if (focus.length) description += ` on ${sentenceList(focus)}`
     description += '. Sessions in person or online.'
     return {
         path: `/therapists/${therapistSlug(therapist)}`,
-        title: `${therapist.name}, ${cleanPosition(position)} in New Cairo${BRAND}`,
+        title: `${therapist.name}, ${speaking.replace('-speaking', '-Speaking')}${cleanPosition(position)} in New Cairo${BRAND}`,
         description,
         image: therapist.image || SITE.image,
         type: 'profile',
@@ -449,8 +573,10 @@ export function therapistMeta(therapist) {
 export function blogMeta(blog) {
     return {
         path: `/blog/${blogSlug(blog)}`,
-        title: `${blog.title}${BRAND}`,
-        description: blog.description || PAGES.blog.description,
+        // An article may set a shorter title and description for search results;
+        // its headline and blog card keep `title` and `description`.
+        title: `${blog.metaTitle || blog.title}${BRAND}`,
+        description: blog.metaDescription || blog.description || PAGES.blog.description,
         image: blog.image || SITE.image,
         type: 'article',
     }
@@ -491,7 +617,7 @@ export function organizationLd() {
                 geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.latitude, longitude: SITE.geo.longitude },
                 hasMap: SITE.mapsUrl,
                 openingHoursSpecification: openingHoursLd(),
-                knowsLanguage: SITE.languages.map(name => ({ '@type': 'Language', name })),
+                knowsLanguage: sessionLanguages().map(name => ({ '@type': 'Language', name })),
                 areaServed: [
                     { '@type': 'City', name: 'Cairo' },
                     { '@type': 'Country', name: 'Egypt' },
@@ -582,8 +708,9 @@ export function therapistLd(therapist) {
             name: therapist.name,
             jobTitle: String(therapist.position || '').trim(),
             url: absoluteUrl(meta.path),
-            image: therapist.image || undefined,
+            image: therapist.image ? absoluteUrl(therapist.image) : undefined,
             worksFor: { '@id': ORG_ID },
+            knowsLanguage: therapistLanguages(therapist).map(name => ({ '@type': 'Language', name })),
             knowsAbout: (therapist.search || []).length ? therapist.search : undefined,
             hasCredential: (therapist.certificates || []).filter(c => c && c.title).map(c => ({
                 '@type': 'EducationalOccupationalCredential',

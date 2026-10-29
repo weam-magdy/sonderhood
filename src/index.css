@@ -955,6 +955,9 @@ textarea
 .MeetTheTeamItemImage img
 {
 	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 50% 20%;
 	box-sizing:border-box;
 	
 }
@@ -2771,7 +2774,8 @@ textarea
 	/* width: 100%; */
 	height: 100%;
 	width: auto;
-	object-fit: fill;
+	object-fit: cover;
+	object-position: 50% 20%;
 	aspect-ratio: 389/566;
 	border-radius: 16in 16in 0 0;
 	/* height: 30%; */
@@ -2821,6 +2825,15 @@ textarea
 	font-weight: 400;
 	line-height: 143.75%;
 	width: 50%;
+}
+
+.TherapistProfileLanguages
+{
+	color: var(--Sonder-olive, #464834);
+	font-family: Arial;
+	font-size: 1.3vw;
+	line-height: 150%;
+	margin-top: 0.5em;
 }
 
 .TherapistProfileServices
@@ -5880,6 +5893,11 @@ textarea
 		height: auto !important;
 	}
 
+	.TherapistProfileLanguages
+	{
+		font-size: 1.6vh;
+	}
+
 	.TherapistProfileServices
 	{
 		min-width: 80%;
@@ -6660,7 +6678,7 @@ a.OurBlogItemContainer,
 {
 	width: 86%;
 	margin: 6% 7% 2%;
-	color: var(--Text, #90946B);
+	color: #6B6E4E;
 	font-family: Arial, sans-serif;
 	font-size: max(15px, 1.1vw);
 	line-height: 160%;
@@ -6802,5 +6820,437 @@ a.OurBlogItemContainer,
 	.FooterDetails
 	{
 		padding-bottom: 96px;
+	}
+}
+
+/* Find your therapist (/find-a-therapist) */
+.Finder
+{
+	width: 86%;
+	margin: 6% 7% 5%;
+	color: var(--Sonder-olive);
+	font-family: Arial, sans-serif;
+	font-size: max(15px, 1.05vw);
+	line-height: 150%;
+}
+
+/* #6B6E4E: the site's grey darkened to 5.2:1 on the cream page (WCAG AA) */
+.FinderIntro, .FinderHint, .FinderNote, .FinderPrivacy
+{
+	max-width: 60em;
+	color: #6B6E4E;
+}
+
+.FinderQuestion
+{
+	border: 0;
+	margin: 2.2em 0 0;
+	padding: 0;
+	min-width: 0;
+}
+
+.FinderQuestion legend, .FinderName label
+{
+	display: block;
+	margin-bottom: 0.7em;
+	padding: 0;
+	color: var(--Sonder-olive);
+	font-family: Raglika, serif;
+	font-size: max(21px, 1.7vw);
+	line-height: 120%;
+	text-transform: uppercase;
+}
+
+.FinderQuestion .FinderHint
+{
+	margin: -0.3em 0 0.8em;
+}
+
+.FinderOptions
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.FinderOption
+{
+	position: relative;
+	cursor: pointer;
+}
+
+.FinderOption input
+{
+	position: absolute;
+	opacity: 0;
+	width: 1px;
+	height: 1px;
+}
+
+.FinderOption span
+{
+	display: inline-block;
+	padding: 10px 16px;
+	border: 1px solid var(--Sonder-olive);
+	color: var(--Sonder-olive);
+	line-height: 1.25;
+	transition: background 0.15s;
+}
+
+.FinderOption:hover span
+{
+	background: var(--Sonder-yellow);
+}
+
+.FinderOption input:checked + span
+{
+	background: #D6DCA2;
+	border-color: var(--Sonder-olive);
+	font-weight: 700;
+}
+
+.FinderOption input:checked + span::before
+{
+	content: '\2713\00a0';
+}
+
+.FinderOption input:focus-visible + span, .Finder button:focus-visible, .FinderName input:focus-visible
+{
+	outline: 2px solid var(--Sonder-olive);
+	outline-offset: 2px;
+}
+
+@media (forced-colors: active)
+{
+	.FinderOption input:checked + span
+	{
+		outline: 3px solid Highlight;
+		outline-offset: -3px;
+	}
+}
+
+.FinderName input
+{
+	width: min(320px, 100%);
+	padding: 10px 12px;
+	border: 1px solid #90946B;
+	border-radius: 0;
+	background: transparent;
+	color: var(--Sonder-olive);
+	font: inherit;
+	box-sizing: border-box;
+}
+
+.FinderResults
+{
+	margin-top: 2.6em;
+	padding-top: 2em;
+	border-top: 1px solid rgba(70, 72, 52, 0.25);
+}
+
+.FinderResultsTitle
+{
+	margin: 0 0 0.6em;
+	color: var(--Sonder-olive);
+	font-family: Raglika, serif;
+	font-size: max(24px, 2.2vw);
+	font-weight: 400;
+	line-height: 120%;
+	text-transform: uppercase;
+}
+
+.FinderMatches
+{
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 20px;
+	margin: 1.2em 0 1.8em;
+}
+
+.FinderMatch
+{
+	display: flex;
+	flex-direction: column;
+	border: 1px solid rgba(70, 72, 52, 0.35);
+	background: var(--Sonder-white);
+}
+
+.FinderMatchImage
+{
+	height: 200px;
+	overflow: hidden;
+	background: #D6DCA2;
+}
+
+.FinderMatchImage img, .FinderMatchImage .ImageFallback
+{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.FinderMatchInfo
+{
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 6px;
+	padding: 14px 16px 16px;
+}
+
+.FinderMatchInfo h3
+{
+	margin: 0;
+	font-family: Raglika, serif;
+	font-size: 1.45em;
+	font-weight: 400;
+}
+
+.FinderMatchInfo h3 a
+{
+	color: var(--Sonder-olive);
+	text-decoration: none;
+}
+
+.FinderMatchInfo h3 a:hover
+{
+	text-decoration: underline;
+}
+
+.FinderMatchRole, .FinderMatchFit
+{
+	margin: 0;
+	color: #6B6E4E;
+}
+
+.FinderMatchFit
+{
+	font-size: 0.9em;
+}
+
+.FinderBookWith
+{
+	align-self: flex-start;
+	margin-top: auto;
+	padding: 10px 14px;
+	border: 1px solid var(--Sonder-olive);
+	background: transparent;
+	color: var(--Sonder-olive);
+	font: 700 12px/1.2 Arial, sans-serif;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.FinderBookWith:hover
+{
+	background: var(--Sonder-yellow);
+}
+
+.FinderSend
+{
+	padding: 15px 24px;
+	border: 0;
+	background: var(--Sonder-olive);
+	color: var(--Sonder-yellow);
+	font: 700 14px/1 Arial, sans-serif;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.FinderSend:hover
+{
+	opacity: 0.9;
+}
+
+.FinderPrivacy
+{
+	margin-top: 0.9em;
+	font-size: 0.85em;
+}
+
+.FinderCta
+{
+	font-weight: 700;
+}
+
+/* Privacy policy (/privacy) */
+.PrivacyPage h2
+{
+	margin: 1.6em 0 0;
+	color: var(--Sonder-olive);
+	font-family: Raglika, serif;
+	font-size: max(20px, 1.6vw);
+	font-weight: 400;
+	text-transform: uppercase;
+}
+
+.PrivacyPage p
+{
+	color: #6B6E4E;
+}
+
+.PrivacyButton
+{
+	margin-top: 2em;
+}
+
+/* Read by screen readers, not shown */
+.VisuallyHidden
+{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* "Cookie settings" in the footer looks like the links beside it */
+.FooterCookieButton
+{
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--Sonder-yellow);
+	font: inherit;
+	cursor: pointer;
+}
+
+.FooterCookieButton:hover
+{
+	text-decoration: underline;
+}
+
+/* Keyboard focus on the booking, profile and contact forms */
+form input:focus-visible, form select:focus-visible, form textarea:focus-visible, .BookSessionButton button:focus-visible, .ContactUsContactMessageButton button:focus-visible, .BookSessionLocationButtons button:focus-visible
+{
+	outline: 2px solid var(--Sonder-olive);
+	outline-offset: 2px;
+}
+
+.react-tel-input .form-control:focus-visible
+{
+	outline: 2px solid var(--Sonder-olive) !important;
+	outline-offset: 2px;
+}
+
+/* While the cookie notice is open, the end of the page and focused fields stay clear of it */
+body.ConsentOpen #root
+{
+	scroll-padding-bottom: 170px;
+}
+
+body.ConsentOpen .FooterDetails
+{
+	padding-bottom: 160px;
+}
+
+/* Cookie notice for Google Analytics */
+.ConsentBanner
+{
+	position: fixed;
+	left: 16px;
+	bottom: 16px;
+	z-index: 1100;
+	max-width: 520px;
+	box-sizing: border-box;
+	padding: 16px 18px;
+	background: var(--Sonder-olive);
+	color: var(--Sonder-white);
+	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	line-height: 150%;
+}
+
+.ConsentBanner p
+{
+	margin: 0 0 12px;
+}
+
+.ConsentBanner a
+{
+	color: var(--Sonder-yellow);
+}
+
+.ConsentBannerButtons
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.ConsentBannerButtons button
+{
+	padding: 10px 18px;
+	border-radius: 0;
+	font: 700 13px/1 Arial, sans-serif;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+
+.ConsentAccept
+{
+	border: 1px solid var(--Sonder-yellow);
+	background: var(--Sonder-yellow);
+	color: var(--Sonder-olive);
+}
+
+.ConsentDecline
+{
+	border: 1px solid var(--Sonder-white);
+	background: transparent;
+	color: var(--Sonder-white);
+}
+
+.ConsentBannerButtons button:focus-visible
+{
+	outline: 2px solid var(--Sonder-orange);
+	outline-offset: 2px;
+}
+
+@media (max-width: 768px)
+{
+	.Finder
+	{
+		width: 88%;
+		margin: 10% 6% 10%;
+	}
+
+	.FinderSend
+	{
+		width: 100%;
+	}
+
+	.FinderOptions
+	{
+		gap: 8px;
+	}
+
+	.FinderOption span
+	{
+		padding: 8px 11px;
+		font-size: 14px;
+	}
+
+	.ConsentBanner
+	{
+		left: 0;
+		right: 0;
+		bottom: 0;
+		max-width: none;
+		padding: 14px 16px;
+	}
+
+	/* The WhatsApp button sits above the notice while it is open */
+	.ConsentOpen .WhatsAppFloat
+	{
+		bottom: 150px;
 	}
 }

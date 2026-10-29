@@ -10,8 +10,11 @@ import { fetchServices } from './app/services/servicesSlice';
 import { fetchBlogs } from './app/blogs/blogsSlice';
 import { fetchTestimonials } from './app/testimonials/testimonialsSlice';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+import { startAnalytics } from './analytics';
 
 if (process.env.NODE_ENV === 'production') disableReactDevTools()
+
+startAnalytics()
 
 // Load the site content (/content.json) before the first render, so a page goes
 // straight from its prerendered HTML to the finished app instead of flashing a

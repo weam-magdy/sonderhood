@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { loadCollection } from "../content";
+import { applyTeamChanges } from "../../seo/meta.mjs";
 
-// Async thunk to fetch therapists (from the content baked into the build); runs once
+// Async thunk to fetch therapists (from the content baked into the build); runs once.
+// Team changes are applied again in case the content came straight from Firestore.
 export const fetchTherapists = createAsyncThunk(
     'therapists/fetchTherapists',
-    () => loadCollection('therapists'),
+    () => loadCollection('therapists').then(applyTeamChanges),
     { condition: (_, { getState }) => !['loading', 'succeeded'].includes(getState().therapists.status) }
 )
 

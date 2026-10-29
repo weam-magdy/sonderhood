@@ -6,8 +6,8 @@ import topright from '../../imgs/topr.jpeg'
 import botright from '../../imgs/botr.jpeg'
 import mid from '../../imgs/midpics.jpeg'
 import useSeo from '../../seo/useSeo'
-import { INTROS, PAGES, SITE, pageLd, whatsappUrl } from '../../seo/meta.mjs'
-import { contactMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
+import { INTROS, PAGES, SITE, languagesText, pageLd, whatsappUrl } from '../../seo/meta.mjs'
+import { contactMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneInput from "react-phone-input-2";
 import FormNotice from '../FormNotice';
 import "react-phone-input-2/lib/bootstrap.css";
@@ -38,7 +38,7 @@ export default function ContactUs() {
     const sendMessage = (e) => {
         e.preventDefault();
         if (canSend) {
-            openWhatsApp(contactMessage({ name, number, email, subject, message }))
+            openWhatsApp(contactMessage({ name, number, email, subject, message }), 'contact_form')
             sendEmailCopy(process.env.REACT_APP_template_id, form.current)
             setSucc(true)
             setName('')
@@ -102,7 +102,7 @@ export default function ContactUs() {
                                     Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
                                     Address: <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'>{SITE.address.display}</a><br />
                                     Opening hours: {SITE.hours.display}<br />
-                                    Languages: {SITE.languages.join(' and ')}<br />
+                                    Languages: {languagesText()}<br />
                                 </address>
                             </div>
                         </div>
@@ -125,12 +125,13 @@ export default function ContactUs() {
                                         <input onChange={changed(setEmail)} value={email} name='email' placeholder='Email...' id='Email' type='email' autoComplete='email' />
                                     </div>
                                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageNumber'>
-                                        <label >Number</label>
+                                        <label htmlFor='Phone'>Number</label>
                                         <PhoneInput
                                             country={"eg"}
+                                            inputProps={{ id: 'Phone', name: 'phone', autoComplete: 'tel' }}
                                             enableSearch={true}
                                             value={number}
-                                            onChange={(phone) => { setNumber(phone); setErr(false); setSucc(false) }}
+                                            onChange={(phone, country) => { setNumber(normalizePhone(phone, country)); setErr(false); setSucc(false) }}
                                             specialLabel='Number: '
                                             inputStyle={{
                                                 width: "75%",
@@ -138,7 +139,6 @@ export default function ContactUs() {
                                                 padding: '0%',
                                                 background: "transparent",
                                                 border: "1px solid #000",
-                                                outline: "none",
                                                 boxSizing: "border-box",
                                                 boxShadow: "none",
                                                 color: "var(--Text, #90946B)",

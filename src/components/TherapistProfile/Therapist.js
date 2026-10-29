@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux'
 import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
 import { selectAllBlogs } from '../../seo/selectors'
 import useSeo from '../../seo/useSeo'
-import { blogSlug, legacySlug, therapistLd, therapistMeta, therapistSlug } from '../../seo/meta.mjs'
-import { bookingMessage, isValidName, isValidPhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
+import { TEAM_CHANGES, blogSlug, legacySlug, sentenceList, sortCredentials, therapistLanguages, therapistLd, therapistMeta, therapistSlug } from '../../seo/meta.mjs'
+import { bookingMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneInput from 'react-phone-input-2'
 import SafeImage from '../SafeImage'
 import FormNotice from '../FormNotice'
@@ -48,10 +48,13 @@ export default function Therapist()
     const selectedTherapist = therapists.find(therapistProfile => therapistSlug(therapistProfile) === String(therapist).toLowerCase())
     // Old links such as /Therapists/WeaamElaidy
     const movedTherapist = !selectedTherapist && therapists.find(therapistProfile => legacySlug(therapistProfile.name) === legacySlug(therapist))
+    // The address of a profile someone else took over leads to the team page.
+    const replacedProfile = !selectedTherapist && Object.values(TEAM_CHANGES).some(change => change.replaces === String(therapist).toLowerCase())
 
     useSeo(selectedTherapist ? { ...therapistMeta(selectedTherapist), jsonLd: therapistLd(selectedTherapist) } : {})
 
     if (movedTherapist) return <Navigate to={`/therapists/${therapistSlug(movedTherapist)}`} replace />
+    if (replacedProfile) return <Navigate to='/therapists' replace />
     if (!selectedTherapist)
     {
         if (therapistsStatus === 'failed') return <PageError />
@@ -73,7 +76,7 @@ export default function Therapist()
         e.preventDefault();
         if(canRequest)
         {
-            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay, therapist: selectedTherapist.name }))
+            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay, therapist: selectedTherapist.name }), 'therapist_profile_form')
             sendEmailCopy(process.env.REACT_APP_templateBook_id, form.current)
             setSucc(true)
             setFirstName('')
@@ -90,9 +93,7 @@ export default function Therapist()
 
     const services = (selectedTherapist.clientele || []).map((service) => <div key={service} className='TherapistProfileService'>{service}</div>)
 
-    const orderedCerts = [...(selectedTherapist.certificates || [])]
-
-    orderedCerts.sort((a, b) => parseInt(a.year) === parseInt(b.year) ? 0 : parseInt(a.year) > parseInt(b.year) ? -1 : 1)
+    const orderedCerts = sortCredentials(selectedTherapist.certificates)
 
     const certificates = orderedCerts.map((certificate, index) =>
         (
@@ -154,6 +155,9 @@ export default function Therapist()
                     </h1>
                     <div className='TherapistProfileDesc'>
                         {selectedTherapist.position}
+                    </div>
+                    <div className='TherapistProfileLanguages'>
+                        Sessions in {sentenceList(therapistLanguages(selectedTherapist))}
                     </div>
                     <div className='TherapistProfileServices'>
                         {services}
@@ -240,12 +244,13 @@ export default function Therapist()
                         <input onChange={changed(setEmail)} value={email} placeholder='Email...' id='Email' type='email' name='email' autoComplete='email' />
                     </div>
                     <div style={{ gridColumn: '3 / span 2' }} className='BookSessionInfoCredentials BookSessionInfoTherapist'>
-                        <label >Mobile Number</label>
+                        <label htmlFor='Phone'>Mobile Number</label>
                         <PhoneInput
                             country={"eg"}
+                            inputProps={{ id: 'Phone', name: 'phone', autoComplete: 'tel' }}
                             enableSearch={true}
                             value={number}
-                            onChange={(phone) => { setNumber(phone); setErr(false); setSucc(false) }}
+                            onChange={(phone, country) => { setNumber(normalizePhone(phone, country)); setErr(false); setSucc(false) }}
                             specialLabel='Number: '
                             inputStyle={{
                                 width: "100%",
@@ -253,7 +258,6 @@ export default function Therapist()
                                 padding: '0%',
                                 background: "transparent",
                                 border: "1px solid #90946B",
-                                outline: "none",
                                 boxSizing: "border-box",
                                 boxShadow: "none",
                                 color: "var(--Text, #90946B)",

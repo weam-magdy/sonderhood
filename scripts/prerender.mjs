@@ -19,6 +19,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import * as M from '../src/seo/meta.mjs'
 import { fetchCollection } from '../src/seo/firestore.mjs'
+import * as F from '../src/seo/finder.mjs'
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const BUILD = path.join(ROOT, 'build')
@@ -128,7 +129,7 @@ function shell(main, whatsappText)
         + `<main class="ssr-main">${main}`
         + `<p class="ssr-cta"><a class="ssr-btn" href="${esc(M.whatsappUrl(whatsappText))}">Message us on WhatsApp</a> <a href="tel:${esc(M.SITE.phone)}">or call ${esc(M.SITE.phoneDisplay)}</a></p></main>`
         + `<footer class="ssr-foot"><nav class="ssr-nav">${M.SERVICE_LINKS.map(s => link(s.path, s.name)).join('')}</nav>`
-        + `<p>${esc(M.SITE.name)}, therapy center in ${esc(M.SITE.address.display)} · Open ${esc(M.SITE.hours.display)} · Sessions in ${esc(M.SITE.languages.join(' and '))} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
+        + `<p>${esc(M.SITE.name)}, therapy center in ${esc(M.SITE.address.display)} · Open ${esc(M.SITE.hours.display)} · Sessions in ${esc(M.sentenceList(M.sessionLanguages()))} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
         + `</div>`
 }
 
@@ -193,15 +194,14 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
     {
         const meta = M.therapistMeta(therapist)
         const written = blogs.filter(b => M.legacySlug(b.therapist) === M.legacySlug(therapist.name))
-        const credentials = [...(therapist.certificates || [])]
-            .sort((a, b) => (parseInt(b.year) || 0) - (parseInt(a.year) || 0))
+        const credentials = M.sortCredentials(therapist.certificates)
             .map(c => esc(`${c.year ? `${c.year}: ` : ''}${c.title}`))
         pages.push({
             path: meta.path,
             lastmod: therapist.updateTime,
             head: { ...meta, ld: M.therapistLd(therapist) },
             body: shell(`<h1>${esc(therapist.name)}</h1>`
-                + paragraphs([`${String(therapist.position || '').trim()} at The Sonderhood, New Cairo.`])
+                + paragraphs([`${String(therapist.position || '').trim()} at The Sonderhood, New Cairo.`, `Sessions in ${M.sentenceList(M.therapistLanguages(therapist))}.`])
                 + ((therapist.clientele || []).length ? `<p>Works with: ${esc(therapist.clientele.join(', '))}</p>` : '')
                 + ((therapist.search || []).length ? `<p>Areas of focus: ${esc(therapist.search.join(', '))}</p>` : '')
                 + (therapist.quote ? `<blockquote>${esc(therapist.quote)}</blockquote>` : '')
@@ -243,7 +243,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
                 `Email: <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a>`,
                 `Address: ${link(M.SITE.mapsUrl, M.SITE.address.display)}`,
                 `Opening hours: ${esc(M.SITE.hours.display)}`,
-                `Languages: ${esc(M.SITE.languages.join(' and '))}`,
+                `Languages: ${esc(M.languagesText())}`,
             ])),
     })
 
@@ -251,6 +251,23 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
         path: '/book',
         head: { ...M.PAGES.book, ld: M.pageLd({ name: 'Book a Session', path: '/book' }) },
         body: shell(`<h1>Book a therapy session</h1>${paragraphs([`${M.INTROS.book} ${M.SITE.phoneDisplay}.`])}`),
+    })
+
+    pages.push({
+        path: M.PAGES.finder.path,
+        head: { ...M.PAGES.finder, ld: M.pageLd({ name: 'Find Your Therapist', path: M.PAGES.finder.path }) },
+        body: shell(`<h1>Find your therapist</h1>${paragraphs([M.INTROS.finder])}`
+            + `<h2>What would you like help with?</h2>${list(F.FINDER_TOPICS.map(topic => esc(topic.label)))}`
+            + `<h2>Who is the therapy for?</h2>${list(F.FINDER_FOR.map(option => esc(option.label)))}`
+            + `<h2>Which language would you prefer?</h2>${list(F.FINDER_LANGUAGES.filter(option => option.id !== 'either').map(option => esc(option.label)))}`
+            + `<h2>Our team</h2>${list(therapists.map(therapistItem))}`,
+            'Hello The Sonderhood, I would like help finding the right therapist.'),
+    })
+
+    pages.push({
+        path: M.PAGES.privacy.path,
+        head: { ...M.PAGES.privacy, ld: M.pageLd({ name: 'Privacy Policy', path: M.PAGES.privacy.path }) },
+        body: shell(`<h1>Privacy policy</h1>${M.PRIVACY.map(section => `<h2>${esc(section.title)}</h2>${paragraphs(section.text)}`).join('')}`),
     })
 
     return pages
@@ -276,7 +293,15 @@ function htaccess({ services, therapists, blogs })
     // [NC] covers any capitalization.
     const legacy = JSON.parse(fs.readFileSync(LEGACY, 'utf8'))
     for (const service of services) add(legacy.services[service.id] && `services/${legacy.services[service.id]}`, `/services/${M.decorateService(service).slug}`)
-    for (const therapist of therapists) add(legacy.therapists[therapist.id] && `therapists/${legacy.therapists[therapist.id]}`, `/therapists/${M.therapistSlug(therapist)}`)
+    for (const therapist of therapists)
+    {
+        // A profile someone else took over (M.TEAM_CHANGES): its earlier addresses
+        // lead to the team page, not to the new therapist.
+        const replaced = M.TEAM_CHANGES[therapist.id]?.replaces
+        const target = replaced ? '/therapists' : `/therapists/${M.therapistSlug(therapist)}`
+        add(legacy.therapists[therapist.id] && `therapists/${legacy.therapists[therapist.id]}`, target)
+        if (replaced) add(`therapists/${replaced}`, target)
+    }
     for (const blog of blogs) add(legacy.blogs[blog.id] && `ArticlePage/${legacy.blogs[blog.id]}`, `/blog/${M.blogSlug(blog)}`)
 
     return `# Generated by scripts/prerender.mjs on every build; edit that script, not this file.
@@ -375,6 +400,7 @@ async function main()
         .replace('<div id="root"></div>', () => `<div id="root">${body}</div>`)
 
     const content = await loadContent()
+    if (Array.isArray(content.therapists)) content.therapists = M.applyTeamChanges(content.therapists)
 
     // The app's copy keeps the photo addresses, so the photos appear as soon as
     // Firebase Storage serves them again; a collection the snapshot lacks is left
