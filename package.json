@@ -28,7 +28,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node scripts/prerender.mjs",
+    "snapshot": "node scripts/prerender.mjs --update-snapshot",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

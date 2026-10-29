@@ -2,26 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="The Sonderhood Website"
-    />
-    <meta property="og:title" content="The Sonderhood" />
-    <meta property="og:description" content="The Sonderhood Website" />
-    <meta property="og:url" content="https://sonderhood.vercel.app/" />
-    <meta property="og:image" content="%PUBLIC_URL%/icon.png" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon.png" />
+    <!-- Home page defaults. `npm run build` rewrites these tags for every page from src/seo/meta.mjs. -->
+    <title>Therapists in New Cairo &amp; Online Therapy in Egypt | The Sonderhood</title>
+    <meta name="description" content="Psychotherapy for adults, couples, families and teens, face to face in New Cairo or online across Egypt. CBT, assessments and more. Book on WhatsApp." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.the-sonderhood.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Sonderhood" />
+    <meta property="og:title" content="Therapists in New Cairo &amp; Online Therapy in Egypt | The Sonderhood" />
+    <meta property="og:description" content="Psychotherapy for adults, couples, families and teens, face to face in New Cairo or online across Egypt. CBT, assessments and more. Book on WhatsApp." />
+    <meta property="og:url" content="https://www.the-sonderhood.com/" />
+    <meta property="og:image" content="https://www.the-sonderhood.com/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#464834" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>The Sonderhood</title>
+    <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,100;9..40,200;9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+    <style>
+      /* The readable page the build writes into #root for crawlers and slow connections; the app replaces it. */
+      .ssr { min-height: 100%; background: #FFFDF4; color: #464834; font: 16px/1.65 'DM Sans', Arial, sans-serif; }
+      .ssr a { color: #464834; }
+      .ssr-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding: 20px 7%; border-bottom: 1px solid #E8E2C4; }
+      .ssr-brand { font: 28px Raglika, Georgia, serif; letter-spacing: 0.04em; text-decoration: none; text-transform: uppercase; }
+      .ssr-nav { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 14px; letter-spacing: 0.06em; }
+      .ssr-main { max-width: 960px; padding: 48px 7% 24px; }
+      .ssr h1 { margin: 0 0 20px; font: 400 clamp(30px, 4vw, 52px)/1.1 Raglika, Georgia, serif; text-transform: uppercase; }
+      .ssr h2 { margin: 40px 0 12px; font: 400 clamp(22px, 2.4vw, 30px)/1.2 Raglika, Georgia, serif; text-transform: uppercase; }
+      .ssr p, .ssr li, .ssr blockquote { max-width: 46em; color: #5B5D45; }
+      .ssr p { margin: 0 0 14px; }
+      .ssr ul { padding-left: 20px; }
+      .ssr details { padding: 10px 0; border-bottom: 1px solid #E8E2C4; }
+      .ssr summary { cursor: pointer; font-weight: 700; }
+      .ssr-meta { font-size: 14px; letter-spacing: 0.04em; }
+      .ssr-cta { margin-top: 32px; }
+      .ssr-btn { display: inline-block; margin-right: 12px; padding: 12px 22px; border-radius: 999px; background: #25D366; color: #FFFFFF !important; font-weight: 700; text-decoration: none; }
+      .ssr-foot { padding: 24px 7% 40px; border-top: 1px solid #E8E2C4; font-size: 14px; }
+    </style>
   </head>
   <body>
-    <noscript></noscript>
     <div id="root"></div>
   </body>
 </html>
