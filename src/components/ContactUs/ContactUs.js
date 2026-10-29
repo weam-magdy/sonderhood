@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
-import map from '../../imgs/map2.png'
 import topleft from '../../imgs/topl.jpeg'
 import botleft from '../../imgs/botl.jpeg'
 import topright from '../../imgs/topr.jpeg'
@@ -85,7 +84,14 @@ export default function ContactUs() {
                     <div className='ContactUsContact'>
                         <div className='ContactUsContactMap'>
                             <div className='ContactUsContactMapImage'>
-                                <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'><img src={map} alt='Map showing The Sonderhood therapy center in New Cairo' /></a>
+                                <iframe
+                                    title='Map: The Sonderhood at 3Sixty by LMD, New Cairo'
+                                    src={SITE.mapsEmbedUrl}
+                                    loading='lazy'
+                                    referrerPolicy='no-referrer-when-downgrade'
+                                    allowFullScreen
+                                />
+                                <a className='ContactUsMapLink' href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'>Open in Google Maps</a>
                             </div>
                             <div className='ContactUsContactMapInfo'>
                                 <address className='ContactUsContactDetails'>

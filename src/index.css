@@ -6593,6 +6593,25 @@ a.OurBlogItemContainer,
 	font-style: normal;
 }
 
+/* Live map of the center (replaced a screenshot of an older location) */
+.ContactUsContactMapImage iframe
+{
+	display: block;
+	width: 100%;
+	height: calc(98.5% - 2em);
+	min-height: 320px;
+	border: 0;
+}
+
+.ContactUsMapLink
+{
+	display: inline-block;
+	margin-top: 0.5em;
+	color: var(--Sonder-olive);
+	font-family: Arial, sans-serif;
+	font-size: max(12px, 0.9vw);
+}
+
 /* Article subheadings look like the bold lines the older articles use */
 .ArticleText h2
 {

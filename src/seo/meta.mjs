@@ -9,16 +9,18 @@ export const SITE = {
     phoneDisplay: '+20 109 429 2553',
     whatsappNumber: '201094292553',
     email: 'inquiries@the-sonderhood.com',
-    // The center's pin on the contact page (updated January 2026). Keep the
-    // address, the pin and the Google Business Profile saying the same thing.
+    // The center is at 3Sixty by LMD (confirmed by the owner, October 2026).
+    // Keep the address, the pin and the Google Business Profile saying the same thing.
     address: {
+        street: '3Sixty by LMD',
         locality: 'New Cairo',
         region: 'Cairo Governorate',
         country: 'EG',
-        display: 'New Cairo, Cairo, Egypt',
+        display: '3Sixty by LMD, New Cairo, Cairo, Egypt',
     },
-    geo: { latitude: 30.0007992, longitude: 31.5327871 },
-    mapsUrl: 'https://maps.app.goo.gl/6ib172QZdKsUx8ja6',
+    geo: { latitude: 30.0277362, longitude: 31.5510843 },
+    mapsUrl: 'https://maps.app.goo.gl/UBNXujaUDyvCnvf26',
+    mapsEmbedUrl: 'https://maps.google.com/maps?q=3sixty%20By%20LMD%2C%20New%20Cairo&ll=30.0277362,31.5510843&z=16&output=embed',
     image: '/og-image.jpg',
     logo: '/logo512.png',
     socials: {
@@ -457,6 +459,7 @@ export function organizationLd() {
                 email: SITE.email,
                 address: {
                     '@type': 'PostalAddress',
+                    streetAddress: SITE.address.street,
                     addressLocality: SITE.address.locality,
                     addressRegion: SITE.address.region,
                     addressCountry: SITE.address.country,
