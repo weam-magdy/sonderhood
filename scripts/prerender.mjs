@@ -195,7 +195,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
         const meta = M.therapistMeta(therapist)
         const written = blogs.filter(b => M.legacySlug(b.therapist) === M.legacySlug(therapist.name))
         const credentials = M.sortCredentials(therapist.certificates)
-            .map(c => esc(`${c.year ? `${c.year}: ` : ''}${c.title}`))
+            .map(c => esc(`${String(c.year || '').trim() ? `${String(c.year).trim()}: ` : ''}${String(c.title || '').trim()}${String(c.description || '').trim() ? `, ${String(c.description).trim()}` : ''}`))
         pages.push({
             path: meta.path,
             lastmod: therapist.updateTime,
