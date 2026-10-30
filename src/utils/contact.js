@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser'
-import { DEFAULT_WHATSAPP_TEXT, DEFAULT_WHATSAPP_TEXT_AR, SITE, whatsappUrl, writesArabic } from '../seo/meta.mjs'
+import { DEFAULT_WHATSAPP_TEXT, DEFAULT_WHATSAPP_TEXT_AR, SITE, foundUsLabel, whatsappUrl, writesArabic } from '../seo/meta.mjs'
 import { trackLead } from '../analytics'
 
 // The browser lists Arabic first. A chat started without typing anything (the
@@ -97,7 +97,7 @@ const DAYS_AR = { 'Any day': 'أي يوم', Sunday: 'الأحد', Monday: 'ال�
 const REACH_AR = { WhatsApp: 'واتساب', Email: 'البريد الإلكتروني', Call: 'مكالمة هاتفية' }
 
 // Someone who types their name in Arabic gets the whole message in Arabic.
-export function bookingMessage({ firstName, lastName, number, email, location, day, reach, therapist })
+export function bookingMessage({ firstName, lastName, number, email, location, day, reach, therapist, foundUs })
 {
     const name = `${firstName || ''} ${lastName || ''}`.trim()
     if (writesArabic([firstName, lastName], browserArabic()))
@@ -110,6 +110,7 @@ export function bookingMessage({ firstName, lastName, number, email, location, d
         if (therapist) lines.push(`الحجز مع: ${therapist}`)
         if (day) lines.push(`اليوم المفضل: ${DAYS_AR[day] || day}`)
         if (reach) lines.push(`التواصل معي عبر: ${REACH_AR[reach] || reach}`)
+        if (foundUs) lines.push(`عرفتكم عن طريق: ${foundUsLabel(foundUs, true)}`)
         return lines.join('\n')
     }
     const lines = [`Hello ${SITE.name}, I would like to request a session.`, '']
@@ -120,6 +121,7 @@ export function bookingMessage({ firstName, lastName, number, email, location, d
     if (therapist) lines.push(`Therapist: ${therapist}`)
     if (day) lines.push(`Preferred day: ${day}`)
     if (reach) lines.push(`Contact me by: ${reach}`)
+    if (foundUs) lines.push(`Found you through: ${foundUsLabel(foundUs)}`)
     return lines.join('\n')
 }
 

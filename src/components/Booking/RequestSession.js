@@ -5,6 +5,8 @@ import { INTROS, PAGES, SITE, pageLd } from '../../seo/meta.mjs';
 import { bookingMessage, chatUrl, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
 import PhoneField from '../PhoneField';
 import FormNotice from '../FormNotice';
+import FoundUsField from './FoundUsField';
+import SafetyNote from '../SafetyNote';
 
 const days = ['Any day', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
@@ -18,6 +20,7 @@ export default function BookSession()
     const [day, setDay] = useState('Any day')
     const [prefWay, setPrefWay] = useState('WhatsApp')
     const [number, setNumber] = useState('')
+    const [foundUs, setFoundUs] = useState('')
 
     const [location, setLocation] = useState('At The Center')
 
@@ -40,7 +43,7 @@ export default function BookSession()
         e.preventDefault();
         if(canRequest)
         {
-            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay }), 'booking_form')
+            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay, foundUs }), 'booking_form')
             sendEmailCopy(process.env.REACT_APP_templateBook_id, form.current)
             setSucc(true)
             setFirstName('')
@@ -150,10 +153,12 @@ export default function BookSession()
                         </select>
                     </div>
                 </form>
+                <FoundUsField value={foundUs} onChange={changed(setFoundUs)} />
                 <div className='BookSessionButton'>
                     <button onClick={sendRequest}>SEND ON WHATSAPP</button>
                 </div>
             </div>
+            <SafetyNote />
         </div>
         </>
     )

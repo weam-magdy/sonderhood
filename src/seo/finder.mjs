@@ -3,7 +3,7 @@
 // replies on WhatsApp can pick up from there. Pure data and functions, shared by
 // the app and scripts/prerender.mjs.
 
-import { SITE, therapistLanguages, writesArabic } from './meta.mjs'
+import { SITE, foundUsLabel, therapistLanguages, writesArabic } from './meta.mjs'
 
 export const FINDER_PATH = '/find-a-therapist'
 
@@ -90,7 +90,7 @@ export function matchTherapists(therapists = [], { topics = [], who, language } 
 // start from them. `therapist` is set when the person picked one to book with.
 // It is in Arabic when they chose Arabic sessions or typed their name in Arabic;
 // `arabicFallback` (the browser's language) decides when neither says.
-export function finderMessage({ name, topics = [], who, mode, language, suggested = [], therapist, arabicFallback = false } = {}) {
+export function finderMessage({ name, topics = [], who, mode, language, suggested = [], therapist, foundUs, arabicFallback = false } = {}) {
     const typedName = String(name || '').trim()
     const arabic = language === 'arabic' || writesArabic([typedName], language === 'english' || language === 'french' ? false : arabicFallback)
     if (arabic) {
@@ -101,6 +101,7 @@ export function finderMessage({ name, topics = [], who, mode, language, suggeste
         if (who) lines.push(`لمن العلاج: ${labelOf(FINDER_FOR, who, true)}`)
         if (mode) lines.push(`الجلسات: ${labelOf(FINDER_MODES, mode, true)}`)
         if (language) lines.push(`اللغة: ${labelOf(FINDER_LANGUAGES, language, true)}`)
+        if (foundUs) lines.push(`عرفتكم عن طريق: ${foundUsLabel(foundUs, true)}`)
         if (therapist) {
             lines.push('', `أود الحجز مع ${therapist}.`)
         } else {
@@ -116,6 +117,7 @@ export function finderMessage({ name, topics = [], who, mode, language, suggeste
     if (who) lines.push(`Therapy for: ${labelOf(FINDER_FOR, who)}`)
     if (mode) lines.push(`Sessions: ${labelOf(FINDER_MODES, mode)}`)
     if (language) lines.push(`Language: ${labelOf(FINDER_LANGUAGES, language)}`)
+    if (foundUs) lines.push(`Found you through: ${foundUsLabel(foundUs)}`)
     if (therapist) {
         lines.push('', `I would like to book with ${therapist}.`)
     } else {

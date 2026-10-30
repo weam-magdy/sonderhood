@@ -13,6 +13,7 @@ import { legacySlug, serviceLd, serviceMeta } from '../../seo/meta.mjs'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
 import LinkedText from '../LinkedText'
 import ServiceDetails from './ServiceDetails'
+import SafetyNote from '../SafetyNote'
 
 export default function Service()
 {
@@ -103,6 +104,7 @@ export default function Service()
             <ServiceDetails sections={selectedService.details?.sections} updated={selectedService.details?.updated} />
             <AvailableTherapists availableTherapists={availableTherapists} />
             <FAQ faqs={selectedService.faqs} />
+            <SafetyNote />
         </>
     )
 }

@@ -75,6 +75,23 @@ export function writesArabic(texts = [], fallback = false) {
     return fallback
 }
 
+// "How did you find us?", optional on the booking forms and the finder. The answer goes
+// only into the WhatsApp message, the one way to see what brings people in: Google
+// Analytics misses everyone who declines cookies. `ar` is how it reads in an Arabic message.
+export const FOUND_US = [
+    { id: 'google', label: 'Google search', ar: 'بحث جوجل' },
+    { id: 'ai', label: 'ChatGPT or another AI tool', ar: 'ChatGPT أو أداة ذكاء اصطناعي أخرى' },
+    { id: 'social', label: 'Instagram or Facebook', ar: 'إنستجرام أو فيسبوك' },
+    { id: 'person', label: 'A friend or family member', ar: 'صديق أو أحد أفراد الأسرة' },
+    { id: 'professional', label: 'A doctor or another therapist', ar: 'طبيب أو معالج آخر' },
+    { id: 'other', label: 'Somewhere else', ar: 'مصدر آخر' },
+]
+
+export function foundUsLabel(id, arabic = false) {
+    const option = FOUND_US.find(o => o.id === id)
+    return option ? (arabic ? option.ar : option.label) : ''
+}
+
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 // Our contact details inside plain copy (FAQ answers, page intros, the privacy
@@ -456,6 +473,19 @@ export const EXTRA_BLOGS = [
         service: 'online-therapy',
         image: '/images/blog/online-or-face-to-face-therapy.jpg',
         createTime: '2026-10-29T19:00:00Z',
+        updateTime: '2026-10-30T12:00:00Z',
+        sources: [
+            { title: 'Telepsychiatry versus face-to-face treatment: systematic review and meta-analysis', from: 'British Journal of Psychiatry, 2023', url: 'https://pubmed.ncbi.nlm.nih.gov/37655816/' },
+            { title: 'Comparing video-based and face-to-face psychotherapy: systematic review and meta-analysis', from: 'Journal of Medical Internet Research, 2026', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC13440640/' },
+            { title: 'Therapeutic alliance in videoconferencing psychotherapy compared to psychotherapy in person', from: 'Journal of Telemedicine and Telecare, 2023', url: 'https://pubmed.ncbi.nlm.nih.gov/36974478/' },
+            { title: 'Guidelines for the Practice of Telepsychology', from: 'American Psychological Association, 2024', url: 'https://www.apa.org/practice/guidelines/telepsychology-revision.pdf' },
+            { title: 'Best Practices in Synchronous Videoconferencing-Based Telemental Health', from: 'American Psychiatric Association and American Telemedicine Association, 2022', url: 'https://www.psychiatry.org/getmedia/49f487ae-7b83-416a-8812-b2b25c717f6a/Resource-Document-Telemental-Health-Best-Practices.pdf' },
+            { title: 'Emotionality differences between a native and foreign language', from: 'Frontiers in Psychology, 2014', url: 'https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2014.01055/full' },
+            { title: 'Multilingualism and psychotherapy: exploring multilingual clients\' experiences', from: 'International Journal of Multilingualism, 2017', url: 'https://eprints.bbk.ac.uk/17869/' },
+            { title: 'Video consultations', from: 'NHS', url: 'https://www.nhs.uk/using-the-nhs/nhs-services/gps/video-consultations/' },
+            { title: 'Egypt prioritizes mental health support, expands services nationwide', from: 'Egypt Independent, 2026', url: 'https://www.egyptindependent.com/egypt-prioritizes-mental-health-support-expands-services-nationwide/' },
+            { title: 'Egypt travel advice: Getting help', from: 'GOV.UK', url: 'https://www.gov.uk/foreign-travel-advice/egypt/getting-help' },
+        ],
         description: 'On average, video therapy works about as well as face to face. Learn when each suits you and how to choose Arabic or English therapy in Egypt or abroad.',
         body: [
             'If you are starting therapy in New Cairo, or <a href="/services/online-therapy">online therapy in Egypt</a> or from abroad, two choices come up early. Face to face or video call? Arabic, English or both?<br />',
@@ -700,6 +730,18 @@ export const INTROS = {
 
 // /privacy. Keep it true to what the site does: if EmailJS copies of the forms are
 // switched on, or another tool is added, say so here.
+// What to do in a crisis, on the service, New Cairo, contact and booking pages. The
+// numbers were rechecked on 30 October 2026: 123 and 122 on GOV.UK's Egypt travel advice,
+// 16328 in a Ministry of Health statement of April 2026. Check them again if this changes.
+export const SAFETY_NOTE = {
+    heading: 'If you need urgent help',
+    text: [
+        `${SITE.name} is not an emergency service. If you are thinking about ending your life, or you or someone else is in immediate danger, go to the nearest hospital emergency department. In Egypt you can also call 123 for an ambulance or 122 for the police.`,
+        'For urgent emotional support, call 16328, the 24-hour psychological support hotline run by Egypt\'s Ministry of Health and Population. If you are outside Egypt, call your local emergency number.',
+    ],
+    links: { 123: 'tel:123', 122: 'tel:122', 16328: 'tel:16328' },
+}
+
 export const PRIVACY = [
     {
         title: 'Who we are',
@@ -719,7 +761,7 @@ export const PRIVACY = [
     },
     {
         title: 'WhatsApp, phone and email',
-        text: ['Our booking form, contact form and therapist finder do not store what you type on this website. They prepare a message in WhatsApp, and it reaches us only when you send it. WhatsApp, run by Meta, handles that message under its own privacy policy. Calls and emails reach us directly.'],
+        text: ['Our booking form, contact form and therapist finder do not store what you type or choose on this website. They prepare a message in WhatsApp, and it reaches us only when you send it. WhatsApp, run by Meta, handles that message under its own privacy policy. Calls and emails reach us directly.'],
     },
     {
         title: 'Newsletter',

@@ -9,6 +9,7 @@ import useSeo from '../../seo/useSeo'
 import { TEAM_CHANGES, blogSlug, legacySlug, sentenceList, sortCredentials, therapistLanguages, therapistLd, therapistMeta, therapistSlug, therapistSummary } from '../../seo/meta.mjs'
 import { bookingMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneField from '../PhoneField'
+import FoundUsField from '../Booking/FoundUsField'
 import SafeImage from '../SafeImage'
 import FormNotice from '../FormNotice'
 import ServiceDetails from '../Services/ServiceDetails'
@@ -40,6 +41,7 @@ export default function Therapist()
     const [day, setDay] = useState('Any day')
     const [prefWay, setPrefWay] = useState('WhatsApp')
     const [number, setNumber] = useState('')
+    const [foundUs, setFoundUs] = useState('')
 
     const [err, setErr] = useState(false)
     const [succ, setSucc] = useState(false)
@@ -77,7 +79,7 @@ export default function Therapist()
         e.preventDefault();
         if(canRequest)
         {
-            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay, therapist: selectedTherapist.name }), 'therapist_profile_form')
+            openWhatsApp(bookingMessage({ firstName, lastName, number, email, location, day, reach: prefWay, therapist: selectedTherapist.name, foundUs }),'therapist_profile_form')
             sendEmailCopy(process.env.REACT_APP_templateBook_id, form.current)
             setSucc(true)
             setFirstName('')
@@ -290,6 +292,7 @@ export default function Therapist()
                         </select>
                     </div>
                 </form>
+                <FoundUsField value={foundUs} onChange={changed(setFoundUs)} />
                 <div className='BookSessionButton'>
                     <button onClick={sendRequest} >SEND ON WHATSAPP</button>
                 </div>

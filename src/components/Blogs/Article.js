@@ -105,6 +105,14 @@ export default function Article()
             <div dangerouslySetInnerHTML={{ __html: selectedBlog.body }} />
             {service && <p className='ArticleServiceLink'>Want to talk this through with a therapist? Read about our <Link to={service.path}>{service.name}</Link>.</p>}
             {author && <p className='ArticleAuthorNote'>Written by <Link to={`/therapists/${therapistSlug(author)}`}>{author.name}</Link>, {String(author.position || 'therapist').trim()} at The Sonder Hood in New Cairo.</p>}
+            {selectedBlog.sources?.length > 0 && (
+                <div className='ArticleSources'>
+                    <h2>Sources</h2>
+                    <ul>
+                        {selectedBlog.sources.map(source => <li key={source.url}><a href={source.url} target='_blank' rel='noopener noreferrer'>{source.title}</a>, {source.from}</li>)}
+                    </ul>
+                </div>
+            )}
         </div>
         <div className='ReadMoreContainer'>
             <div className='ReadMoreTitle'>

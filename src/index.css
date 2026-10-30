@@ -6996,7 +6996,7 @@ a.OurBlogItemContainer,
 	content: '\2713\00a0';
 }
 
-.FinderOption input:focus-visible + span, .Finder button:focus-visible, .FinderName input:focus-visible
+.FinderOption input:focus-visible + span, .Finder button:focus-visible, .FinderName input:focus-visible, .FinderName select:focus-visible
 {
 	outline: 2px solid var(--Sonder-olive);
 	outline-offset: 2px;
@@ -7011,9 +7011,11 @@ a.OurBlogItemContainer,
 	}
 }
 
-.FinderName input
+.FinderName input, .FinderName select
 {
 	width: min(320px, 100%);
+	height: auto;
+	text-indent: 0;
 	padding: 10px 12px;
 	border: 1px solid #90946B;
 	border-radius: 0;
@@ -7488,6 +7490,77 @@ body.ConsentOpen .FooterDetails
 {
 	font-size: 0.85em;
 	opacity: 0.8;
+}
+
+/* What to do in a crisis, at the end of the service, New Cairo, contact and booking pages. */
+.SafetyNote
+{
+	border-top: 1px solid rgba(70, 72, 52, 0.25);
+}
+
+.SafetyNote p
+{
+	max-width: 46em;
+}
+
+/* An article's sources, under its author line. */
+.ArticleSources
+{
+	margin-top: 2em;
+	font-size: 0.9em;
+}
+
+.ArticleSources ul
+{
+	margin: 0.5em 0 0;
+	padding-left: 1.2em;
+}
+
+/* "How did you find us?" sits under the booking form's grid, so the grid's fixed rows
+   stay as they are. */
+.BookSessionFoundUs
+{
+	margin: 2.5% 5% 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.BookSessionFoundUs label
+{
+	margin-bottom: 0.6em;
+	color: var(--Sonder-olive, #464834);
+	font-family: Arial;
+	font-size: 1.2vw;
+	font-weight: 700;
+	line-height: 100%;
+}
+
+.BookSessionFoundUs select
+{
+	width: 47.5%;
+	height: 5.5vh;
+	min-height: 36px;
+}
+
+@media (max-width: 900px)
+{
+	.BookSessionFoundUs
+	{
+		margin: 16px 5% 0;
+	}
+
+	.BookSessionFoundUs label
+	{
+		font-size: 2vh;
+	}
+
+	.BookSessionFoundUs select
+	{
+		width: 100%;
+		height: 44px;
+		font-size: 2vh;
+	}
 }
 
 .ArticlePublished

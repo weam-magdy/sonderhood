@@ -6,6 +6,7 @@ import { NEW_CAIRO, PAGES, SITE, newCairoLd } from '../seo/meta.mjs'
 import LinkedText from './LinkedText'
 import ServiceDetails from './Services/ServiceDetails'
 import FAQ from './HomePage/FAQ'
+import SafetyNote from './SafetyNote'
 
 // /therapy-in-new-cairo: the center, for people looking for a therapist near them.
 // The copy lives in src/seo/pageCopy.mjs. No map is embedded (Google Maps would then
@@ -33,6 +34,7 @@ export default function NewCairo()
         </div>
         <ServiceDetails sections={NEW_CAIRO.sections} updated={NEW_CAIRO.updated} label='Our therapy center in New Cairo' />
         <FAQ faqs={NEW_CAIRO.faqs} />
+        <SafetyNote />
         </>
     )
 }

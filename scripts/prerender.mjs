@@ -87,6 +87,8 @@ const paragraphs = (texts, options) => texts.filter(Boolean).map(text => `<p>${l
 // Headed sections from src/seo/pageCopy.mjs, as src/components/Services/ServiceDetails.js draws them.
 const sectionsBlock = (sections, updated) => (sections || []).map(s => `<h2>${esc(s.heading)}</h2>${paragraphs(s.paragraphs, { links: s.links, word: true })}`).join('')
     + (sections?.length && updated ? `<p>Last updated ${esc(M.longDate(updated))}</p>` : '')
+// As src/components/SafetyNote.js draws it.
+const safetyNote = () => sectionsBlock([{ heading: M.SAFETY_NOTE.heading, paragraphs: M.SAFETY_NOTE.text, links: M.SAFETY_NOTE.links }])
 const faqBlock = (faqs) => (faqs || []).filter(f => f && f.question)
     .map(f => `<details><summary>${esc(f.question)}</summary><p>${linked(f.answer, { links: f.links, word: true })}</p>${f.cta ? `<p>${link(f.cta.path, f.cta.label)}</p>` : ''}</details>`).join('')
 
@@ -252,7 +254,8 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
                 + list((service.points || []).map(esc))
                 + sectionsBlock(service.details?.sections, service.details?.updated)
                 + (team.length ? `<h2>Available therapists</h2>${list(team.map(therapistItem))}` : '')
-                + (service.faqs?.length ? `<h2>Frequently asked questions</h2>${faqBlock(service.faqs)}` : ''),
+                + (service.faqs?.length ? `<h2>Frequently asked questions</h2>${faqBlock(service.faqs)}` : '')
+                + safetyNote(),
             `Hello The Sonder Hood, I would like to book a session for ${service.title}.`),
         })
     }
@@ -306,6 +309,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
                 + `<div class="ssr-article">${blog.body || ''}</div>`
                 + (service ? `<p><strong>Want to talk this through with a therapist? Read about our ${link(service.path, service.name)}.</strong></p>` : '')
                 + (author ? `<p>Written by ${byline}, ${esc(String(author.position || 'therapist').trim())} at The Sonder Hood in New Cairo.</p>` : '')
+                + (blog.sources?.length ? `<h2>Sources</h2>${list(blog.sources.map(source => `${link(source.url, source.title)}, ${esc(source.from)}`))}` : '')
                 + `<h2>Read more</h2>${list(M.relatedBlogs(blogs, blog).map(blogItem))}`),
         })
     }
@@ -321,13 +325,13 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
                 `Address: ${link(M.SITE.mapsUrl, M.SITE.address.display)}`,
                 `Opening hours: ${esc(M.SITE.hours.display)}`,
                 `Languages: ${esc(M.languagesText())}`,
-            ])),
+            ]) + safetyNote()),
     })
 
     pages.push({
         path: '/book',
         head: { ...M.PAGES.book, ld: M.pageLd({ name: 'Book a Session', path: '/book' }) },
-        body: shell(`<h1>Book a therapy session</h1>${paragraphs([`${M.INTROS.book} ${M.SITE.phoneDisplay}.`])}`),
+        body: shell(`<h1>Book a therapy session</h1>${paragraphs([`${M.INTROS.book} ${M.SITE.phoneDisplay}.`])}${safetyNote()}`),
     })
 
     pages.push({
@@ -348,7 +352,8 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
         body: shell(`<h1>${esc(M.NEW_CAIRO.h1)}</h1>${paragraphs(M.NEW_CAIRO.intro, { word: true })}`
             + `<p>${esc(`${M.SITE.name}, ${M.SITE.address.display}. Open ${M.SITE.hours.display}.`)} ${link(M.SITE.mapsUrl, 'Open in Google Maps')}</p>`
             + sectionsBlock(M.NEW_CAIRO.sections, M.NEW_CAIRO.updated)
-            + `<h2>Frequently asked questions</h2>${faqBlock(M.NEW_CAIRO.faqs)}`),
+            + `<h2>Frequently asked questions</h2>${faqBlock(M.NEW_CAIRO.faqs)}`
+            + safetyNote()),
     })
 
     pages.push({

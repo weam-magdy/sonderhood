@@ -11,6 +11,7 @@ import { chatUrl, contactMessage, isValidName, isValidPhone, normalizePhone, ope
 import LinkedText from '../LinkedText'
 import PhoneField from "../PhoneField";
 import FormNotice from '../FormNotice';
+import SafetyNote from '../SafetyNote';
 import "react-phone-input-2/lib/bootstrap.css";
 
 export default function ContactUs() {
@@ -195,6 +196,7 @@ export default function ContactUs() {
                     </div>
                 </div>
             </div>
+            <SafetyNote />
         </>
     )
 }

@@ -12,7 +12,7 @@ export default function LinkedText({ text, links, word = false })
     {
         if (!part.href) return <React.Fragment key={index}>{part.text}</React.Fragment>
         if (part.href.startsWith('/')) return <Link key={index} to={part.href}>{part.text}</Link>
-        if (part.href.startsWith('mailto:')) return <a key={index} href={part.href}>{part.text}</a>
+        if (/^(mailto|tel):/.test(part.href)) return <a key={index} href={part.href}>{part.text}</a>
         return <a key={index} href={part.href} target='_blank' rel='noopener noreferrer'>{part.text}</a>
     })
 }

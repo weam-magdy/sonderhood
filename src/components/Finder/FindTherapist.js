@@ -8,10 +8,11 @@ import { INTROS, PAGES, pageLd, therapistSlug } from '../../seo/meta.mjs'
 import { FINDER_FOR, FINDER_LANGUAGES, FINDER_MODES, FINDER_TOPICS, finderMessage, inSentence, knownTopics, matchTherapists, soleTherapistFor } from '../../seo/finder.mjs'
 import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
 import { browserArabic, openWhatsApp } from '../../utils/contact'
+import FoundUsField from '../Booking/FoundUsField'
 
 // Answers stay in memory for the visit, so they survive opening a suggested profile
 // and coming back. They are never stored on the device or sent anywhere.
-const remembered = { key: null, topics: [], who: '', mode: '', language: '', name: '' }
+const remembered = { key: null, topics: [], who: '', mode: '', language: '', name: '', foundUs: '' }
 
 // One question with single-choice answers, as a labelled group of radio buttons.
 function Choice({ legend, name, options, value, onChange })
@@ -58,11 +59,12 @@ export default function FindTherapist()
     const [mode, setMode] = useState(remembered.mode)
     const [language, setLanguage] = useState(remembered.language)
     const [name, setName] = useState(remembered.name)
+    const [foundUs, setFoundUs] = useState(remembered.foundUs)
 
     useEffect(() =>
     {
-        Object.assign(remembered, { topics, who, mode, language, name })
-    }, [topics, who, mode, language, name])
+        Object.assign(remembered, { topics, who, mode, language, name, foundUs })
+    }, [topics, who, mode, language, name, foundUs])
 
     const toggleTopic = (id) => setTopics(list => (list.includes(id) ? list.filter(topic => topic !== id) : [...list, id]))
 
@@ -70,7 +72,7 @@ export default function FindTherapist()
     const names = matches.map(match => match.therapist.name)
     const sole = soleTherapistFor(language)
 
-    const send = (therapist) => openWhatsApp(finderMessage({ name, topics, who, mode, language, suggested: names, therapist, arabicFallback: browserArabic() }), 'therapist_finder')
+    const send = (therapist) => openWhatsApp(finderMessage({ name, topics, who, mode, language, suggested: names, therapist, foundUs, arabicFallback: browserArabic() }), 'therapist_finder')
 
     const summary = !who ? '' : names.length ? `${names.length === 1 ? 'One therapist' : `${names.length} therapists`} may suit you: ${listNames(names)}.` : 'No exact match. Send us your answers and we will suggest a therapist.'
 
@@ -102,6 +104,8 @@ export default function FindTherapist()
                     <label htmlFor='FinderName'>Your first name (optional)</label>
                     <input id='FinderName' type='text' name='firstname' autoComplete='given-name' value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
+
+                <FoundUsField className='FinderQuestion FinderName' label='How did you find us? (optional)' value={foundUs} onChange={(e) => setFoundUs(e.target.value)} />
 
                 <section className='FinderResults' aria-label='Your matches'>
                     <p className='VisuallyHidden' role='status'>{summary}</p>
