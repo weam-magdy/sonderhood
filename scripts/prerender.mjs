@@ -225,7 +225,9 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
     pages.push({
         path: '/about',
         head: { ...M.PAGES.about, ld: M.pageLd({ name: 'About Us', path: '/about' }) },
-        body: shell(`<h1>About The Sonder Hood</h1>${paragraphs([M.PAGES.about.description, M.INTROS.therapists[0]])}<h2>Our team</h2>${list(therapists.map(therapistItem))}`),
+        body: shell(`<h1>About The Sonder Hood</h1>${paragraphs([M.PAGES.about.description, M.INTROS.therapists[0]])}`
+            + `<h2>The Sonder Hood at a glance</h2><dl>${M.aboutFacts(therapists.length).map(([label, text]) => `<dt>${esc(label)}</dt><dd>${linked(text)}</dd>`).join('')}</dl>`
+            + `<h2>Our team</h2>${list(therapists.map(therapistItem))}`),
     })
 
     pages.push({
@@ -270,6 +272,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
             head: { ...meta, ld: M.therapistLd(therapist) },
             body: shell(`<h1>${esc(therapist.name)}</h1>`
                 + paragraphs([`${String(therapist.position || '').trim()} at The Sonder Hood, New Cairo.`, `Sessions in ${M.sentenceList(M.therapistLanguages(therapist))}.`])
+                + sectionsBlock([{ heading: `About ${therapist.name}`, paragraphs: [M.therapistSummary(therapist).join(' ')] }])
                 + ((therapist.clientele || []).length ? `<p>Works with: ${esc(therapist.clientele.join(', '))}</p>` : '')
                 + ((therapist.search || []).length ? `<p>Areas of focus: ${esc(therapist.search.join(', '))}</p>` : '')
                 + (therapist.quote ? `<blockquote>${esc(therapist.quote)}</blockquote>` : '')
@@ -296,9 +299,10 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
             lastmod: blog.updateTime,
             head: { ...meta, ld: M.blogLd(blog, author) },
             body: shell(`<p class="ssr-meta">${esc([blog.topic, String(blog.duration || '').trim()].filter(Boolean).join(' · '))}</p>`
-                + `<h1>${esc(blog.title)}</h1><p class="ssr-meta">By ${byline}</p>`
+                + `<h1>${esc(blog.title)}</h1><p class="ssr-meta">By ${byline}${blog.createTime ? ` · Published ${esc(M.longDate(blog.createTime))}` : ''}</p>`
                 + `<div class="ssr-article">${blog.body || ''}</div>`
                 + (service ? `<p><strong>Want to talk this through with a therapist? Read about our ${link(service.path, service.name)}.</strong></p>` : '')
+                + (author ? `<p>Written by ${byline}, ${esc(String(author.position || 'therapist').trim())} at The Sonder Hood in New Cairo.</p>` : '')
                 + `<h2>Read more</h2>${list(blogs.filter(b => b.id !== blog.id).map(blogItem))}`),
         })
     }
@@ -351,6 +355,42 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
     })
 
     return pages
+}
+
+// ---------------------------------------------------------------- llms.txt
+
+// A plain summary of the practice for AI tools (llmstxt.org), from the same data as the
+// pages. No engine has said it uses this file, so it is a small extra, not a strategy.
+function llmsTxt({ services: rawServices, therapists, blogs: rawBlogs })
+{
+    const services = M.mergeServices([...rawServices].sort((a, b) => (a.order ?? 99) - (b.order ?? 99)), therapists)
+    const blogs = M.mergeBlogs(rawBlogs)
+    const line = (name, sitePath, text) => `- [${name}](${M.absoluteUrl(sitePath)})${text ? `: ${text}` : ''}`
+    return [
+        `# ${M.SITE.name}`,
+        '',
+        `> ${M.SITE.name} is a psychotherapy practice at ${M.SITE.address.street}, ${M.SITE.address.road}, New Cairo, Egypt, with ${therapists.length} psychologists and psychotherapists. Sessions are in ${M.languagesText()}, face to face or online by secure video call. Open ${M.SITE.hours.display}.`,
+        '',
+        `To book: WhatsApp ${M.SITE.phoneDisplay}, ${M.absoluteUrl('/book')} or the therapist finder at ${M.absoluteUrl(M.PAGES.finder.path)}. Email: ${M.SITE.email}. Session prices are not published; ask on WhatsApp. The team are psychologists and psychotherapists, not psychiatrists, and do not prescribe medication. This is not an emergency service.`,
+        '',
+        '## Location',
+        '',
+        line('Therapy in New Cairo', M.NEW_CAIRO.path, M.NEW_CAIRO.metaDescription),
+        line('Contact', '/contact', 'Address, map, phone and opening hours'),
+        '',
+        '## Services',
+        '',
+        ...services.map(s => line(s.title, `/services/${s.slug}`, s.description)),
+        '',
+        '## Therapists',
+        '',
+        ...therapists.map(t => line(t.name, `/therapists/${M.therapistSlug(t)}`, M.therapistSummary(t).slice(1).join(' '))),
+        '',
+        '## Articles',
+        '',
+        ...blogs.map(b => line(b.title, `/blog/${M.blogSlug(b)}`, `By ${b.therapist}. ${b.description || ''}`.trim())),
+        '',
+    ].join('\n')
 }
 
 // ---------------------------------------------------------------- server files
@@ -537,6 +577,7 @@ async function main()
     fs.writeFileSync(path.join(BUILD, '404.html'), render({ ...M.PAGES.notFound, path: '', noindex: true }, shell(notFound)))
 
     fs.writeFileSync(path.join(BUILD, 'sitemap.xml'), sitemap(pages))
+    fs.writeFileSync(path.join(BUILD, 'llms.txt'), llmsTxt(content))
     fs.writeFileSync(path.join(BUILD, '.htaccess'), htaccess(content))
 
     console.log(`prerender: ${pages.length} pages, sitemap.xml (${pages.length} URLs), 404.html and .htaccess written to build/`)

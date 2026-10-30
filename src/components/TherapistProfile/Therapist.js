@@ -6,11 +6,12 @@ import { useSelector } from 'react-redux'
 import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
 import { selectAllBlogs } from '../../seo/selectors'
 import useSeo from '../../seo/useSeo'
-import { TEAM_CHANGES, blogSlug, legacySlug, sentenceList, sortCredentials, therapistLanguages, therapistLd, therapistMeta, therapistSlug } from '../../seo/meta.mjs'
+import { TEAM_CHANGES, blogSlug, legacySlug, sentenceList, sortCredentials, therapistLanguages, therapistLd, therapistMeta, therapistSlug, therapistSummary } from '../../seo/meta.mjs'
 import { bookingMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import PhoneInput from 'react-phone-input-2'
 import SafeImage from '../SafeImage'
 import FormNotice from '../FormNotice'
+import ServiceDetails from '../Services/ServiceDetails'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
 const colors = ['#F9F3D0', '#FFDEB5', '#D6DCA2']
 // const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -168,6 +169,7 @@ export default function Therapist()
                 </div>
             </div>
         </div>
+        <ServiceDetails label={`About ${selectedTherapist.name}`} sections={[{ heading: `About ${selectedTherapist.name}`, paragraphs: [therapistSummary(selectedTherapist).join(' ')] }]} />
         {selectedTherapist.quote && <div className='TestimonialsContainer'>
             <div className='TestimonialsImage'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">

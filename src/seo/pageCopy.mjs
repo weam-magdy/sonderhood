@@ -1,10 +1,12 @@
 // Longer copy for the service pages and the New Cairo page (30 October 2026), written
-// from the team's own profiles and fact-checked line by line: no prices, durations,
+// from the team's own profiles and fact-checked line by line: no prices, durations, unsourced
 // statistics, methods outside the team's training, or details about the building.
 // Plain data, shared by the app and scripts/prerender.mjs.
 //
 // SERVICE_DETAILS is keyed by service slug. Each section is drawn as an H2 and its
-// paragraphs; `links` maps an exact phrase in the section to a page of this site.
+// paragraphs; `links` maps an exact phrase in the section to a page of this site, or to
+// the source of a claim (each service's research section; every source was read and its
+// wording checked on 30 October 2026).
 // `faqs` are added after the service's own questions. `updated` is the last time the
 // page's copy changed: it goes to the sitemap and the structured data.
 
@@ -57,6 +59,17 @@ export const SERVICE_DETAILS = {
                     'Our therapists': '/therapists',
                     'Find your therapist questions': '/find-a-therapist',
                     'booking request': '/book',
+                },
+            },
+            {
+                heading: 'What the research says',
+                paragraphs: [
+                    'According to the National Institute of Mental Health, research with large groups of patients suggests many talk therapies can ease symptoms of depression and anxiety. The World Health Organization places psychological treatment, such as talk therapy, first for depression. A 2024 review of 441 trials across eight conditions in the journal World Psychiatry found most therapies worked better than comparison groups, though the share of people whose symptoms fell by at least half was modest.',
+                ],
+                links: {
+                    'National Institute of Mental Health': 'https://www.nimh.nih.gov/health/topics/psychotherapies',
+                    'World Health Organization': 'https://www.who.int/news-room/fact-sheets/detail/depression',
+                    'World Psychiatry': 'https://pubmed.ncbi.nlm.nih.gov/38727072/',
                 },
             },
             {
@@ -129,6 +142,15 @@ export const SERVICE_DETAILS = {
                 ],
                 links: {
                     'individual therapy': '/services/individual-adult-therapy',
+                },
+            },
+            {
+                heading: 'What research says about couples therapy',
+                paragraphs: [
+                    'Couples therapy, which many people call marriage counseling, is therapy both partners join to work on relationship problems. A 2026 review in the Journal of Marital and Family Therapy suggests it can bring clinically meaningful gains in relationship satisfaction and stability for many distressed couples, typically around 60% to 70%. It found modest support for seven specific methods, but none yet has strong support, mainly because most trials were small. Bigger studies of more varied couples are needed.',
+                ],
+                links: {
+                    'Journal of Marital and Family Therapy': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC13474905/',
                 },
             },
             {
@@ -208,6 +230,17 @@ export const SERVICE_DETAILS = {
                 },
             },
             {
+                heading: 'What the research says',
+                paragraphs: [
+                    'Family therapy is psychotherapy for a whole family, some of its members, a couple or one person, and can help with many psychological and relationship difficulties, NHS Health Careers says. The World Health Organization names family approaches among effective treatments for eating disorders and schizophrenia. Research suggests it can also help young people: in a 2013 review in the journal Family Process, 42 of 47 trials found systemic family therapy effective for ADHD, conduct or substance use disorders.',
+                ],
+                links: {
+                    'NHS Health Careers': 'https://www.healthcareers.nhs.uk/explore-roles/psychological-therapies/roles-psychological-therapies/family-and-systemic-psychotherapist',
+                    'World Health Organization': 'https://www.who.int/news-room/fact-sheets/detail/mental-disorders',
+                    'Family Process': 'https://pubmed.ncbi.nlm.nih.gov/24102196/',
+                },
+            },
+            {
                 heading: 'Family counseling in New Cairo or online',
                 paragraphs: [
                     'Not every family lives in one city. A parent may work in the Gulf, or an older child may study abroad. Online sessions let family members in other cities or countries take part, so you can work with a family therapist in Egypt wherever you each live.',
@@ -283,6 +316,17 @@ export const SERVICE_DETAILS = {
                 links: {},
             },
             {
+                heading: 'What the research says',
+                paragraphs: [
+                    'The World Health Organization estimates that one in seven people aged 10 to 19 worldwide experience a mental health condition. Across 192 studies, a review in Molecular Psychiatry suggests that 34.6% of people who develop a mental disorder do so before age 14, and 48.4% before 18. The National Institute of Mental Health says starting treatment early can help children cope with symptoms, and effective talk therapy for children often involves parents and practicing skills between sessions.',
+                ],
+                links: {
+                    'World Health Organization': 'https://www.who.int/news-room/fact-sheets/detail/adolescent-mental-health',
+                    'Molecular Psychiatry': 'https://pubmed.ncbi.nlm.nih.gov/34079068/',
+                    'National Institute of Mental Health': 'https://www.nimh.nih.gov/health/publications/children-and-mental-health',
+                },
+            },
+            {
                 heading: 'Contacting a child psychologist in New Cairo',
                 paragraphs: [
                     'When you get in touch, start with your child\'s age and what you have noticed, in your own words. A short message is enough. For a teenager, it also helps to mention whether they would rather come to the center or meet online, and whether they know you are contacting us.',
@@ -356,6 +400,17 @@ export const SERVICE_DETAILS = {
                 ],
                 links: {
                     'strategies for dealing with anxiety': '/blog/10-strategies-to-deal-with-anxiety',
+                },
+            },
+            {
+                heading: 'What health authorities say',
+                paragraphs: [
+                    'The NHS says cognitive behavioral therapy (CBT), a talking therapy for changing thoughts and actions, can treat many mental health problems and is recommended for depression, anxiety and PTSD. The National Institute of Mental Health says dialectical behavior therapy (DBT), created for borderline personality disorder, pairs mindfulness with skills for handling intense emotions. The National Institute for Health and Care Excellence advises considering a full DBT program for women with that diagnosis when reducing repeated self-harm is a priority.',
+                ],
+                links: {
+                    NHS: 'https://www.nhs.uk/tests-and-treatments/cognitive-behavioural-therapy-cbt/',
+                    'National Institute of Mental Health': 'https://www.nimh.nih.gov/health/publications/borderline-personality-disorder',
+                    'National Institute for Health and Care Excellence': 'https://www.nice.org.uk/guidance/cg78/chapter/recommendations',
                 },
             },
             {
@@ -435,6 +490,16 @@ export const SERVICE_DETAILS = {
                 },
             },
             {
+                heading: 'What an assessment involves',
+                paragraphs: [
+                    'NHS Health Careers describes clinical psychologists as assessing what a person is struggling with through observation, interviews and tools such as standardized psychometric tests. A 2001 review in American Psychologist, drawing on more than 125 meta-analyses and 800 samples, suggests that each method adds its own information, and that clinicians who depend on interviews alone can reach an incomplete understanding. Its authors suggest that combining methods can give skilled clinicians a structured way to strengthen individual assessments.',
+                ],
+                links: {
+                    'NHS Health Careers': 'https://www.healthcareers.nhs.uk/explore-roles/psychological-therapies/roles-psychological-therapies/clinical-psychologist',
+                    'American Psychologist': 'https://pubmed.ncbi.nlm.nih.gov/11279806/',
+                },
+            },
+            {
                 heading: 'Booking a psychological assessment in Cairo',
                 paragraphs: [
                     'Our center is at 3Sixty by LMD in New Cairo and is open every day, 10 am to 10 pm. You can talk with your psychologist in Arabic or English. Your results stay confidential, like everything you share in therapy, except where someone may be at risk of harm.',
@@ -506,6 +571,17 @@ export const SERVICE_DETAILS = {
                     'Try to leave a little time before and after the session. A quiet moment beforehand can help you settle. A pause afterwards gives you room to take in what came up before you go back to work or family.',
                 ],
                 links: {},
+            },
+            {
+                heading: 'What the research says',
+                paragraphs: [
+                    'Research suggests online therapy by video can help many adults about as much as face-to-face therapy. A 2023 review in The BMJ found similar outcomes, though results varied. A 2026 review of 12 randomized trials in the Journal of Medical Internet Research found no clear difference in symptom relief, but called the evidence limited. The National Institute of Mental Health says virtual care can help treat anxiety and depression, and lists technology and privacy problems as possible drawbacks.',
+                ],
+                links: {
+                    'The BMJ': 'https://pubmed.ncbi.nlm.nih.gov/36646462/',
+                    'Journal of Medical Internet Research': 'https://pubmed.ncbi.nlm.nih.gov/42555822/',
+                    'National Institute of Mental Health': 'https://www.nimh.nih.gov/health/publications/what-is-telemental-health',
+                },
             },
             {
                 heading: 'Switching between online and face to face',
@@ -581,6 +657,17 @@ export const SERVICE_DETAILS = {
                 ],
                 links: {
                     'get in touch': '/contact',
+                },
+            },
+            {
+                heading: 'What research says about group therapy',
+                paragraphs: [
+                    'The American Group Psychotherapy Association describes group therapy as a small number of people working with a trained therapist on personal and relationship concerns while supporting one another. A 2021 review in the American Journal of Psychotherapy, covering 30 years of research, suggests it can work about as well as individual therapy. A 2020 analysis in the journal Psychotherapy Research, drawing on 57 studies, found it can reduce symptoms of anxiety disorders more than no treatment.',
+                ],
+                links: {
+                    'American Group Psychotherapy Association': 'https://agpa.org/resource-overview/what-is-group-psychotherapy/',
+                    'American Journal of Psychotherapy': 'https://pubmed.ncbi.nlm.nih.gov/33745284/',
+                    'Psychotherapy Research': 'https://pubmed.ncbi.nlm.nih.gov/32093586/',
                 },
             },
             {

@@ -7487,6 +7487,50 @@ body.ConsentOpen .FooterDetails
 	opacity: 0.8;
 }
 
+.ArticlePublished
+{
+	margin-bottom: 2%;
+	font-size: max(13px, 0.9vw);
+	opacity: 0.8;
+}
+
+.ArticleAuthorNote
+{
+	margin: 1.2em 0 0;
+}
+
+.ArticleAuthorNote a
+{
+	color: inherit;
+	text-decoration: underline;
+}
+
+.AboutFacts dl
+{
+	max-width: 46em;
+	margin: 0 0 1.5em;
+}
+
+.AboutFacts dl > div
+{
+	display: grid;
+	grid-template-columns: minmax(7em, 11em) 1fr;
+	gap: 0 1em;
+	padding: 0.55em 0;
+	border-top: 1px solid rgba(70, 72, 52, 0.2);
+}
+
+.AboutFacts dt
+{
+	color: var(--Sonder-olive);
+	font-weight: 700;
+}
+
+.AboutFacts dd
+{
+	margin: 0;
+}
+
 .LocationAddress
 {
 	margin-top: 1.4em;

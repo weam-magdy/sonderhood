@@ -3,7 +3,10 @@ import PagesHeader from '../PagesHeader/PagesHeader'
 import AboutMeetTheTeam from './AboutMeetTheTeam'
 import AboutTherapistsPledge from './AboutTherapistsPledge'
 import useSeo from '../../seo/useSeo'
-import { PAGES, pageLd } from '../../seo/meta.mjs'
+import { PAGES, aboutFacts, pageLd } from '../../seo/meta.mjs'
+import { useSelector } from 'react-redux'
+import { selectedTherapists } from '../../app/therapists/therapistsSlice'
+import LinkedText from '../LinkedText'
 import ReactPlayer from 'react-player'
 //@ts-ignore
 import video from '../../video/vid.mp4'
@@ -12,6 +15,7 @@ export default function About() {
     useSeo({ ...PAGES.about, jsonLd: pageLd({ name: 'About Us', path: PAGES.about.path }) })
 
     const [playing, setPlaying] = useState(true)
+    const therapists = useSelector(selectedTherapists)
 
     return (
         <>
@@ -66,6 +70,17 @@ export default function About() {
                     </div>
                 </div>
             </div>
+            <section className='ServiceDetails AboutFacts' aria-label='The Sonder Hood at a glance'>
+                <h2>The Sonder Hood at a glance</h2>
+                <dl>
+                    {aboutFacts(therapists.length).map(([label, text]) => (
+                        <div key={label}>
+                            <dt>{label}</dt>
+                            <dd><LinkedText text={text} /></dd>
+                        </div>
+                    ))}
+                </dl>
+            </section>
             <AboutMeetTheTeam />
             <AboutTherapistsPledge />
         </>

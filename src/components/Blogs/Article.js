@@ -8,7 +8,7 @@ import { selectBlogsStatus } from '../../app/blogs/blogsSlice'
 import { selectAllBlogs } from '../../seo/selectors'
 import { selectedTherapists } from '../../app/therapists/therapistsSlice'
 import useSeo from '../../seo/useSeo'
-import { blogLd, blogMeta, blogServiceLink, blogSlug, findTherapistByName, legacySlug, therapistSlug } from '../../seo/meta.mjs'
+import { blogLd, blogMeta, blogServiceLink, blogSlug, findTherapistByName, legacySlug, longDate, therapistSlug } from '../../seo/meta.mjs'
 import SafeImage from '../SafeImage'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
 
@@ -60,6 +60,7 @@ export default function Article()
                 <div className='ArticlePageMainInfoServiceAuthor'>
                     By: {author ? <Link className='PlainLink' to={`/therapists/${therapistSlug(author)}`}>{author.name}</Link> : selectedBlog.therapist}
                 </div>
+                {selectedBlog.createTime && <div className='ArticlePublished'>Published {longDate(selectedBlog.createTime)}</div>}
             </div>
         </div>
     )
@@ -103,6 +104,7 @@ export default function Article()
         <div className='ArticleText'>
             <div dangerouslySetInnerHTML={{ __html: selectedBlog.body }} />
             {service && <p className='ArticleServiceLink'>Want to talk this through with a therapist? Read about our <Link to={service.path}>{service.name}</Link>.</p>}
+            {author && <p className='ArticleAuthorNote'>Written by <Link to={`/therapists/${therapistSlug(author)}`}>{author.name}</Link>, {String(author.position || 'therapist').trim()} at The Sonder Hood in New Cairo.</p>}
         </div>
         <div className='ReadMoreContainer'>
             <div className='ReadMoreTitle'>

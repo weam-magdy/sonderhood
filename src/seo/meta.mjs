@@ -21,6 +21,8 @@ export const SITE = {
         locality: 'New Cairo',
         region: 'Cairo Governorate',
         country: 'EG',
+        road: 'Sheikh Mohamed Bin Zayed North Axis',
+        postalCode: '11865',
         display: '3Sixty by LMD, New Cairo, Cairo, Egypt',
     },
     geo: { latitude: 30.0277362, longitude: 31.5510843 },
@@ -769,7 +771,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 // '2026-10-30' as '30 October 2026'.
 export function longDate(iso) {
-    const [year, month, day] = String(iso || '').split('-').map(Number)
+    const [year, month, day] = String(iso || '').slice(0, 10).split('-').map(Number)
     return year && month && day ? `${day} ${MONTHS[month - 1]} ${year}` : ''
 }
 
@@ -829,6 +831,32 @@ export function therapistMeta(therapist) {
     }
 }
 
+// A profile in plain sentences, from the profile's own fields, so people and AI engines
+// can see who someone is, who they work with and where they trained. No pronouns: the
+// profiles do not record them.
+export function therapistSummary(therapist) {
+    const position = String(therapist.position || 'therapist').trim()
+    const extra = therapistLanguages(therapist).slice(SITE.languages.length)
+    const speaking = extra.length ? `${sentenceList(extra)}-speaking ` : ''
+    const article = /^founder/i.test(position) ? 'the' : /^[aeiou]/i.test(speaking || position) ? 'an' : 'a'
+    const clients = [...new Set((therapist.clientele || [])
+        .map(c => String(c).trim().toLowerCase())
+        .map(c => CLIENTELE_WORDS[c] || c)
+        .filter(c => c && c !== 'all services'))]
+    // Tags are typed by hand, so "Family Problem" and "Family problems" can both appear.
+    const tags = (therapist.search || []).map(lowerWords)
+    const focus = tags.filter(tag => !tags.includes(`${tag}s`)).filter((tag, index, all) => all.indexOf(tag) === index)
+    const degrees = sortCredentials(therapist.certificates)
+        .filter(c => /\b(bachelor|master|masters|ba|bsc|ms|msc|phd|doctorate)\b/i.test(c.title || '') && String(c.description || '').trim())
+        .map(c => `${String(c.title).trim()}, ${String(c.description).trim()}`)
+    return [
+        `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at ${SITE.name}, a psychotherapy practice at ${SITE.address.street} in New Cairo, Egypt.`,
+        `${therapist.name} works ${clients.length ? `with ${sentenceList(clients)} ` : ''}in ${sentenceList(therapistLanguages(therapist))}.`,
+        focus.length ? `Areas of focus include ${sentenceList(focus)}.` : '',
+        degrees.length ? `Education: ${degrees.join('; ')}.` : '',
+    ].filter(Boolean)
+}
+
 export function blogMeta(blog) {
     return {
         path: `/blog/${blogSlug(blog)}`,
@@ -844,6 +872,7 @@ export function blogMeta(blog) {
 // ---------------------------------------------------------------- structured data (JSON-LD)
 
 const ORG_ID = `${SITE.url}/#organization`
+const personId = (slug) => `${SITE.url}/therapists/${slug}#person`
 
 const WEEK = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
@@ -868,9 +897,10 @@ export function organizationLd() {
                 email: SITE.email,
                 address: {
                     '@type': 'PostalAddress',
-                    streetAddress: SITE.address.street,
+                    streetAddress: `${SITE.address.street}, ${SITE.address.road}`,
                     addressLocality: SITE.address.locality,
                     addressRegion: SITE.address.region,
+                    postalCode: SITE.address.postalCode,
                     addressCountry: SITE.address.country,
                 },
                 geo: { '@type': 'GeoCoordinates', latitude: SITE.geo.latitude, longitude: SITE.geo.longitude },
@@ -878,9 +908,11 @@ export function organizationLd() {
                 openingHoursSpecification: openingHoursLd(),
                 knowsLanguage: sessionLanguages().map(name => ({ '@type': 'Language', name })),
                 areaServed: [
+                    { '@type': 'City', name: 'New Cairo' },
                     { '@type': 'City', name: 'Cairo' },
                     { '@type': 'Country', name: 'Egypt' },
                 ],
+                founder: { '@type': 'Person', '@id': personId('weaam-elaidy'), name: 'Weaam Elaidy', url: absoluteUrl('/therapists/weaam-elaidy') },
                 knowsAbout: ['Psychotherapy', 'Individual therapy', 'Couples therapy', 'Marriage counseling', 'Family therapy', 'Child and adolescent therapy', 'Cognitive behavioral therapy', 'Dialectical behavior therapy', 'Group therapy', 'Psychological assessment', 'Online therapy'],
                 availableService: SERVICE_LINKS.map(s => ({ '@type': 'MedicalTherapy', name: s.name, url: absoluteUrl(s.path) })),
                 contactPoint: {
@@ -938,17 +970,51 @@ export function homeLd() {
     return graph(faqLd(HOME_FAQS))
 }
 
+// A page's own node, for pages whose copy has a date (pageCopy.mjs).
+function webPageLd({ name, path, updated }) {
+    return {
+        '@type': 'WebPage',
+        '@id': `${absoluteUrl(path)}#webpage`,
+        url: absoluteUrl(path),
+        name,
+        inLanguage: 'en',
+        isPartOf: { '@id': `${SITE.url}/#website` },
+        about: { '@id': ORG_ID },
+        dateModified: updated || undefined,
+    }
+}
+
 export function pageLd(page) {
     return graph(breadcrumbLd([{ name: page.name, path: page.path }]))
 }
 
+// The facts people and AI engines ask for, in one list (the About page).
+export function aboutFacts(teamSize) {
+    return [
+        ['What it is', `${SITE.name} is a psychotherapy practice in New Cairo, Egypt.`],
+        ['Founder', 'Weaam Elaidy, counseling psychotherapist'],
+        ['Team', `${teamSize ? `${teamSize} ` : ''}psychologists and psychotherapists`],
+        ['Services', sentenceList(SERVICE_LINKS.map(s => s.name))],
+        ['Languages', languagesText()],
+        ['Address', `${SITE.address.street}, ${SITE.address.road}, New Cairo, Egypt`],
+        ['Online sessions', 'By secure video call, from anywhere in Egypt or abroad'],
+        ['Opening hours', SITE.hours.display],
+        ['Contact', `WhatsApp at ${SITE.phoneDisplay} or ${SITE.email}`],
+    ]
+}
+
 export function newCairoLd() {
-    return graph(breadcrumbLd([{ name: 'Therapy in New Cairo', path: NEW_CAIRO.path }]), faqLd(NEW_CAIRO.faqs))
+    return graph(
+        webPageLd({ name: NEW_CAIRO.h1, path: NEW_CAIRO.path, updated: NEW_CAIRO.updated }),
+        breadcrumbLd([{ name: 'Therapy in New Cairo', path: NEW_CAIRO.path }]),
+        faqLd(NEW_CAIRO.faqs),
+    )
 }
 
 export function serviceLd(service) {
     const meta = serviceMeta(service)
     return graph(
+        webPageLd({ name: service.title, path: meta.path, updated: service.details?.updated }),
         {
             '@type': 'Service',
             name: service.title,
@@ -968,8 +1034,10 @@ export function therapistLd(therapist) {
     return graph(
         {
             '@type': 'Person',
+            '@id': personId(therapistSlug(therapist)),
             name: therapist.name,
             jobTitle: String(therapist.position || '').trim(),
+            description: therapistSummary(therapist)[0],
             url: absoluteUrl(meta.path),
             image: therapist.image ? absoluteUrl(therapist.image) : undefined,
             worksFor: { '@id': ORG_ID },
@@ -978,6 +1046,8 @@ export function therapistLd(therapist) {
             hasCredential: (therapist.certificates || []).filter(c => c && c.title).map(c => ({
                 '@type': 'EducationalOccupationalCredential',
                 name: c.title,
+                recognizedBy: String(c.description || '').trim() ? { '@type': 'Organization', name: String(c.description).trim() } : undefined,
+                dateCreated: /^\d{4}$/.test(String(c.year || '').trim()) ? String(c.year).trim() : undefined,
             })),
         },
         breadcrumbLd([{ name: 'Our Therapists', path: '/therapists' }, { name: therapist.name, path: meta.path }]),
@@ -989,6 +1059,7 @@ export function blogLd(blog, author) {
     return graph(
         {
             '@type': 'BlogPosting',
+            inLanguage: 'en',
             headline: blog.title,
             description: blog.description || undefined,
             url: absoluteUrl(meta.path),
@@ -997,7 +1068,7 @@ export function blogLd(blog, author) {
             datePublished: blog.createTime || undefined,
             dateModified: blog.updateTime || blog.createTime || undefined,
             author: author
-                ? { '@type': 'Person', name: author.name, url: absoluteUrl(`/therapists/${therapistSlug(author)}`) }
+                ? { '@type': 'Person', '@id': personId(therapistSlug(author)), name: author.name, jobTitle: String(author.position || '').trim() || undefined, url: absoluteUrl(`/therapists/${therapistSlug(author)}`) }
                 : { '@type': 'Person', name: blog.therapist },
             publisher: { '@id': ORG_ID },
         },
