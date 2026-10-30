@@ -148,8 +148,10 @@ function shell(main, whatsappText)
 // page from the first paint. The script in public/index.html hides it when the visitor
 // has already chosen, and its buttons store the choice before the app has loaded.
 // Without it the notice appeared only with the app and, being the largest text on a
-// phone's first screen, set the home page's "largest paint" seconds late.
-const CONSENT_BANNER = `<div class="ConsentBanner ssr-consent" role="region" aria-label="Cookie choice">`
+// phone's first screen, set the home page's "largest paint" seconds late. It comes after
+// the page's content and is marked data-nosnippet, so search results and tools that read
+// a page from the top do not take it for the page's opening text.
+const CONSENT_BANNER = `<div class="ConsentBanner ssr-consent" data-nosnippet role="region" aria-label="Cookie choice">`
     + `<p>${esc(M.CONSENT_TEXT)} <a href="/privacy">Privacy policy</a></p>`
     + `<div class="ConsentBannerButtons"><button type="button" class="ConsentAccept" onclick="sonderhoodChoose('granted')">Accept</button><button type="button" class="ConsentDecline" onclick="sonderhoodChoose('denied')">No thanks</button></div>`
     + `</div>`
@@ -224,6 +226,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
 
     pages.push({
         path: '/about',
+        lastmod: M.PAGES.about.updated,
         head: { ...M.PAGES.about, ld: M.pageLd({ name: 'About Us', path: '/about' }) },
         body: shell(`<h1>About The Sonder Hood</h1>${paragraphs([M.PAGES.about.description, M.INTROS.therapists[0]])}`
             + `<h2>The Sonder Hood at a glance</h2><dl>${M.aboutFacts(therapists.length).map(([label, text]) => `<dt>${esc(label)}</dt><dd>${linked(text)}</dd>`).join('')}</dl>`
@@ -268,7 +271,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
             .map(c => esc(`${String(c.year || '').trim() ? `${String(c.year).trim()}: ` : ''}${String(c.title || '').trim()}${String(c.description || '').trim() ? `, ${String(c.description).trim()}` : ''}`))
         pages.push({
             path: meta.path,
-            lastmod: therapist.updateTime,
+            lastmod: [therapist.updateTime, M.PROFILES_UPDATED].filter(Boolean).sort().pop(),
             head: { ...meta, ld: M.therapistLd(therapist) },
             body: shell(`<h1>${esc(therapist.name)}</h1>`
                 + paragraphs([`${String(therapist.position || '').trim()} at The Sonder Hood, New Cairo.`, `Sessions in ${M.sentenceList(M.therapistLanguages(therapist))}.`])
@@ -296,14 +299,14 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
         const service = M.blogServiceLink(blog)
         pages.push({
             path: meta.path,
-            lastmod: blog.updateTime,
+            lastmod: blog.updateTime || blog.createTime,
             head: { ...meta, ld: M.blogLd(blog, author) },
             body: shell(`<p class="ssr-meta">${esc([blog.topic, String(blog.duration || '').trim()].filter(Boolean).join(' · '))}</p>`
                 + `<h1>${esc(blog.title)}</h1><p class="ssr-meta">By ${byline}${blog.createTime ? ` · Published ${esc(M.longDate(blog.createTime))}` : ''}</p>`
                 + `<div class="ssr-article">${blog.body || ''}</div>`
                 + (service ? `<p><strong>Want to talk this through with a therapist? Read about our ${link(service.path, service.name)}.</strong></p>` : '')
                 + (author ? `<p>Written by ${byline}, ${esc(String(author.position || 'therapist').trim())} at The Sonder Hood in New Cairo.</p>` : '')
-                + `<h2>Read more</h2>${list(blogs.filter(b => b.id !== blog.id).map(blogItem))}`),
+                + `<h2>Read more</h2>${list(M.relatedBlogs(blogs, blog).map(blogItem))}`),
         })
     }
 
@@ -536,7 +539,7 @@ async function main()
     const render = (head, body = '') => template
         .replace(viewport, (tag) => `${tag}${preloadTags(head.preload)}${fontPreload}`)
         .replace('</head>', () => `${headTags(head)}</head>`)
-        .replace('<div id="root"></div>', () => `<div id="root">${CONSENT_BANNER}${body}</div>`)
+        .replace('<div id="root"></div>', () => `<div id="root">${body}${CONSENT_BANNER}</div>`)
 
     const content = await loadContent()
     if (Array.isArray(content.therapists)) content.therapists = M.applyTeamChanges(content.therapists)

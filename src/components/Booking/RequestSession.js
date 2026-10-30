@@ -3,7 +3,7 @@ import PagesHeader from '../PagesHeader/PagesHeader'
 import useSeo from '../../seo/useSeo';
 import { INTROS, PAGES, SITE, pageLd } from '../../seo/meta.mjs';
 import { bookingMessage, chatUrl, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
-import PhoneInput from 'react-phone-input-2';
+import PhoneField from '../PhoneField';
 import FormNotice from '../FormNotice';
 
 const days = ['Any day', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
@@ -108,7 +108,7 @@ export default function BookSession()
                     </div>
                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageNumber'>
                         <label htmlFor='Phone'>Mobile Number</label>
-                        <PhoneInput
+                        <PhoneField
                             country={"eg"}
                             inputProps={{ id: 'Phone', name: 'phone', autoComplete: 'tel' }}
                             enableSearch={true}

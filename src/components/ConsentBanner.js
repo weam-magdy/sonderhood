@@ -42,7 +42,7 @@ export default function ConsentBanner()
     }
 
     return (
-        <div className='ConsentBanner' role='region' aria-label='Cookie choice'>
+        <div className='ConsentBanner' data-nosnippet role='region' aria-label='Cookie choice'>
             <p>
                 {CONSENT_TEXT} <Link to='/privacy'>Privacy policy</Link>
             </p>

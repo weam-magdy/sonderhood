@@ -9,7 +9,7 @@ import useSeo from '../../seo/useSeo'
 import { INTROS, PAGES, SITE, languagesText, pageLd } from '../../seo/meta.mjs'
 import { chatUrl, contactMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
 import LinkedText from '../LinkedText'
-import PhoneInput from "react-phone-input-2";
+import PhoneField from "../PhoneField";
 import FormNotice from '../FormNotice';
 import "react-phone-input-2/lib/bootstrap.css";
 
@@ -127,7 +127,7 @@ export default function ContactUs() {
                                     </div>
                                     <div className='ContactUsContactMessageCredentials ContactUsContactMessageNumber'>
                                         <label htmlFor='Phone'>Number</label>
-                                        <PhoneInput
+                                        <PhoneField
                                             country={"eg"}
                                             inputProps={{ id: 'Phone', name: 'phone', autoComplete: 'tel' }}
                                             enableSearch={true}

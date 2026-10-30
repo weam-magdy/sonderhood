@@ -8,7 +8,7 @@ import { selectAllBlogs } from '../../seo/selectors'
 import useSeo from '../../seo/useSeo'
 import { TEAM_CHANGES, blogSlug, legacySlug, sentenceList, sortCredentials, therapistLanguages, therapistLd, therapistMeta, therapistSlug, therapistSummary } from '../../seo/meta.mjs'
 import { bookingMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
-import PhoneInput from 'react-phone-input-2'
+import PhoneField from '../PhoneField'
 import SafeImage from '../SafeImage'
 import FormNotice from '../FormNotice'
 import ServiceDetails from '../Services/ServiceDetails'
@@ -248,7 +248,7 @@ export default function Therapist()
                     </div>
                     <div style={{ gridColumn: '3 / span 2' }} className='BookSessionInfoCredentials BookSessionInfoTherapist'>
                         <label htmlFor='Phone'>Mobile Number</label>
-                        <PhoneInput
+                        <PhoneField
                             country={"eg"}
                             inputProps={{ id: 'Phone', name: 'phone', autoComplete: 'tel' }}
                             enableSearch={true}

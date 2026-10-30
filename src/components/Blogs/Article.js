@@ -8,7 +8,7 @@ import { selectBlogsStatus } from '../../app/blogs/blogsSlice'
 import { selectAllBlogs } from '../../seo/selectors'
 import { selectedTherapists } from '../../app/therapists/therapistsSlice'
 import useSeo from '../../seo/useSeo'
-import { blogLd, blogMeta, blogServiceLink, blogSlug, findTherapistByName, legacySlug, longDate, therapistSlug } from '../../seo/meta.mjs'
+import { blogLd, blogMeta, blogServiceLink, blogSlug, findTherapistByName, legacySlug, longDate, relatedBlogs, therapistSlug } from '../../seo/meta.mjs'
 import SafeImage from '../SafeImage'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
 
@@ -37,7 +37,7 @@ export default function Article()
         return <PageLoading />
     }
 
-    const readMoreBlogs = blogs.filter(blog => blog.id !== selectedBlog.id)
+    const readMoreBlogs = relatedBlogs(blogs, selectedBlog)
     const service = blogServiceLink(selectedBlog)
 
     const displayedSelectedBlog = (

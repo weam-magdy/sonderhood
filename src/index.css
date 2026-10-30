@@ -7453,10 +7453,13 @@ body.ConsentOpen .FooterDetails
 	background: var(--Sonder-white);
 }
 
+/* Long pages: the browser lays out a section only as it nears the screen. */
 .ServiceDetailsSection
 {
 	max-width: 46em;
 	margin-bottom: 2.2em;
+	content-visibility: auto;
+	contain-intrinsic-size: auto 22em;
 }
 
 .ServiceDetails h2

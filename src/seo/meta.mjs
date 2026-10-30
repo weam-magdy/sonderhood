@@ -379,14 +379,45 @@ export function applyTeamChanges(therapists = []) {
     })
 }
 
-// Credentials newest first, by the last year given ("2023-2025" counts as 2025);
-// undated ones last.
+// The last year a credential gives ("2023-2025" counts as 2025), 0 when undated.
+function credentialYear(certificate) {
+    const years = String(certificate?.year || '').match(/\d{4}/g)
+    return years ? Number(years[years.length - 1]) : 0
+}
+
+// Credentials newest first, by the last year given; undated ones last.
 export function sortCredentials(certificates = []) {
-    const year = (certificate) => {
-        const years = String(certificate?.year || '').match(/\d{4}/g)
-        return years ? Number(years[years.length - 1]) : 0
-    }
-    return [...certificates].sort((a, b) => year(b) - year(a))
+    return [...certificates].sort((a, b) => credentialYear(b) - credentialYear(a))
+}
+
+// Credentials someone holds today: a later year ("2028") is a degree still in progress.
+function heldCredentials(certificates = []) {
+    return sortCredentials(certificates).filter(c => c?.title && credentialYear(c) <= new Date().getFullYear())
+}
+
+// A certificate's description is typed by hand: usually the school, but sometimes a grade
+// ("High honors"), a country ("USA") or both ("AUC Highest Honors"). Only these bodies are
+// published as the one behind a credential, in summaries and structured data, so a grade
+// never reads as a university. Add a school here when a profile first names it.
+const AWARDING_BODIES = [
+    [/\bAUC\b|American University in Cairo/i, 'The American University in Cairo'],
+    [/British University in Egypt/i, 'The British University in Egypt'],
+    [/Al ?Mashfa Hospital/i, 'Al Mashfa Hospital'],
+    [/Cent(re|er) of Excellence/i, 'Centre of Excellence'],
+    ...[
+        'Ain Shams University', 'Beck Institute', 'Behman Psychiatric Hospital', 'Bournemouth University',
+        'Cairo University', 'California Lutheran University', 'Coventry University TKH',
+        'Egyptian Association for Psychotherapists', 'Egyptian Psychology Association', 'Heal Counseling Center',
+        'Kasr El Maadi Hospital', 'Liverpool John Moores University', 'London South Bank University',
+        'Maastricht University', 'Middlesex University London', 'Okasha Institute of Psychiatry',
+        'Queen Mary University of London', 'Sheffield Hallam University', 'University of Edinburgh',
+        'University of Oxford', 'University of Plymouth', 'University of Southampton',
+        'Université Toulouse 2 Jean Jaurès', 'Wesleyan University',
+    ].map(name => [new RegExp(name, 'i'), name]),
+]
+
+function awardingBodies(certificate) {
+    return AWARDING_BODIES.filter(([pattern]) => pattern.test(certificate.description || '')).map(([, name]) => name)
 }
 
 // Hand-picked keyword slugs for the existing articles, keyed by Firestore id.
@@ -574,6 +605,12 @@ export function blogServiceLink(blog) {
     return blog?.service ? SERVICE_LINKS.find(link => link.path === `/services/${blog.service}`) : undefined
 }
 
+// The articles listed under an article: same topic first, then same service, then newest.
+export function relatedBlogs(blogs = [], blog, count = 3) {
+    const closeness = (other) => (other.topic === blog.topic ? 2 : 0) + (other.service && other.service === blog.service ? 1 : 0)
+    return blogs.filter(other => other.id !== blog.id).sort((a, b) => closeness(b) - closeness(a)).slice(0, count)
+}
+
 // Article authors are typed by hand ("Ingie ElSaady", "Ingie El Saady").
 export function findTherapistByName(therapists = [], name) {
     const key = legacySlug(name)
@@ -719,6 +756,7 @@ export const PAGES = {
         path: '/about',
         title: `About Us: A Therapy Center in New Cairo${BRAND}`,
         description: 'The story behind The Sonder Hood, a safe haven for therapy in New Cairo, and the team of psychologists and psychotherapists who work here.',
+        updated: '2026-10-30',
     },
     therapists: {
         path: '/therapists',
@@ -831,6 +869,10 @@ export function therapistMeta(therapist) {
     }
 }
 
+// When the wording of the profile pages last changed. A later edit to a profile in
+// Firestore counts instead.
+export const PROFILES_UPDATED = '2026-10-30'
+
 // A profile in plain sentences, from the profile's own fields, so people and AI engines
 // can see who someone is, who they work with and where they trained. No pronouns: the
 // profiles do not record them.
@@ -846,9 +888,9 @@ export function therapistSummary(therapist) {
     // Tags are typed by hand, so "Family Problem" and "Family problems" can both appear.
     const tags = (therapist.search || []).map(lowerWords)
     const focus = tags.filter(tag => !tags.includes(`${tag}s`)).filter((tag, index, all) => all.indexOf(tag) === index)
-    const degrees = sortCredentials(therapist.certificates)
-        .filter(c => /\b(bachelor|master|masters|ba|bsc|ms|msc|phd|doctorate)\b/i.test(c.title || '') && String(c.description || '').trim())
-        .map(c => `${String(c.title).trim()}, ${String(c.description).trim()}`)
+    const degrees = heldCredentials(therapist.certificates)
+        .filter(c => /\b(bachelor|master|masters|ba|bsc|ms|msc|phd|doctorate)\b/i.test(c.title))
+        .map(c => [String(c.title).trim(), awardingBodies(c).join(' and ')].filter(Boolean).join(', '))
     return [
         `${therapist.name} is ${article} ${speaking}${lowerWords(position)} at ${SITE.name}, a psychotherapy practice at ${SITE.address.street} in New Cairo, Egypt.`,
         `${therapist.name} works ${clients.length ? `with ${sentenceList(clients)} ` : ''}in ${sentenceList(therapistLanguages(therapist))}.`,
@@ -1043,12 +1085,15 @@ export function therapistLd(therapist) {
             worksFor: { '@id': ORG_ID },
             knowsLanguage: therapistLanguages(therapist).map(name => ({ '@type': 'Language', name })),
             knowsAbout: (therapist.search || []).length ? therapist.search : undefined,
-            hasCredential: (therapist.certificates || []).filter(c => c && c.title).map(c => ({
-                '@type': 'EducationalOccupationalCredential',
-                name: c.title,
-                recognizedBy: String(c.description || '').trim() ? { '@type': 'Organization', name: String(c.description).trim() } : undefined,
-                dateCreated: /^\d{4}$/.test(String(c.year || '').trim()) ? String(c.year).trim() : undefined,
-            })),
+            hasCredential: heldCredentials(therapist.certificates).map(c => {
+                const bodies = awardingBodies(c).map(name => ({ '@type': 'Organization', name }))
+                return {
+                    '@type': 'EducationalOccupationalCredential',
+                    name: c.title,
+                    recognizedBy: bodies.length > 1 ? bodies : bodies[0],
+                    dateCreated: /^\d{4}$/.test(String(c.year || '').trim()) ? String(c.year).trim() : undefined,
+                }
+            }),
         },
         breadcrumbLd([{ name: 'Our Therapists', path: '/therapists' }, { name: therapist.name, path: meta.path }]),
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Suspense, lazy, useState } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import AboutMeetTheTeam from './AboutMeetTheTeam'
 import AboutTherapistsPledge from './AboutTherapistsPledge'
@@ -7,9 +7,11 @@ import { PAGES, aboutFacts, pageLd } from '../../seo/meta.mjs'
 import { useSelector } from 'react-redux'
 import { selectedTherapists } from '../../app/therapists/therapistsSlice'
 import LinkedText from '../LinkedText'
-import ReactPlayer from 'react-player'
 //@ts-ignore
 import video from '../../video/vid.mp4'
+
+// Only this page plays a video, so the player loads with it, not with every page.
+const ReactPlayer = lazy(() => import('react-player/file'))
 
 export default function About() {
     useSeo({ ...PAGES.about, jsonLd: pageLd({ name: 'About Us', path: PAGES.about.path }) })
@@ -48,13 +50,15 @@ export default function About() {
                             <path d="M61.2434 46.7679C62.5767 47.5377 62.5767 49.4622 61.2434 50.232L44.3784 59.969C43.0451 60.7388 41.3784 59.7765 41.3784 58.2369L41.3784 38.7629C41.3784 37.2233 43.0451 36.2611 44.3784 37.0309L61.2434 46.7679Z" fill="#464834"/>
                         </svg>
                     </div> */}
-                        <ReactPlayer
-                            playing={playing}
-                            style={{ zIndex: '1' }}
-                            // stopOnUnmount={true}
-                            // url={'https://www.youtube.com/watch?v=5-vMcPR7Bws&list=PLZOsvm-FGi10AhLNm8ZmVqhj_7OrNSAnE'} 
-                            url={video}
-                        />
+                        <Suspense fallback={null}>
+                            <ReactPlayer
+                                playing={playing}
+                                style={{ zIndex: '1' }}
+                                // stopOnUnmount={true}
+                                // url={'https://www.youtube.com/watch?v=5-vMcPR7Bws&list=PLZOsvm-FGi10AhLNm8ZmVqhj_7OrNSAnE'}
+                                url={video}
+                            />
+                        </Suspense>
                         {
                             !playing &&
                             <div style={{ position: 'absolute', zIndex: '2', alignSelf: 'center', display: 'flex', justifySelf: 'center', alignItems: 'center', justifyContent: 'center' }}>
