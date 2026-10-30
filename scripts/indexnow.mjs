@@ -1,6 +1,6 @@
-// Tells Bing and the other IndexNow engines which pages changed. ChatGPT and Copilot
-// draw on Bing's index, and Bing did not show this site even for its own name (October
-// 2026). Run after an upload: `node scripts/indexnow.mjs` sends every page in the built
+// Tells Bing and the other IndexNow engines which pages changed. Copilot answers from
+// Bing's index, and Bing did not show this site even for its own name (October 2026).
+// Run after an upload: `node scripts/indexnow.mjs` sends every page in the built
 // sitemap, or pass paths: `node scripts/indexnow.mjs /services/couples-therapy`.
 // The key is public by design: it is the file of the same name at the site root.
 import fs from 'node:fs'
