@@ -7360,6 +7360,84 @@ body.ConsentOpen .FooterDetails
 	{
 		height: 44px !important;
 	}
+
+	/* A therapist's booking form: the form sets the section's height and the photo
+	   fills the space behind it. It used to sit on a 90vh photo at 90% of its
+	   height, and on an iPhone its last field and the send button spilled over the
+	   footer (30 October 2026). */
+	.TherapistBookSession
+	{
+		justify-content: center;
+		padding: 6vh 0;
+	}
+
+	.TherapistBookSessionImage
+	{
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.TherapistBookSession .BookSession
+	{
+		position: relative;
+		top: auto;
+		left: auto;
+		height: auto;
+		padding-bottom: 20px;
+	}
+
+	.TherapistBookSession .BookSession .BookSessionButton
+	{
+		height: auto;
+		margin-top: 20px;
+	}
+
+	.TherapistBookSession .BookSession .BookSessionButton button
+	{
+		height: 48px;
+	}
+}
+
+/* Links inside FAQ answers and page copy (src/components/LinkedText.js). A closed
+   answer's links are hidden so the keyboard does not stop on them. */
+.FAQItemAnswerTemp a,
+.ContactUsPageOurStoryDesc a,
+.SingleServicePageIntro a,
+.FooterDetailsAddress a
+{
+	color: inherit;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.FAQItemAnswerTemp a
+{
+	color: var(--Sonder-olive);
+}
+
+.FAQItemAnswerWrapper:not(.open) a
+{
+	visibility: hidden;
+}
+
+.FAQItemAnswerTemp a.FAQItemCta
+{
+	display: table;
+	margin: 1.2em 0;
+	padding: 15px 24px;
+	background: var(--Sonder-olive);
+	color: var(--Sonder-yellow);
+	font: 700 14px/1 Arial, sans-serif;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
+.FAQItemAnswerTemp a.FAQItemCta:hover
+{
+	opacity: 0.9;
 }
 
 /* Instagram: the latest posts, three to a row, at the end of the home page. */

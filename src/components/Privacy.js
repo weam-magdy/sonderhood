@@ -2,6 +2,7 @@ import React from 'react'
 import PagesHeader from './PagesHeader/PagesHeader'
 import useSeo from '../seo/useSeo'
 import { PAGES, PRIVACY, pageLd } from '../seo/meta.mjs'
+import LinkedText from './LinkedText'
 
 // /privacy: what the site collects. The button reopens the cookie notice.
 export default function Privacy()
@@ -16,7 +17,7 @@ export default function Privacy()
                 {PRIVACY.map(section => (
                     <section key={section.title}>
                         <h2>{section.title}</h2>
-                        {section.text.map(text => <p key={text}>{text}</p>)}
+                        {section.text.map(text => <p key={text}><LinkedText text={text} /></p>)}
                     </section>
                 ))}
                 <button type='button' className='FinderSend PrivacyButton' onClick={() => window.dispatchEvent(new Event('sonderhood:consent'))}>Change your cookie choice</button>

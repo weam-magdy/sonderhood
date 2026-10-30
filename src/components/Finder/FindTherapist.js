@@ -7,7 +7,7 @@ import useSeo from '../../seo/useSeo'
 import { INTROS, PAGES, pageLd, therapistSlug } from '../../seo/meta.mjs'
 import { FINDER_FOR, FINDER_LANGUAGES, FINDER_MODES, FINDER_TOPICS, finderMessage, inSentence, knownTopics, matchTherapists, soleTherapistFor } from '../../seo/finder.mjs'
 import { selectedTherapists, selectTherapistsStatus } from '../../app/therapists/therapistsSlice'
-import { openWhatsApp } from '../../utils/contact'
+import { browserArabic, openWhatsApp } from '../../utils/contact'
 
 // Answers stay in memory for the visit, so they survive opening a suggested profile
 // and coming back. They are never stored on the device or sent anywhere.
@@ -70,7 +70,7 @@ export default function FindTherapist()
     const names = matches.map(match => match.therapist.name)
     const sole = soleTherapistFor(language)
 
-    const send = (therapist) => openWhatsApp(finderMessage({ name, topics, who, mode, language, suggested: names, therapist }), 'therapist_finder')
+    const send = (therapist) => openWhatsApp(finderMessage({ name, topics, who, mode, language, suggested: names, therapist, arabicFallback: browserArabic() }), 'therapist_finder')
 
     const summary = !who ? '' : names.length ? `${names.length === 1 ? 'One therapist' : `${names.length} therapists`} may suit you: ${listNames(names)}.` : 'No exact match. Send us your answers and we will suggest a therapist.'
 

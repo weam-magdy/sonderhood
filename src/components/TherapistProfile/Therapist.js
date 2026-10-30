@@ -209,7 +209,8 @@ export default function Therapist()
         }
         <div className='TherapistBookSession'>
             <div className='TherapistBookSessionImage'>
-                <img src={book} alt='A calm therapy room at The Sonder Hood' loading='lazy' />
+                {/* The size keeps the section its height before the photo loads, so the form never spills out of it */}
+                <img src={book} alt='A calm therapy room at The Sonder Hood' loading='lazy' width='1012' height='1600' />
             </div>
             <div className='BookSession'>
                 <h2 className='BookSessionTitle'>

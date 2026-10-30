@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { instagram } from '../../imgs/InstagramIcon'
 import { whatsappTile } from '../../imgs/WhatsAppIcon'
 import { Link } from 'react-router-dom'
-import { SERVICE_LINKS, SITE, sentenceList, sessionLanguages, whatsappUrl } from '../../seo/meta.mjs'
+import { SERVICE_LINKS, SITE, sentenceList, sessionLanguages } from '../../seo/meta.mjs'
+import { chatUrl } from '../../utils/contact'
+import LinkedText from '../LinkedText'
 
 export default function Footer()
 {   
@@ -94,7 +96,7 @@ export default function Footer()
                         Follow us
                     </div>
                     <div className='HomeFooterSocialsIcons'>
-                        <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer' aria-label='WhatsApp'>
+                        <a href={chatUrl()} target='_blank' rel='noopener noreferrer' aria-label='WhatsApp'>
                             {whatsappTile}
                         </a>
                         <a href={SITE.socials.facebook} target='_blank' rel='noopener noreferrer' aria-label='Facebook'>
@@ -127,10 +129,10 @@ export default function Footer()
                     <button type='button' className='FooterCookieButton' onClick={() => window.dispatchEvent(new Event('sonderhood:consent'))}>Cookie settings</button>
                 </nav>
                 <address className='FooterDetailsAddress'>
-                    The Sonder Hood, therapy center in {SITE.address.display}
+                    <LinkedText text={`The Sonder Hood, therapy center in ${SITE.address.display}`} />
                     {' · '}Open {SITE.hours.display}
                     {' · '}Sessions in {sentenceList(sessionLanguages())}
-                    {' · '}<a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp {SITE.phoneDisplay}</a>
+                    {' · '}<a href={chatUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp {SITE.phoneDisplay}</a>
                     {' · '}<a href={`tel:${SITE.phone}`}>Call</a>
                     {' · '}<a href={`mailto:${SITE.email}`}>{SITE.email}</a>
                     {' · '}<a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'>Directions</a>

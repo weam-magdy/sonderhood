@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react'
 import PagesHeader from '../PagesHeader/PagesHeader'
 import useSeo from '../../seo/useSeo';
-import { INTROS, PAGES, SITE, pageLd, whatsappUrl } from '../../seo/meta.mjs';
-import { bookingMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
+import { INTROS, PAGES, SITE, pageLd } from '../../seo/meta.mjs';
+import { bookingMessage, chatUrl, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact';
 import PhoneInput from 'react-phone-input-2';
 import FormNotice from '../FormNotice';
 
@@ -77,7 +77,7 @@ export default function BookSession()
                     REQUEST TO BOOK A SESSION
                 </h1>
                 <p className='BookSessionNote'>
-                    {INTROS.book} <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>{SITE.phoneDisplay}</a>.
+                    {INTROS.book} <a href={chatUrl()} target='_blank' rel='noopener noreferrer'>{SITE.phoneDisplay}</a>.
                 </p>
                 {err && error}
                 {succ && success}

@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import LinkedText from '../LinkedText'
 
 export default function FAQItem({ faq, faqs, index }) 
 {
@@ -46,7 +48,8 @@ export default function FAQItem({ faq, faqs, index })
         {/* Always in the page (search engines read it); CSS collapses it until opened. */}
         <div className={shown ? 'FAQItemAnswerWrapper open' : 'FAQItemAnswerWrapper'}>
             <div style={ faqs.length === (index+1) || !shown ? {} : {borderBottom: '1px solid #000'} } className={'FAQItemAnswerTemp'}>
-                {faq.answer}
+                <LinkedText text={faq.answer} links={faq.links} word />
+                {faq.cta && <Link className='FAQItemCta' to={faq.cta.path}>{faq.cta.label}</Link>}
             </div>
         </div>
         </>

@@ -6,8 +6,9 @@ import topright from '../../imgs/topr.jpeg'
 import botright from '../../imgs/botr.jpeg'
 import mid from '../../imgs/midpics.jpeg'
 import useSeo from '../../seo/useSeo'
-import { INTROS, PAGES, SITE, languagesText, pageLd, whatsappUrl } from '../../seo/meta.mjs'
-import { contactMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
+import { INTROS, PAGES, SITE, languagesText, pageLd } from '../../seo/meta.mjs'
+import { chatUrl, contactMessage, isValidName, isValidPhone, normalizePhone, openWhatsApp, sendEmailCopy } from '../../utils/contact'
+import LinkedText from '../LinkedText'
 import PhoneInput from "react-phone-input-2";
 import FormNotice from '../FormNotice';
 import "react-phone-input-2/lib/bootstrap.css";
@@ -75,10 +76,10 @@ export default function ContactUs() {
                         </h1>
                         <div className='ContactUsPageOurStoryDesc'>
                             <div className='ContactUsPageDescFirstPart'>
-                                {INTROS.contact[0]}
+                                <LinkedText text={INTROS.contact[0]} word />
                             </div>
                             <div className='ContactUsPageDescSecPart'>
-                                {INTROS.contact[1]}
+                                <LinkedText text={INTROS.contact[1]} word />
                             </div>
                         </div>
                     </div>
@@ -97,7 +98,7 @@ export default function ContactUs() {
                             <div className='ContactUsContactMapInfo'>
                                 <address className='ContactUsContactDetails'>
                                     Reach us out on<br />
-                                    WhatsApp: <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>{SITE.phoneDisplay}</a><br />
+                                    WhatsApp: <a href={chatUrl()} target='_blank' rel='noopener noreferrer'>{SITE.phoneDisplay}</a><br />
                                     Cellular: <a href={`tel:${SITE.phone}`}>{SITE.phoneDisplay}</a><br />
                                     Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a><br />
                                     Address: <a href={SITE.mapsUrl} target='_blank' rel='noopener noreferrer'>{SITE.address.display}</a><br />

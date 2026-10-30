@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PagesHeader from './PagesHeader/PagesHeader'
 import useSeo from '../seo/useSeo'
-import { PAGES, SERVICE_LINKS, SITE, whatsappUrl } from '../seo/meta.mjs'
+import { PAGES, SERVICE_LINKS, SITE } from '../seo/meta.mjs'
+import { chatUrl } from '../utils/contact'
 
 // Shown while Firestore data for a deep page is on its way.
 export function PageLoading()
@@ -25,7 +26,7 @@ export function PageError()
         <div className='SimplePageContainer'>
             <PagesHeader />
             <div className='SimplePage'>
-                <p className='SimplePageStatus'>We couldn't load this page. Please refresh, or message us on <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp</a>.</p>
+                <p className='SimplePageStatus'>We couldn't load this page. Please refresh, or message us on <a href={chatUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp</a>.</p>
             </div>
         </div>
     )
@@ -49,7 +50,7 @@ export default function NotFound()
                     <li><Link to='/blog'>Blog</Link></li>
                     <li><Link to='/contact'>Contact us</Link></li>
                 </ul>
-                <p>Or message us on <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp at {SITE.phoneDisplay}</a>.</p>
+                <p>Or message us on <a href={chatUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp at {SITE.phoneDisplay}</a>.</p>
             </div>
         </div>
     )

@@ -81,8 +81,11 @@ const esc = (text) => String(text ?? '').replace(/&/g, '&amp;').replace(/</g, '&
 const json = (data) => JSON.stringify(data).replace(/</g, '\\u003c')
 const link = (href, text) => `<a href="${esc(href)}">${esc(text)}</a>`
 const list = (items) => (items.length ? `<ul>${items.map(item => `<li>${item}</li>`).join('')}</ul>` : '')
-const paragraphs = (texts) => texts.filter(Boolean).map(text => `<p>${esc(text)}</p>`).join('')
-const faqBlock = (faqs) => (faqs || []).filter(f => f && f.question).map(f => `<details><summary>${esc(f.question)}</summary><p>${esc(f.answer)}</p></details>`).join('')
+// Plain copy with our contact details (and any `links`) as links, as src/components/LinkedText.js draws it.
+const linked = (text, options) => M.linkedParts(text, options).map(part => (part.href ? link(part.href, part.text) : esc(part.text))).join('')
+const paragraphs = (texts, options) => texts.filter(Boolean).map(text => `<p>${linked(text, options)}</p>`).join('')
+const faqBlock = (faqs) => (faqs || []).filter(f => f && f.question)
+    .map(f => `<details><summary>${esc(f.question)}</summary><p>${linked(f.answer, { links: f.links, word: true })}</p>${f.cta ? `<p>${link(f.cta.path, f.cta.label)}</p>` : ''}</details>`).join('')
 
 function stripHead(html)
 {
@@ -134,7 +137,7 @@ function shell(main, whatsappText)
         + `<main class="ssr-main">${main}`
         + `<p class="ssr-cta"><a class="ssr-btn" href="${esc(M.whatsappUrl(whatsappText))}">Message us on WhatsApp</a> <a href="tel:${esc(M.SITE.phone)}">or call ${esc(M.SITE.phoneDisplay)}</a></p></main>`
         + `<footer class="ssr-foot"><nav class="ssr-nav">${M.SERVICE_LINKS.map(s => link(s.path, s.name)).join('')}</nav>`
-        + `<p>${esc(M.SITE.name)}, therapy center in ${esc(M.SITE.address.display)} · Open ${esc(M.SITE.hours.display)} · Sessions in ${esc(M.sentenceList(M.sessionLanguages()))} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
+        + `<p>${linked(`${M.SITE.name}, therapy center in ${M.SITE.address.display}`)} · Open ${esc(M.SITE.hours.display)} · Sessions in ${esc(M.sentenceList(M.sessionLanguages()))} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
         + `</div>`
 }
 
@@ -237,7 +240,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
             lastmod: service.updateTime,
             head: { ...meta, ld: M.serviceLd(service) },
             body: shell(`<h1>${esc(service.title)}</h1>`
-                + paragraphs([service.description, service.seo?.intro])
+                + paragraphs([service.description, service.seo?.intro], { word: true })
                 + list((service.points || []).map(esc))
                 + (team.length ? `<h2>Available therapists</h2>${list(team.map(therapistItem))}` : '')
                 + (service.faqs?.length ? `<h2>Frequently asked questions</h2>${faqBlock(service.faqs)}` : ''),
@@ -248,7 +251,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
     pages.push({
         path: '/therapists',
         head: { ...M.PAGES.therapists, ld: M.pageLd({ name: 'Our Therapists', path: '/therapists' }) },
-        body: shell(`<h1>Our therapists</h1>${paragraphs(M.INTROS.therapists)}${list(therapists.map(therapistItem))}`),
+        body: shell(`<h1>Our therapists</h1>${paragraphs(M.INTROS.therapists, { word: true })}${list(therapists.map(therapistItem))}`),
     })
 
     for (const therapist of therapists)
@@ -299,7 +302,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
     pages.push({
         path: '/contact',
         head: { ...M.PAGES.contact, ld: M.pageLd({ name: 'Contact Us', path: '/contact' }) },
-        body: shell(`<h1>Contact us</h1>${paragraphs(M.INTROS.contact)}`
+        body: shell(`<h1>Contact us</h1>${paragraphs(M.INTROS.contact, { word: true })}`
             + list([
                 `WhatsApp: <a href="${esc(M.whatsappUrl())}">${esc(M.SITE.phoneDisplay)}</a>`,
                 `Phone: <a href="tel:${esc(M.SITE.phone)}">${esc(M.SITE.phoneDisplay)}</a>`,

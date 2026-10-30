@@ -37,9 +37,58 @@ export const SITE = {
 }
 
 export const DEFAULT_WHATSAPP_TEXT = 'Hello The Sonder Hood, I would like to book a therapy session.'
+// The same first message for visitors who use Arabic (src/utils/contact.js decides).
+export const DEFAULT_WHATSAPP_TEXT_AR = 'مرحبًا، أود حجز جلسة علاج نفسي.'
+
+// Each service as it reads after "جلسة" (a session of …) in an Arabic first message, by slug.
+export const SERVICE_NAMES_AR = {
+    'individual-adult-therapy': 'علاج نفسي فردي للبالغين',
+    'couples-therapy': 'علاج زوجي',
+    'family-therapy': 'علاج أسري',
+    'child-adolescent-therapy': 'علاج نفسي للأطفال والمراهقين',
+    'cbt-behavioral-therapy': 'علاج معرفي سلوكي (CBT)',
+    'group-therapy': 'علاج جماعي',
+    'online-therapy': 'علاج نفسي أونلاين',
+    'psychological-assessments': 'تقييم نفسي',
+}
 
 export function whatsappUrl(text = DEFAULT_WHATSAPP_TEXT) {
     return `https://wa.me/${SITE.whatsappNumber}${text ? `?text=${encodeURIComponent(text)}` : ''}`
+}
+
+const ARABIC_LETTERS = /[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]/
+const LATIN_LETTERS = /[A-Za-zÀ-ɏ]/
+
+// Whether a visitor writes in Arabic: yes if any of `texts` has an Arabic letter,
+// no if any has a Latin one, otherwise `fallback` (nothing typed to go by).
+export function writesArabic(texts = [], fallback = false) {
+    const typed = texts.map(text => String(text || ''))
+    if (typed.some(text => ARABIC_LETTERS.test(text))) return true
+    if (typed.some(text => LATIN_LETTERS.test(text))) return false
+    return fallback
+}
+
+const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+// Our contact details inside plain copy (FAQ answers, page intros, the privacy
+// policy, the footer) work as links: "WhatsApp at +20 …" and the number open the
+// chat, "3Sixty by LMD" opens the map and the email address opens an email. `links`
+// adds a block's own phrases ({ 'couples therapy': '/services/couples-therapy' }), and
+// `word` also links a bare "WhatsApp" (left off in the privacy policy, which names
+// WhatsApp as a service). `chat` is the WhatsApp link to use. Returns the text in
+// pieces, { text } or { text, href }.
+export function linkedParts(text, { links = {}, word = false, chat = whatsappUrl() } = {}) {
+    const targets = new Map(Object.entries({
+        [`WhatsApp at ${SITE.phoneDisplay}`]: chat,
+        [SITE.phoneDisplay]: chat,
+        [SITE.address.street]: SITE.mapsUrl,
+        [SITE.email]: `mailto:${SITE.email}`,
+        ...links,
+        ...(word ? { WhatsApp: chat } : {}),
+    }))
+    const phrases = [...targets.keys()].sort((a, b) => b.length - a.length)
+    const pattern = new RegExp(`(${phrases.map(escapeRegExp).join('|')})`)
+    return String(text ?? '').split(pattern).filter(Boolean).map(piece => (targets.has(piece) ? { text: piece, href: targets.get(piece) } : { text: piece }))
 }
 
 export function absoluteUrl(path = '/') {
@@ -523,19 +572,35 @@ export const HOME_FAQS = [
     },
     {
         question: 'What types of therapy do you offer, and are sessions online or face to face?',
-        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best. Sessions are available in Arabic and English, and in French with Inji Farid.',
+        answer: 'We offer individual therapy for adults, couples therapy, family therapy, child and adolescent therapy, behavioral therapy such as CBT and DBT, group therapy and psychological assessments. Sessions are available face to face at our therapy center in New Cairo or online by secure video call from anywhere in Egypt or abroad, so you can choose what suits you best. Sessions are available in Arabic and English, and in French with Inji Farid. Not sure which one is right for you? Answer four quick questions and we will suggest therapists from our team.',
+        // Each service opens its page, and the button leads to "Find your therapist".
+        links: {
+            'individual therapy for adults': '/services/individual-adult-therapy',
+            'couples therapy': '/services/couples-therapy',
+            'family therapy': '/services/family-therapy',
+            'child and adolescent therapy': '/services/child-adolescent-therapy',
+            'behavioral therapy such as CBT and DBT': '/services/cbt-behavioral-therapy',
+            'group therapy': '/services/group-therapy',
+            'psychological assessments': '/services/psychological-assessments',
+            'online by secure video call': '/services/online-therapy',
+            'Inji Farid': '/therapists/inji-farid',
+        },
+        cta: { path: '/find-a-therapist', label: 'Find your therapist' },
     },
     {
         question: 'Where is your therapy center in New Cairo, and when are you open?',
         answer: `Our therapy center is at ${SITE.address.street} in ${SITE.address.locality}, Cairo, and we are open ${SITE.hours.display}. You can see a therapist face to face at the center, or online by video call from anywhere in Egypt or abroad, in Arabic or English. For directions, open the map on our Contact page or message us on WhatsApp at ${SITE.phoneDisplay}.`,
+        links: { 'Contact page': '/contact' },
     },
     {
         question: 'How do I book a session with a therapist?',
         answer: `The quickest way is to message us on WhatsApp at ${SITE.phoneDisplay}, or send a booking request through our website. Let us know whether you prefer an in-person or online session and any preferred days, and we will help you choose a therapist and find the nearest available slot. We are open ${SITE.hours.display}.`,
+        links: { 'booking request': '/book' },
     },
     {
         question: 'Do you have a French-speaking therapist in Cairo?',
         answer: `Yes. Inji Farid, who studied clinical psychology in France, offers therapy in French as well as in Arabic and English, face to face at our center in New Cairo or online by video call from anywhere in Egypt or abroad. To book with her, message us on WhatsApp at ${SITE.phoneDisplay} and say you would like your sessions in French.`,
+        links: { 'Inji Farid': '/therapists/inji-farid' },
     },
 ]
 

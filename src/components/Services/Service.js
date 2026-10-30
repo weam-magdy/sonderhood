@@ -11,6 +11,7 @@ import { selectAllServices } from '../../seo/selectors'
 import useSeo from '../../seo/useSeo'
 import { legacySlug, serviceLd, serviceMeta } from '../../seo/meta.mjs'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
+import LinkedText from '../LinkedText'
 
 export default function Service()
 {
@@ -65,7 +66,7 @@ export default function Service()
                             </div>
                             {selectedService.seo?.intro &&
                                 <div className='SingleServicePageHeaderDesc SingleServicePageIntro'>
-                                    {selectedService.seo.intro}
+                                    <LinkedText text={selectedService.seo.intro} word />
                                 </div>
                             }
                         </div>

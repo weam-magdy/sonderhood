@@ -1,7 +1,7 @@
 import React from 'react'
 import Therapists from '../HomePage/Therapists'
 import { useNavigate } from 'react-router-dom'
-import { whatsappUrl } from '../../seo/meta.mjs'
+import { chatUrl } from '../../utils/contact'
 
 export default function AvailableTherapists({ availableTherapists })
 {
@@ -11,7 +11,7 @@ export default function AvailableTherapists({ availableTherapists })
         ? availableTherapists.map(therapist => <Therapists key={therapist.id} therapist={therapist} />)
         : (
             <div className='NoTherapists'>
-                <span>Message us on <a href={whatsappUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp</a> and we will match you with the right therapist.</span>
+                <span>Message us on <a href={chatUrl()} target='_blank' rel='noopener noreferrer'>WhatsApp</a> and we will match you with the right therapist.</span>
             </div>
         )
 

@@ -1,6 +1,20 @@
 import emailjs from '@emailjs/browser'
-import { SITE, whatsappUrl } from '../seo/meta.mjs'
+import { DEFAULT_WHATSAPP_TEXT, DEFAULT_WHATSAPP_TEXT_AR, SITE, whatsappUrl, writesArabic } from '../seo/meta.mjs'
 import { trackLead } from '../analytics'
+
+// The browser lists Arabic first. A chat started without typing anything (the
+// WhatsApp button, links in the text) then opens with an Arabic first message.
+export function browserArabic()
+{
+    const languages = typeof navigator === 'undefined' ? [] : navigator.languages || [navigator.language]
+    return /^ar\b/i.test(languages[0] || '')
+}
+
+// A WhatsApp link with the first message in the visitor's language.
+export function chatUrl()
+{
+    return whatsappUrl(browserArabic() ? DEFAULT_WHATSAPP_TEXT_AR : DEFAULT_WHATSAPP_TEXT)
+}
 
 // At least two characters and no digits or symbols, so names in any script
 // (Arabic included) pass. A \p{L} class would add ~15 kB once Babel expands it.
@@ -71,10 +85,35 @@ export function sendEmailCopy(templateId, form)
     )
 }
 
+// Keeps a number or an email address left to right inside an Arabic line, so the
+// + of +20 stays in front of the digits.
+function leftToRight(text)
+{
+    return `⁦${text}⁩`
+}
+
+// The booking forms' choices as they read in an Arabic message.
+const DAYS_AR = { 'Any day': 'أي يوم', Sunday: 'الأحد', Monday: 'الاثنين', Tuesday: 'الثلاثاء', Wednesday: 'الأربعاء', Thursday: 'الخميس', Friday: 'الجمعة', Saturday: 'السبت' }
+const REACH_AR = { WhatsApp: 'واتساب', Email: 'البريد الإلكتروني', Call: 'مكالمة هاتفية' }
+
+// Someone who types their name in Arabic gets the whole message in Arabic.
 export function bookingMessage({ firstName, lastName, number, email, location, day, reach, therapist })
 {
+    const name = `${firstName || ''} ${lastName || ''}`.trim()
+    if (writesArabic([firstName, lastName], browserArabic()))
+    {
+        const lines = ['مرحبًا، أود طلب حجز جلسة.', '']
+        lines.push(`الاسم: ${name}`)
+        if (number) lines.push(`رقم الموبايل: ${leftToRight(phoneForMessage(number))}`)
+        if (email) lines.push(`البريد الإلكتروني: ${leftToRight(email)}`)
+        lines.push(`الجلسة: ${location === 'Online' ? 'أونلاين' : 'في المركز بالقاهرة الجديدة'}`)
+        if (therapist) lines.push(`الحجز مع: ${therapist}`)
+        if (day) lines.push(`اليوم المفضل: ${DAYS_AR[day] || day}`)
+        if (reach) lines.push(`التواصل معي عبر: ${REACH_AR[reach] || reach}`)
+        return lines.join('\n')
+    }
     const lines = [`Hello ${SITE.name}, I would like to request a session.`, '']
-    lines.push(`Name: ${`${firstName || ''} ${lastName || ''}`.trim()}`)
+    lines.push(`Name: ${name}`)
     if (number) lines.push(`Phone: ${phoneForMessage(number)}`)
     if (email) lines.push(`Email: ${email}`)
     lines.push(`Session: ${location === 'Online' ? 'Online' : 'At the center in New Cairo'}`)
@@ -84,8 +123,19 @@ export function bookingMessage({ firstName, lastName, number, email, location, d
     return lines.join('\n')
 }
 
+// Arabic when the message, subject or name is written in Arabic.
 export function contactMessage({ name, number, email, subject, message })
 {
+    if (writesArabic([message, subject, name], browserArabic()))
+    {
+        const lines = ['مرحبًا،', '']
+        if (subject) lines.push(`الموضوع: ${subject}`)
+        lines.push(`الاسم: ${String(name || '').trim()}`)
+        if (number) lines.push(`رقم الموبايل: ${leftToRight(phoneForMessage(number))}`)
+        if (email) lines.push(`البريد الإلكتروني: ${leftToRight(email)}`)
+        lines.push('', String(message || '').trim())
+        return lines.join('\n')
+    }
     const lines = [`Hello ${SITE.name},`, '']
     if (subject) lines.push(`Subject: ${subject}`)
     lines.push(`Name: ${String(name || '').trim()}`)
