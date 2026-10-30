@@ -1,6 +1,11 @@
 // Site facts, page titles/descriptions, URL slugs and structured data.
 // Shared by the React app and by scripts/prerender.mjs (which runs in plain Node),
-// so this file holds only data and pure functions: no imports, no browser globals.
+// so this file holds only data and pure functions: no browser globals, and no imports
+// except the page copy in ./pageCopy.mjs, which is plain data too.
+
+import { NEW_CAIRO, SERVICE_DETAILS } from './pageCopy.mjs'
+
+export { NEW_CAIRO, SERVICE_DETAILS }
 
 export const SITE = {
     name: 'The Sonder Hood',
@@ -253,21 +258,47 @@ function matchTherapists(match, therapists) {
     return []
 }
 
+// `details` is the page's longer copy (pageCopy.mjs); its questions follow the service's own.
 export function decorateService(service) {
     const seo = SERVICE_SEO[service.id] || {}
+    const slug = seo.slug || slugify(service.title)
+    const details = SERVICE_DETAILS[slug]
     return {
         ...service,
         legacySlug: legacySlug(service.title),
-        slug: seo.slug || slugify(service.title),
+        slug,
         title: seo.name || service.title,
         seo,
+        details,
+        faqs: [...(service.faqs || []), ...((details && details.faqs) || [])],
     }
+}
+
+// Firestore lists each service's therapists by hand, and those lists date from 2023.
+// Therapists whose own profile names the client group join them, so the page shows
+// everyone who offers the service, as the therapist finder does. Keyed by Firestore id.
+const SERVICE_CLIENTELE = {
+    hhsdmrAXJVOTKq8UT3Yv: /adult/i, // Individual adult therapy
+    wkCeZbijHxJw1RhtEpix: /couple/i, // Couples therapy
+    '5nwmIB32vjsHXknedWyf': /child|adolescent/i, // Child & adolescent therapy
+    ee4ZPo01CGhm2vK1Li4C: /group/i, // Group therapy
+}
+
+function withProfileTherapists(service, therapists) {
+    const clientele = SERVICE_CLIENTELE[service.id]
+    if (!clientele) return service
+    const listed = service.therapists || []
+    const added = therapists
+        .filter(t => (t.clientele || []).some(group => clientele.test(group)))
+        .filter(t => !listed.some(ref => ref.id === t.id))
+        .map(t => ({ id: t.id }))
+    return added.length ? { ...service, therapists: [...listed, ...added] } : service
 }
 
 // Firestore services plus EXTRA_SERVICES, decorated and in display order.
 export function mergeServices(services = [], therapists = []) {
     const titles = new Set(services.map(s => String(s.title || '').trim().toLowerCase()))
-    const merged = services.map(decorateService)
+    const merged = services.map(s => decorateService(withProfileTherapists(s, therapists)))
     for (const extra of EXTRA_SERVICES) {
         if (titles.has(extra.title.toLowerCase())) continue
         merged.push(decorateService({ ...extra, therapists: matchTherapists(extra.match, therapists).map(t => ({ id: t.id })) }))
@@ -590,7 +621,7 @@ export const HOME_FAQS = [
     {
         question: 'Where is your therapy center in New Cairo, and when are you open?',
         answer: `Our therapy center is at ${SITE.address.street} in ${SITE.address.locality}, Cairo, and we are open ${SITE.hours.display}. You can see a therapist face to face at the center, or online by video call from anywhere in Egypt or abroad, in Arabic or English. For directions, open the map on our Contact page or message us on WhatsApp at ${SITE.phoneDisplay}.`,
-        links: { 'Contact page': '/contact' },
+        links: { 'Our therapy center': NEW_CAIRO.path, 'Contact page': '/contact' },
     },
     {
         question: 'How do I book a session with a therapist?',
@@ -622,6 +653,8 @@ export const INTROS = {
         'Visit The Sonder Hood at our therapy center in New Cairo for face-to-face sessions, or start online therapy from anywhere in Egypt or abroad.',
         'The quickest way to reach us is WhatsApp. Send us a message and we will help you choose a therapist and find the nearest available time.',
     ],
+    // Phrases in the contact intro that open other pages (src/components/LinkedText.js).
+    contactLinks: { 'our therapy center in New Cairo': NEW_CAIRO.path, 'online therapy': '/services/online-therapy' },
     book: 'Choose a session online or at our center in New Cairo. Your request opens in WhatsApp, ready to send to us, or message us directly at',
     finder: 'Answer a few quick questions and we will suggest therapists from our team who work with what you are going through. Your answers then open in WhatsApp as your first message to us, so we can reply and help you book.',
 }
@@ -715,6 +748,11 @@ export const PAGES = {
         title: `Find Your Therapist in New Cairo or Online${BRAND}`,
         description: 'Four quick questions show which of our therapists may suit you, in New Cairo or online, in Arabic, English or French. Then send your answers to us on WhatsApp.',
     },
+    newCairo: {
+        path: NEW_CAIRO.path,
+        title: NEW_CAIRO.metaTitle,
+        description: NEW_CAIRO.metaDescription,
+    },
     privacy: {
         path: '/privacy',
         title: `Privacy Policy${BRAND}`,
@@ -725,6 +763,14 @@ export const PAGES = {
         title: `Page Not Found${BRAND}`,
         description: 'This page does not exist. Explore our therapy services, therapists and articles, or message us on WhatsApp.',
     },
+}
+
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+
+// '2026-10-30' as '30 October 2026'.
+export function longDate(iso) {
+    const [year, month, day] = String(iso || '').split('-').map(Number)
+    return year && month && day ? `${day} ${MONTHS[month - 1]} ${year}` : ''
 }
 
 export function sentenceList(items) {
@@ -894,6 +940,10 @@ export function homeLd() {
 
 export function pageLd(page) {
     return graph(breadcrumbLd([{ name: page.name, path: page.path }]))
+}
+
+export function newCairoLd() {
+    return graph(breadcrumbLd([{ name: 'Therapy in New Cairo', path: NEW_CAIRO.path }]), faqLd(NEW_CAIRO.faqs))
 }
 
 export function serviceLd(service) {

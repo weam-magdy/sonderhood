@@ -84,6 +84,9 @@ const list = (items) => (items.length ? `<ul>${items.map(item => `<li>${item}</l
 // Plain copy with our contact details (and any `links`) as links, as src/components/LinkedText.js draws it.
 const linked = (text, options) => M.linkedParts(text, options).map(part => (part.href ? link(part.href, part.text) : esc(part.text))).join('')
 const paragraphs = (texts, options) => texts.filter(Boolean).map(text => `<p>${linked(text, options)}</p>`).join('')
+// Headed sections from src/seo/pageCopy.mjs, as src/components/Services/ServiceDetails.js draws them.
+const sectionsBlock = (sections, updated) => (sections || []).map(s => `<h2>${esc(s.heading)}</h2>${paragraphs(s.paragraphs, { links: s.links, word: true })}`).join('')
+    + (sections?.length && updated ? `<p>Last updated ${esc(M.longDate(updated))}</p>` : '')
 const faqBlock = (faqs) => (faqs || []).filter(f => f && f.question)
     .map(f => `<details><summary>${esc(f.question)}</summary><p>${linked(f.answer, { links: f.links, word: true })}</p>${f.cta ? `<p>${link(f.cta.path, f.cta.label)}</p>` : ''}</details>`).join('')
 
@@ -136,7 +139,7 @@ function shell(main, whatsappText)
         + `<header class="ssr-head"><a class="ssr-brand" href="/">The Sonder Hood</a><nav class="ssr-nav" id="menu">${NAV.map(([href, text]) => link(href, text)).join('')}</nav></header>`
         + `<main class="ssr-main">${main}`
         + `<p class="ssr-cta"><a class="ssr-btn" href="${esc(M.whatsappUrl(whatsappText))}">Message us on WhatsApp</a> <a href="tel:${esc(M.SITE.phone)}">or call ${esc(M.SITE.phoneDisplay)}</a></p></main>`
-        + `<footer class="ssr-foot"><nav class="ssr-nav">${M.SERVICE_LINKS.map(s => link(s.path, s.name)).join('')}</nav>`
+        + `<footer class="ssr-foot"><nav class="ssr-nav">${M.SERVICE_LINKS.map(s => link(s.path, s.name)).join('')}${link(M.PAGES.newCairo.path, 'Therapy in New Cairo')}</nav>`
         + `<p>${linked(`${M.SITE.name}, therapy center in ${M.SITE.address.display}`)} · Open ${esc(M.SITE.hours.display)} · Sessions in ${esc(M.sentenceList(M.sessionLanguages()))} · <a href="mailto:${esc(M.SITE.email)}">${esc(M.SITE.email)}</a> · ${link(M.SITE.mapsUrl, 'Directions')}</p></footer>`
         + `</div>`
 }
@@ -237,11 +240,12 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
         const team = (service.therapists || []).map(ref => therapists.find(t => t.id === ref.id)).filter(Boolean)
         pages.push({
             path: meta.path,
-            lastmod: service.updateTime,
+            lastmod: service.details?.updated || service.updateTime,
             head: { ...meta, ld: M.serviceLd(service) },
             body: shell(`<h1>${esc(service.title)}</h1>`
                 + paragraphs([service.description, service.seo?.intro], { word: true })
                 + list((service.points || []).map(esc))
+                + sectionsBlock(service.details?.sections, service.details?.updated)
                 + (team.length ? `<h2>Available therapists</h2>${list(team.map(therapistItem))}` : '')
                 + (service.faqs?.length ? `<h2>Frequently asked questions</h2>${faqBlock(service.faqs)}` : ''),
             `Hello The Sonder Hood, I would like to book a session for ${service.title}.`),
@@ -302,7 +306,7 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
     pages.push({
         path: '/contact',
         head: { ...M.PAGES.contact, ld: M.pageLd({ name: 'Contact Us', path: '/contact' }) },
-        body: shell(`<h1>Contact us</h1>${paragraphs(M.INTROS.contact, { word: true })}`
+        body: shell(`<h1>Contact us</h1>${paragraphs(M.INTROS.contact, { word: true, links: M.INTROS.contactLinks })}`
             + list([
                 `WhatsApp: <a href="${esc(M.whatsappUrl())}">${esc(M.SITE.phoneDisplay)}</a>`,
                 `Phone: <a href="tel:${esc(M.SITE.phone)}">${esc(M.SITE.phoneDisplay)}</a>`,
@@ -328,6 +332,16 @@ function buildPages({ services: rawServices, therapists, blogs: rawBlogs })
             + `<h2>Which language would you prefer?</h2>${list(F.FINDER_LANGUAGES.filter(option => option.id !== 'either').map(option => esc(option.label)))}`
             + `<h2>Our team</h2>${list(therapists.map(therapistItem))}`,
             'Hello The Sonder Hood, I would like help finding the right therapist.'),
+    })
+
+    pages.push({
+        path: M.PAGES.newCairo.path,
+        lastmod: M.NEW_CAIRO.updated,
+        head: { ...M.PAGES.newCairo, ld: M.newCairoLd() },
+        body: shell(`<h1>${esc(M.NEW_CAIRO.h1)}</h1>${paragraphs(M.NEW_CAIRO.intro, { word: true })}`
+            + `<p>${esc(`${M.SITE.name}, ${M.SITE.address.display}. Open ${M.SITE.hours.display}.`)} ${link(M.SITE.mapsUrl, 'Open in Google Maps')}</p>`
+            + sectionsBlock(M.NEW_CAIRO.sections, M.NEW_CAIRO.updated)
+            + `<h2>Frequently asked questions</h2>${faqBlock(M.NEW_CAIRO.faqs)}`),
     })
 
     pages.push({

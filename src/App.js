@@ -16,6 +16,7 @@ import Article from './components/Blogs/Article';
 import RequestSession from './components/Booking/RequestSession';
 import FindTherapist from './components/Finder/FindTherapist';
 import Privacy from './components/Privacy';
+import NewCairo from './components/NewCairo';
 import NotFound from './components/PageStatus';
 import { fetchTherapists } from './app/therapists/therapistsSlice';
 import { fetchServices } from './app/services/servicesSlice';
@@ -61,6 +62,7 @@ function App()
                     <Route path='contact' element={<ContactUs />} />
                     <Route path='book' element={<RequestSession />} />
                     <Route path='find-a-therapist' element={<FindTherapist />} />
+                    <Route path='therapy-in-new-cairo' element={<NewCairo />} />
                     <Route path='privacy' element={<Privacy />} />
 
                     {/* Addresses used before October 2026. The server also answers them with 301s. */}

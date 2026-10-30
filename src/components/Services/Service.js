@@ -12,6 +12,7 @@ import useSeo from '../../seo/useSeo'
 import { legacySlug, serviceLd, serviceMeta } from '../../seo/meta.mjs'
 import NotFound, { PageError, PageLoading } from '../PageStatus'
 import LinkedText from '../LinkedText'
+import ServiceDetails from './ServiceDetails'
 
 export default function Service()
 {
@@ -99,6 +100,7 @@ export default function Service()
                     </div>
                 </div>
             </motion.div>
+            <ServiceDetails sections={selectedService.details?.sections} updated={selectedService.details?.updated} />
             <AvailableTherapists availableTherapists={availableTherapists} />
             <FAQ faqs={selectedService.faqs} />
         </>

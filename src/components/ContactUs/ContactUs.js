@@ -76,7 +76,7 @@ export default function ContactUs() {
                         </h1>
                         <div className='ContactUsPageOurStoryDesc'>
                             <div className='ContactUsPageDescFirstPart'>
-                                <LinkedText text={INTROS.contact[0]} word />
+                                <LinkedText text={INTROS.contact[0]} links={INTROS.contactLinks} word />
                             </div>
                             <div className='ContactUsPageDescSecPart'>
                                 <LinkedText text={INTROS.contact[1]} word />

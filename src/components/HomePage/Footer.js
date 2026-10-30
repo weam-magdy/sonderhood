@@ -121,6 +121,7 @@ export default function Footer()
                 <nav className='FooterDetailsLinks' aria-label='Pages'>
                     <Link to='/therapists'>Our Therapists</Link>
                     <Link to='/find-a-therapist'>Find a Therapist</Link>
+                    <Link to='/therapy-in-new-cairo'>Therapy in New Cairo</Link>
                     <Link to='/about'>About Us</Link>
                     <Link to='/blog'>Blog</Link>
                     <Link to='/contact'>Contact Us</Link>
