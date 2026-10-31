@@ -340,7 +340,8 @@ export function therapistSlug(therapist) {
 
 // Team changes made here rather than in Firestore, keyed by Firestore id. On
 // 29 October 2026 the owner had Inji Farid take over Yosra Elsewerky's profile and
-// Sally Roshdy take over Habiba Youssry's: each keeps that profile's title, client
+// Sally Roshdy take over Habiba Youssry's: each keeps that profile's title (Sally's
+// was changed since), client
 // groups, focus areas and services, with her own name, photo and credentials, and no
 // quote yet. `replaces` is the earlier profile's address, which now leads to the team
 // page. Habiba's articles keep her name as their author.
@@ -359,6 +360,7 @@ export const TEAM_CHANGES = {
     F1jzTtRVVh2PMFASVHVe: {
         replaces: 'habiba-youssry',
         name: 'Sally Roshdy',
+        position: 'Clinical Psychologist', // The owner, 31 October 2026.
         image: '/images/team/sally-roshdy.jpg',
         quote: '',
         certificates: [
