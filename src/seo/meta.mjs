@@ -758,6 +758,10 @@ export const PRIVACY = [
         ],
     },
     {
+        title: 'Our own visit count',
+        text: ['This website also keeps a simple count of its own, whether or not you accept Google Analytics: how many visits it has each day, which pages are opened, the kind of site that sent each visit (such as Google or Instagram), and whether the visit is on a phone or a computer. It sets no cookies and does not store your internet address, it can\'t tell who you are or connect one visit with another, and only totals are kept. Nothing from this count goes to any other company.'],
+    },
+    {
         title: 'Services that load with our pages',
         text: ['Our lettering and photos come from this website itself. Two services from other companies load only where they are needed, and they receive your device\'s internet address: Google Maps for the map on our contact page, and Google Firebase when you subscribe to our newsletter (or, rarely, when this website\'s own copy of our services, therapists and articles fails to load and the page reads them from Firebase instead). The Instagram posts at the end of our home page are copies kept on this website (we fetch them through Behold, behold.so), so seeing them sends nothing to Instagram; opening one takes you to Instagram, which has its own privacy policy.'],
     },
@@ -775,7 +779,7 @@ export const PRIVACY = [
     },
     {
         title: 'Updates',
-        text: ['We will update this page if anything changes. Last updated 30 October 2026.'],
+        text: ['We will update this page if anything changes. Last updated 2 November 2026.'],
     },
 ]
 

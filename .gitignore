@@ -25,3 +25,5 @@ yarn-error.log*
 .env
 # The Behold feed address for public/instagram.php: kept off GitHub (every request to it counts as a view on the free plan)
 /public/instagram-config.php
+# The key to the private page public/stats.php: kept off GitHub because the repo is public
+/public/stats-config.php

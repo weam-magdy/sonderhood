@@ -9,8 +9,12 @@ const CONSENT_KEY = 'sonderhood-analytics'
 const CONSENT_DAYS = 365
 const CAMPAIGN_PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'gclid', 'gbraid', 'wbraid']
 
+const SITE_HOST = 'www.the-sonderhood.com'
+const NOT_COUNTED_KEY = 'sonderhood-not-counted'
+
 let loaded = false
 let lastPath = null
+let countedPath = null
 let sessionChoice = null
 const disableKey = `ga-disable-${MEASUREMENT_ID}`
 
@@ -111,6 +115,40 @@ export function trackPageView()
     for (const name of CAMPAIGN_PARAMS) if (all.has(name)) kept.set(name, all.get(name))
     const query = kept.toString()
     window.gtag('event', 'page_view', { page_location: `${window.location.origin}${path}${query ? `?${query}` : ''}`, page_title: document.title })
+}
+
+// The site's own daily totals (public/visit.php, read on the private stats.php). It sets
+// no cookie, so it needs no consent: only this page's address, the host that sent the
+// visitor and whether this page starts a visit are sent, and visit.php keeps totals only.
+export function countPageView()
+{
+    const path = window.location.pathname
+    if (path === countedPath) return
+    const firstPage = countedPath === null
+    countedPath = path
+    if (window.location.hostname !== SITE_HOST || navigator.webdriver) return
+    try
+    {
+        if (localStorage.getItem(NOT_COUNTED_KEY)) return
+    }
+    catch
+    {
+        // Storage blocked: this browser can't have been marked, so it is counted.
+    }
+    let referrer = ''
+    try
+    {
+        referrer = new URL(document.referrer).hostname
+    }
+    catch
+    {
+        // No referrer, the usual case for a typed address or a link from an app.
+    }
+    const navigation = performance.getEntriesByType?.('navigation')[0]
+    const returning = navigation && navigation.type !== 'navigate'
+    const body = JSON.stringify({ path, visit: firstPage && !returning && referrer !== SITE_HOST, ref: referrer })
+    if (navigator.sendBeacon) navigator.sendBeacon('/visit.php', body)
+    else fetch('/visit.php', { method: 'POST', body, keepalive: true }).catch(() => {})
 }
 
 export function trackLead(method)
