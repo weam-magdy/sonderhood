@@ -365,10 +365,10 @@ export const TEAM_CHANGES = {
         quote: '',
         certificates: [
             { year: '2021-2025', title: 'BA in Psychology, minor in Behavioral Neuroscience', description: 'High honors' },
-            { year: '2025-2026', title: 'MSc in Applied Clinical Psychology', description: 'Distinction grade' },
+            { year: '2025-2026', title: 'MSc in Applied Clinical Psychology', description: 'University of Central Lancashire, UK. Distinction grade' }, // University from the owner, 24 November 2026.
             { year: '2025', title: 'Psychodynamic Therapy Training', description: 'Kasr El Maadi Hospital, July to August 2025' },
         ],
-        updateTime: '2026-10-29T19:00:00Z',
+        updateTime: '2026-11-24T12:00:00Z',
     },
     // Heidi Fares finished her training and supervision (the owner, 29 October 2026).
     J9Odp0mxyUYUYQWZoNyT: { position: 'Clinical Psychologist' },
@@ -431,7 +431,7 @@ const AWARDING_BODIES = [
         'Maastricht University', 'Middlesex University London', 'Okasha Institute of Psychiatry',
         'Queen Mary University of London', 'Sheffield Hallam University', 'University of Edinburgh',
         'University of Oxford', 'University of Plymouth', 'University of Southampton',
-        'Université Toulouse 2 Jean Jaurès', 'Wesleyan University',
+        'Université Toulouse 2 Jean Jaurès', 'University of Central Lancashire', 'Wesleyan University',
     ].map(name => [new RegExp(name, 'i'), name]),
 ]
 
